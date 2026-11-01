@@ -2153,11 +2153,11 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
  }
 
  /* ----- tombol unduh APK ----- */
- var APK_DEF='';
- function apkUrl(){var u='';try{u=(S.d&&S.d.settings&&S.d.settings.apk_url)||(S.pub&&S.pub.apk_url)||localStorage.getItem('nb_apk')||APK_DEF}catch(e){}return /^https?:\/\//i.test(u)?u:''}
+ function apkId(){var v='';try{v=(S.d&&S.d.settings&&S.d.settings.apk_file_id)||(S.pub&&S.pub.apk_file_id)||localStorage.getItem('nb_apkid')||''}catch(e){}return /^[\w-]{10,}$/.test(v)?v:''}
+ function apkUrl(){var i=apkId();return i?'https://drive.google.com/uc?export=download&id='+i:''}
  function apkHTML(){
   var u=apkUrl(),ic='<svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>';
-  return '<a class="nb-apk" id="nbApk" '+(u?'href="'+esc(u)+'" target="_blank" rel="noopener" download':'href="#" onclick="toast(\'Link APK belum diatur admin\');return false"')+'>'+ic+'<span>Unduh Aplikasi (APK)<small>Android</small></span></a>';
+  return '<a class="nb-apk" id="nbApk" '+'href="'+esc(u)+'" target="_blank" rel="noopener"'+'>'+ic+'<span>Unduh Aplikasi (APK)<small>Android</small></span></a>';
  }
  function inApp(){
   try{
@@ -2176,7 +2176,7 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
   var host=null,where='beforeend';
   if(S.p==='login'){host=document.querySelector('#app .lg');}
   else if(['beranda','kat'].includes(S.p)){var bn=document.getElementById('nbBn');if(bn){host=bn;where='afterend'}}
-  if(host)host.insertAdjacentHTML(where,apkHTML());
+  if(host&&apkUrl())host.insertAdjacentHTML(where,apkHTML());
  }
 
  /* ----- editor banner (SUPERADMIN, halaman Pengaturan) ----- */
@@ -2201,16 +2201,41 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
   var h='<div class="card nb-ed" id="nbEd"><b>Banner Pelanggan</b><small>Tampil di Beranda & Katalog pembeli. Kosongkan judul untuk menghapus slide. Foto dipilih dari galeri HP/laptop (otomatis dikecilkan).</small>'+
    b.map(function(x,i){return '<div class="nb-g"><label>Slide '+(i+1)+' · Label</label><input id="nb_t'+i+'" value="'+esc(x.tag||'')+'" maxlength="24"><label>Judul</label><input id="nb_h'+i+'" value="'+esc(x.title||'')+'" maxlength="80"><label>Keterangan</label><input id="nb_s'+i+'" value="'+esc(x.sub||'')+'" maxlength="140">'+
     '<label>Foto banner</label><div class="up"><div class="upv c" id="nb_v'+i+'" style="width:96px;height:36px;border-radius:10px;background:#cfdcf1 center/cover"></div><div class="upb"><label class="btn g"><input type="file" accept="image/*" hidden onchange="nbPick(this,'+i+')">🖼️ Pilih dari Galeri</label><button class="btn l" type="button" onclick="nbClr('+i+')">Hapus</button><small id="nb_n'+i+'"></small></div></div></div>'}).join('')+
-   '<div class="nb-g"><label>Link Download APK (https)</label><input id="nb_apk" value="'+esc(apkUrl())+'" placeholder="https://...apk atau link Google Drive"></div><button class="btn g w" onclick="nbSave()">SIMPAN BANNER & APK</button><button class="btn l w" onclick="nbReset()">Kembalikan bawaan</button></div>';
+   '<div class="nb-g"><label>File Aplikasi (APK)</label><div class="upb"><label class="btn g"><input type="file" accept=".apk,application/vnd.android.package-archive" hidden onchange="nbApkPick(this)">📦 Pilih File APK</label><small id="nb_apkn">'+(apkId()?'APK sudah terunggah. Pilih file baru untuk mengganti.':'Belum ada APK.')+'</small></div><div id="nb_apkp" style="height:6px;border-radius:6px;background:rgba(30,107,255,.18);margin-top:8px;display:none"><i style="display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#1E6BFF,#5AA9FF)"></i></div></div><button class="btn g w" onclick="nbSave()">SIMPAN BANNER</button><button class="btn l w" onclick="nbReset()">Kembalikan bawaan</button></div>';
   pg.insertAdjacentHTML('afterbegin',h);[0,1,2].forEach(prev);
  }
+
+ /* ----- unggah APK dari perangkat (dipotong per bagian, disimpan di Google Drive lewat server) ----- */
+ function b64(buf){var b='',u=new Uint8Array(buf),C=0x8000;for(var i=0;i<u.length;i+=C)b+=String.fromCharCode.apply(null,u.subarray(i,i+C));return btoa(b)}
+ window.nbApkPick=async function(el){
+  var f=el.files&&el.files[0];el.value='';if(!f)return;
+  if(!/\.apk$/i.test(f.name))return toast('Pilih file berformat .apk');
+  if(f.size>60*1024*1024)return toast('Ukuran APK maksimal 60 MB');
+  if(!confirm('Unggah '+f.name+' ('+(f.size/1048576).toFixed(1)+' MB)?'))return;
+  var bar=document.getElementById('nb_apkp'),fill=bar&&bar.firstElementChild,note=document.getElementById('nb_apkn');
+  if(bar)bar.style.display='block';
+  var CH=1024*1024,total=Math.ceil(f.size/CH),up=RID(),id='';
+  try{
+   for(var i=0;i<total;i++){
+    var data=b64(await f.slice(i*CH,(i+1)*CH).arrayBuffer());
+    var r=await api('call',S.t,'uploadApkChunk',[{up:up,i:i,total:total,name:f.name,data:data}],RID());
+    if(fill)fill.style.width=Math.round((i+1)/total*100)+'%';
+    if(note)note.textContent='Mengunggah '+(i+1)+' / '+total+'…';
+    if(r&&r.r&&r.r.apk_file_id)id=r.r.apk_file_id;
+   }
+   if(!id)throw new Error('Unggah belum selesai di server');
+   try{localStorage.setItem('nb_apkid',id)}catch(e){}
+   if(S.d&&S.d.settings)S.d.settings.apk_file_id=id;
+   if(note)note.textContent='APK berhasil diunggah ✔';toast('APK berhasil diunggah')
+  }catch(e){if(note)note.textContent='Gagal mengunggah';toast(cleanErr(e&&e.message||e))}
+ };
  window.nbSave=function(){
   var g=function(k,i){return(document.getElementById('nb_'+k+i)||{}).value||''};
   var a=[0,1,2].map(function(i){return{tag:g('t',i).trim(),title:g('h',i).trim(),sub:g('s',i).trim(),img:IM[i]||''}}).filter(function(x){return x.title});
-  var js=JSON.stringify(a),ap=((document.getElementById('nb_apk')||{}).value||'').trim();
+  var js=JSON.stringify(a);
   if(js.length>46000)return toast('Foto terlalu besar, kurangi jumlah foto banner');
-  try{localStorage.setItem('nb_banner',js);localStorage.setItem('nb_apk',ap)}catch(e){}
-  run(async function(){await act('saveSettings',{banner_json:js,apk_url:ap});if(S.d&&S.d.settings){S.d.settings.banner_json=js;S.d.settings.apk_url=ap}toast('Banner tersimpan')},function(){render()});
+  try{localStorage.setItem('nb_banner',js)}catch(e){}
+  run(async function(){await act('saveSettings',{banner_json:js});if(S.d&&S.d.settings){S.d.settings.banner_json=js}toast('Banner tersimpan')},function(){render()});
  };
  window.nbReset=function(){try{localStorage.removeItem('nb_banner')}catch(e){}
   run(async function(){await act('saveSettings',{banner_json:''});if(S.d&&S.d.settings)S.d.settings.banner_json='';toast('Banner dikembalikan')},function(){render()})};
