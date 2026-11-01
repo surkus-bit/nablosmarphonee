@@ -342,6 +342,28 @@ nav button.on{color:var(--blue);background:var(--blue-l)}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 @media print{.hd,nav,.noprint,#drw,#sb,.fab,#toast,#ld,#bar{display:none!important}body{background:#fff}body.has-sb #app{margin-left:0;width:100%}#app{padding:0;background:#fff}.pg{padding:12mm}.card{box-shadow:none;border:1px solid #CBD5E1;border-radius:8px}@page{margin:0}}
 
+.intro{max-width:960px;margin:0 auto;padding:0 18px calc(28px + env(safe-area-inset-bottom,0px))}
+.in-top{display:flex;align-items:center;gap:10px;padding:calc(14px + env(safe-area-inset-top,0px)) 0 14px;border-bottom:1px solid var(--line)}
+.in-top b{flex:1;min-width:0;font-size:16px;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.in-top img{border-radius:8px!important;box-shadow:none!important;border:1px solid var(--line)}
+.in-hero{padding:34px 0 6px}
+.in-hero h1{font-size:clamp(26px,3.6vw + 12px,42px);line-height:1.15;letter-spacing:-.8px;color:var(--navy);max-width:640px}
+.in-hero p{font-size:15px;line-height:1.65;color:var(--mut);max-width:580px;margin:14px 0 20px}
+.in-cta{display:flex;gap:8px;flex-wrap:wrap}.in-cta .btn{margin:0;padding:12px 18px;font-size:14px}
+.in-sec h2{font-size:18px;color:var(--navy);margin:30px 0 12px;letter-spacing:-.2px}
+.in-sec:last-of-type h2{margin:0}
+.in-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.in-it{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.in-it .stat-icon{margin:0 0 10px}
+.in-it b{display:block;font-size:14px;color:var(--navy);margin-bottom:4px}
+.in-it p{font-size:13px;color:var(--mut);line-height:1.55}
+.in-steps{list-style:none;padding:0;display:grid;gap:10px;max-width:640px}
+.in-steps li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.in-steps li>i{flex:none;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-style:normal;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+.in-steps b{display:block;font-size:14px;color:var(--navy)}.in-steps p{font-size:13px;color:var(--mut);margin-top:2px;line-height:1.5}
+.in-staff{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.in-staff b{display:block;font-size:14px;color:var(--navy)}.in-staff p{font-size:13px;color:var(--mut);margin-top:3px;max-width:520px;line-height:1.5}
+
 .ms .mi i{display:none}
 </style></head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
@@ -349,7 +371,7 @@ nav button.on{color:var(--blue);background:var(--blue-l)}
 <script>
 const $=s=>document.querySelector(s),rp=n=>'Rp '+Number(n||0).toLocaleString('id-ID'),
 esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let S={u:null,t:null,d:null,p:'login',q:'',f:'TERSEDIA',edit:null,inv:null,sel:'',from:'',to:'',per:'30',kper:'bulan',kfrom:'',kto:'',sale:null,nextP:'dash',pub:{},cat:undefined,kq:'',kbrand:'SEMUA',ksort:'rekomendasi',reg:null,fp:null,pf:null,compareIds:[],compareDetails:{},sold:undefined,soldLoading:false};
+let S={u:null,t:null,d:null,p:'intro',q:'',f:'TERSEDIA',edit:null,inv:null,sel:'',from:'',to:'',per:'30',kper:'bulan',kfrom:'',kto:'',sale:null,nextP:'dash',pub:{},cat:undefined,kq:'',kbrand:'SEMUA',ksort:'rekomendasi',reg:null,fp:null,pf:null,compareIds:[],compareDetails:{},sold:undefined,soldLoading:false};
 const API_URL='https://surkusstore-api.kusumaponsel566.workers.dev/';
 const SAFE_MSG='Layanan sedang sibuk atau bermasalah. Silakan coba lagi beberapa saat lagi.';
 const TECH_ERR=/cloudflare|worker|apps\s*script|script\.google|googleusercontent|deployment|<\/?[a-z!][^>]*>|exception|stack|typeerror|referenceerror|syntaxerror|rangeerror|undefined|\bnull\b|https?:\/\/|\bHTTP\s*\d|\bError\s*\d{3,4}|ray id|\bat\s+[\w$.]+\s*\(|\.gs\b|spreadsheet|\bapi\b|token|secret|key|quota|unauthorized|forbidden/i;
@@ -491,7 +513,8 @@ logout:'<path d="M9 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4M16 17l5-5-5-5M21 12H9"/
 kat:'<rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/>',
 terjual:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
 bandingkan:'<path d="M7 4 3 8l4 4M3 8h13M17 20l4-4-4-4M21 16H8"/>',
-tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1"/>'};
+tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1"/>',
+chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-5.4A8 8 0 1 1 21 12z"/>'};
 const ni=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${NI[k]||''}</svg>`;
 const MENU=[['dash',ni('dash'),'Beranda',ALL],['stok',ni('stok'),'Stok HP',['SUPERADMIN','OWNER','SUB_OWNER','GUDANG']],['servis',ni('servis'),'Servis',['SUPERADMIN','OWNER','SUB_OWNER','TEKNISI']],['qc',ni('qc'),'QC',['SUPERADMIN','OWNER','SUB_OWNER','QC','TEKNISI']],['jual',ni('jual'),'Penjualan',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['lap',ni('lap'),'Laporan',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['keu',ni('keu'),'Keuangan',['SUPERADMIN','OWNER','SUB_OWNER']],['kalk',ni('kalk'),'Kalkulator',['SUPERADMIN','OWNER','GUDANG']],['data',ni('data'),'Data & Akun',['SUPERADMIN','OWNER','SUB_OWNER','GUDANG']],['set',ni('set'),'Pengaturan',['SUPERADMIN']],['spesifikasi',ni('spesifikasi'),'Spesifikasi',['SUPERADMIN','SPESIFIKASI']],['notifikasi',ni('notifikasi'),'Pengumuman',['SUPERADMIN','OWNER']],['profil',ni('profil'),'Profil Saya',ALL]];
 /* Pengelompokan menu (hanya tampilan; hak akses tetap dari daftar peran di atas) */
@@ -515,6 +538,21 @@ $('#drw').onclick=closeMenu;
 
 /* ---------- Halaman ---------- */
 const P={
+intro:()=>`<div class="intro"><header class="in-top">${logo(36)}<b>${esc(shopName())}</b><button class="btn l" style="margin:0" onclick="nav('login')">Masuk</button></header>
+<section class="in-hero"><h1>Temukan HP dengan informasi yang jelas dan transparan</h1><p>${esc(shopName())} adalah toko HP yang menampilkan unit siap jual lengkap dengan spesifikasi, kondisi, dan hasil pemeriksaan (QC). Lihat katalog, bandingkan beberapa HP, lalu tanyakan langsung kepada penjual lewat WhatsApp.</p><div class="in-cta"><button class="btn g" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn l" onclick="nav('daftar')">Buat Akun Pembeli</button></div></section>
+<section class="in-sec"><h2>Yang bisa Anda lakukan</h2><div class="in-grid">
+<div class="in-it"><span class="stat-icon">${ni('kat')}</span><b>Telusuri katalog</b><p>Cari HP berdasarkan merek, model, atau warna. Harga tampil jelas pada setiap unit.</p></div>
+<div class="in-it"><span class="stat-icon">${ni('qc')}</span><b>Cek spesifikasi dan QC</b><p>Lihat detail, kondisi, dan hasil pemeriksaan unit sebelum memutuskan. Perlu akun pembeli.</p></div>
+<div class="in-it"><span class="stat-icon">${ni('bandingkan')}</span><b>Bandingkan HP</b><p>Bandingkan hingga 3 unit berdampingan untuk memilih yang paling cocok.</p></div>
+<div class="in-it"><span class="stat-icon">${ni('chat')}</span><b>Tanya penjual</b><p>Hubungi toko lewat WhatsApp untuk menanyakan ketersediaan dan harga.</p></div>
+</div></section>
+<section class="in-sec"><h2>Cara memulai</h2><ol class="in-steps">
+<li><i>1</i><div><b>Lihat katalog</b><p>Jelajahi HP yang tersedia, tanpa perlu masuk.</p></div></li>
+<li><i>2</i><div><b>Buat akun pembeli</b><p>Daftar untuk membuka detail spesifikasi, kondisi, dan hasil QC.</p></div></li>
+<li><i>3</i><div><b>Hubungi penjual</b><p>Tanyakan unit pilihan Anda dan lanjutkan pembelian bersama toko.</p></div></li>
+</ol></section>
+<section class="in-sec"><div class="card in-staff"><div><b>Untuk tim toko</b><p>Masuk untuk mengelola stok HP, servis, QC, penjualan, laporan, dan keuangan sesuai peran Anda.</p></div><button class="btn" style="margin:0" onclick="nav('login')">Masuk ke Akun</button></div></section>
+${pubFoot()}</div>`,
 kalk:()=>kalkView(),
 beranda:()=>{const cat=Array.isArray(S.cat)?S.cat:[],brands=[...new Set(cat.map(x=>String(x.brand||'').trim()).filter(Boolean))].sort(),featured=cat.slice(0,4);return `<div class="hd">${logo(36)}<b>${esc(shopName())}</b><button class="ic" title="Akun saya" onclick="nav('akun')" aria-label="Akun">${ni('profil')}</button></div><div class="pg"><section class="buyer-welcome"><div class="buyer-hero-layout"><div class="buyer-hero-copy"><div class="buyer-eyebrow">NABLO SMARTPHONE</div><h2>Selamat datang, ${esc(((S.u&&S.u.full_name)||'Pembeli').split(' ')[0])}!</h2><p>Temukan HP yang cocok, cek spesifikasi dan hasil QC, lalu tanyakan langsung kepada kami.</p><div class="buyer-actions"><button class="btn primary" onclick="nav('kat')">Jelajahi Katalog →</button><button class="btn ghost" onclick="nav('bandingkan')">Bandingkan HP</button></div></div></div></section><div class="buyer-stats"><div class="buyer-stat"><span class="stat-icon">${ni('spesifikasi')}</span><div><b>${S.cat===undefined||S.cat===null?'…':cat.length}</b><small>Unit tersedia</small></div></div><div class="buyer-stat"><span class="stat-icon">${ni('tag')}</span><div><b>${brands.length}</b><small>Merek tersedia</small></div></div></div><div class="buyer-section"><div><h3>HP Pilihan</h3><p>Beberapa unit dari katalog saat ini</p></div><button class="btn l" onclick="nav('kat')">Lihat semua →</button></div>${featured.length?`<div class="buyer-grid">${featured.map(x=>`<article class="card buyer-product"><div class="buyer-photo">${x.photo_url?`<img src="${esc(x.photo_url)}" alt="${esc((x.brand||'')+' '+(x.model||''))}" onerror="this.style.display='none'">`:'📱'}${x.reserved?'<span class="ready-pill" style="background:#FEF3C7;color:#B45309">● DIPESAN</span>':'<span class="ready-pill">● SIAP JUAL</span>'}</div><div class="buyer-info"><div class="buyer-brand">${esc(x.brand||'Smartphone')}</div><h4>${esc(x.model||'Model HP')}</h4><div class="buyer-memory">${esc(x.ram||'-')} RAM · ${esc(x.rom||'-')} Memori</div><div class="buyer-price">${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</div><div class="buyer-buttons"><button class="btn g" onclick="katDetail('${esc(x.id)}')">Lihat Detail</button></div></div></article>`).join('')}</div>`:'<div class="buyer-empty"><b>Memuat katalog HP…</b>Produk pilihan akan muncul setelah data katalog tersedia.</div>'}${pubFoot()}</div>`},
 kat:()=>{const brands=[...new Set((S.cat||[]).map(x=>String(x.brand||'').trim()).filter(Boolean))].sort();return `<div class="hd">${logo(36)}<b>${esc(shopName())}</b>${S.u?`<button class="ic" title="Akun saya" onclick="nav('akun')" aria-label="Akun">${ni('profil')}</button>`:`<button class="btn" style="background:#fff;color:#142B45;border-color:#fff;margin:0" onclick="nav('login')">Masuk</button>`}</div><div class="pg">
@@ -539,7 +577,7 @@ login:()=>`<div class="lg"><div class="lgl">${logo(90)}</div>
 <div class="inp"><svg viewBox="0 0 24 24"><path d="M6 10V8a6 6 0 0 1 12 0v2h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1zm2.2 0h7.6V8a3.8 3.8 0 0 0-7.6 0z"/></svg><input id="lp" type="password" placeholder="Kata Sandi" autocomplete="current-password" onkeydown="event.key=='Enter'&&doLogin()"><button class="eye" type="button" onclick="eye()" aria-label="Lihat sandi"><svg viewBox="0 0 24 24"><path d="M12 5C6.5 5 2.5 9 1 12c1.5 3 5.5 7 11 7s9.5-4 11-7c-1.5-3-5.5-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg></button></div>
 <div class="opt"><label class="rm"><input type="checkbox" id="lr" checked><span class="cb"></span>Ingat username</label><a onclick="nav('lupa',{fp:{step:1,id:($('#lu')||{value:''}).value.trim()}})">Lupa password?</a></div>
 <button class="mbtn" onclick="doLogin()"><svg viewBox="0 0 24 24"><path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5M3 12h12M11 8l4 4-4 4"/></svg>MASUK</button>
-<div class="opt" style="margin:14px 0 0;justify-content:center;gap:22px"><a onclick="nav('kat')">Lihat Katalog</a><a onclick="nav('daftar')">Buat Akun</a></div><div class="foot"><span>${esc(shopName())}</span><small>Manajemen Stok &amp; Penjualan</small></div></div>
+<div class="opt" style="margin:14px 0 0;justify-content:center;gap:22px"><a onclick="nav('intro')">Halaman Awal</a><a onclick="nav('kat')">Lihat Katalog</a><a onclick="nav('daftar')">Buat Akun</a></div><div class="foot"><span>${esc(shopName())}</span><small>Manajemen Stok &amp; Penjualan</small></div></div>
 </div>`,
 
 dash:()=>{const d=S.d,role=ROLE(),ok=okSales(),cnt=s=>d.units.filter(u=>u.current_status==s).length,
@@ -756,7 +794,7 @@ const saveProfile=()=>{const o={full_name:$('#pf_n').value.trim(),phone:$('#pf_h
 const pickProfilePhoto=el=>{const f=el.files&&el.files[0];el.value='';if(!f)return;if(!/^image\//i.test(f.type))return toast('Pilih file gambar');run(async()=>{const d=await readImg(f,384,'image/jpeg');S.u=await api('uploadProfilePhoto',S.t,d);toast('Foto profil diperbarui')},()=>render())};
 const delProfilePhoto=()=>{if(!S.u||!S.u.photo_url)return;run(async()=>{S.u=await api('deleteProfilePhoto',S.t);toast('Foto profil dihapus')},()=>render())};
 const doChangePw=()=>{const o=$('#pw_o').value,n=$('#pw_n').value,c=$('#pw_k').value;run(async()=>{if(!o)throw new Error('Isi password saat ini');PW_OK(n,c);const x=await api('changePassword',S.t,o,n);setTok(x.t);S.u=x.u;toast('Password diubah. Perangkat lain perlu masuk ulang.')},()=>render())};
-const doLogout=()=>{const t=S.t;S.u=S.t=S.d=null;try{localStorage.removeItem('sk_token');localStorage.removeItem('sk_token_exp')}catch(e){}closeMenu();if(t)api('logout',t).catch(()=>{});nav('login')};
+const doLogout=()=>{const t=S.t;S.u=S.t=S.d=null;try{localStorage.removeItem('sk_token');localStorage.removeItem('sk_token_exp')}catch(e){}closeMenu();if(t)api('logout',t).catch(()=>{});nav('intro')};
 const saveUnit=()=>{const o={unit_id:(S.edit||{}).unit_id||''};['brand','model','ram','rom','color','condition','imei1','imei2','supplier_id','purchase_price','selling_price','purchase_date','notes'].forEach(k=>o[k]=$('#f_'+k).value.trim());
  ['imei1','imei2'].forEach(k=>{o[k]=o[k].replace(/\D/g,'')});
  let bad=false;['imei1','imei2'].forEach(k=>{const x=!!o[k]&&!/^\d{15}$/.test(o[k]);$('#f_'+k).classList.toggle('err',x);bad=bad||x});
@@ -980,10 +1018,10 @@ async function sendNotifUI(){const title=($('#nt_title')||{}).value||'',message=
   toast(r.emailError?'Pengumuman tersimpan, tetapi '+r.emailError:r.emailSent?'Pengumuman disimpan dan email dikirim ke '+r.emailCount+' penerima'+(r.emailFailed?' ('+r.emailFailed+' gagal)':''):'Pengumuman berhasil disimpan')},
   ()=>{if($('#nt_title'))$('#nt_title').value='';if($('#nt_message'))$('#nt_message').value='';pollNotifs(true)})}
 function render(){
- if(!S.u&&!['login','kat','daftar','lupa','boot'].includes(S.p))S.p='login';
+ if(!S.u&&!['intro','login','kat','daftar','lupa','boot'].includes(S.p))S.p='intro';
  if(S.u&&ROLE()==='PEMBELI'&&!['beranda','kat','akun','terjual','bandingkan','profil','notifikasi'].includes(S.p))S.p='beranda';
  if(S.u&&!P[S.p])S.p='dash';
- const lg=S.p==='login', publicPage=['kat','daftar','lupa','boot'].includes(S.p), role=ROLE();
+ const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot'].includes(S.p), role=ROLE();
  if(S.u&&!['inv','qris','form','beranda','kat','terjual','bandingkan','akun','profil'].includes(S.p)){
   if(role==='PEMBELI'&&['terjual','bandingkan','akun'].includes(S.p)){}else{const m=MENU.find(x=>x[0]===S.p);if(m&&!m[3].includes(role))S.p='dash'
   }
@@ -991,7 +1029,7 @@ function render(){
  const prim=(lg||publicPage||role==='PEMBELI')?[]:(PRIMARY[role]||['dash']).map(k=>MENU.find(x=>x[0]===k)).filter(Boolean),
  inPrim=prim.some(x=>x[0]===S.p),
  n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='beranda'?'on':''}" onclick="nav('beranda')"><i>${ni('dash')}</i>Beranda</button><button class="${S.p==='kat'?'on':''}" onclick="nav('kat')"><i>${ni('kat')}</i>Katalog</button><button class="${S.p==='terjual'?'on':''}" onclick="nav('terjual')"><i>${ni('terjual')}</i>Terjual</button><button class="${S.p==='bandingkan'?'on':''}" onclick="nav('bandingkan')"><i>${ni('bandingkan')}</i>Bandingkan</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${S.p==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
- $('#app').className=lg?'noav':'';$('#app').innerHTML=P[S.p]()+n;ntfSync();
+ $('#app').className=(lg||S.p==='intro')?'noav':'';$('#app').innerHTML=P[S.p]()+n;ntfSync();
  if(role==='SUB_OWNER'&&S.p!=='profil'){
    // Mode pemeriksaan: tombol navigasi/lihat tetap aktif, seluruh tombol aksi perubahan dinonaktifkan.
    $('#app').querySelectorAll('button').forEach(b=>{const h=b.getAttribute('onclick')||'';if(!/nav\s*\(|openMenu\s*\(|doLogout\s*\(|viewPhoto\s*\(|toggleNotif\s*\(|ntf[A-Z]\w*\s*\(|pollNotifs\s*\(/.test(h)){b.disabled=true;b.title='SUB OWNER hanya dapat melihat data';b.style.opacity='.48';b.style.cursor='not-allowed';}});
@@ -1050,7 +1088,7 @@ async function syncConnectedDevices(){
 setInterval(()=>{if(!document.hidden)syncConnectedDevices()},30000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncConnectedDevices()});
 /* Informasi toko yang memang boleh dilihat publik. */
-api('getPublicInfo').then(x=>{S.pub=x||{};if(['login','kat','daftar','lupa'].includes(S.p))render()}).catch(()=>{});
+api('getPublicInfo').then(x=>{S.pub=x||{};if(['intro','login','kat','daftar','lupa'].includes(S.p))render()}).catch(()=>{});
 if(new URLSearchParams(window.location.search).get('v')==='katalog'&&!S.u)nav('kat')
 </script>
 <script id="responsive-js">
@@ -1153,7 +1191,7 @@ if(new URLSearchParams(window.location.search).get('v')==='katalog'&&!S.u)nav('k
   if(typeof S==='undefined'||document.getElementById('nbApk'))return;
   if(inApp()){var o=document.getElementById('nbApk');if(o)o.remove();return}
   var host=null,where='beforeend';
-  if(S.p==='login'){host=document.querySelector('#app .lg');}
+  if(S.p==='login'){host=document.querySelector('#app .lg');}else if(S.p==='intro'){host=document.querySelector('#app .in-hero');}
   else if(['beranda','kat'].includes(S.p)){var bn=document.getElementById('nbBn');if(bn){host=bn;where='afterend'}}
   if(host&&apkUrl())host.insertAdjacentHTML(where,apkHTML());
  }
