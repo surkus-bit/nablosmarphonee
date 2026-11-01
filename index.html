@@ -1366,4 +1366,48 @@ if(new URLSearchParams(window.location.search).get('v')==='katalog'&&!S.u)nav('k
  };
 })();
 </script>
+<script id="update2-admin">
+/* ===== UPDATE 2 (tahap 2): menu Pesanan Masuk & Pelanggan untuk petugas/Superadmin ===== */
+(function(){
+ MENU.push(['ordadm',ni('jual'),'Pesanan Masuk',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['pelanggan',ni('data'),'Pelanggan',['SUPERADMIN','SUB_OWNER']]);
+ MENUGRP.find(x=>x.id==='jual').k.push('ordadm');MENUGRP.find(x=>x.id==='data').k.push('pelanggan');
+ const sk=s=>s.sale_status==='MENUNGGU_PEMBAYARAN'?'MENUNGGU':s.sale_status==='SELESAI'?'SELESAI':s.sale_status==='BATAL'?'BATAL':s.sale_status==='REFUND'?'REFUND':'LAIN';
+ const SKL={MENUNGGU:['Menunggu bayar','b-or'],SELESAI:['Selesai','b-gr'],BATAL:['Dibatalkan','b-red'],REFUND:['Refund','b-gray'],LAIN:['-','b-gray']};
+ const ordRows=()=>{
+  const f=S.of||'MENUNGGU',src=S.osrc||'SEMUA',q=String(S.oq||'').toLowerCase().trim();
+  let l=[...(S.d.sales||[])].reverse().filter(s=>{
+   const o=onlInfo(s.sale_id);
+   if(f!=='SEMUA'&&sk(s)!==f)return false;
+   if(src==='ONLINE'&&!o)return false;if(src==='KASIR'&&o)return false;
+   if(!q)return true;const u=U(s.unit_id);
+   return `${s.invoice_number} ${u.brand||''} ${u.model||''} ${o?o.name+' '+o.phone:''}`.toLowerCase().includes(q)});
+  return l};
+ window.ordadmList=()=>{const e=$('#ol');if(e)e.innerHTML=ordHTML()};
+ const ordHTML=()=>{const l=ordRows(),lim=S.olim||60;
+  if(!l.length)return '<div class="empty">Tidak ada pesanan pada filter ini</div>';
+  return l.slice(0,lim).map(s=>{const u=U(s.unit_id),st=SKL[sk(s)];
+   return `<div class="sw" style="cursor:pointer" onclick="nav('inv',{inv:'${esc(s.sale_id)}'})"><span><b>${esc(s.invoice_number)}</b><br><small>${esc(u.brand||'')} ${esc(u.model||'')} · ${esc(fmtDT(s.sale_date))}</small>${onlTag(s.sale_id)}</span><div style="text-align:right"><b>${rp(s.final_total)}</b><br><span class="bd ${st[1]}" style="float:none;display:inline-block;margin-top:3px">${st[0]}</span></div></div>`}).join('')+(l.length>lim?`<button class="btn l w" onclick="S.olim=${lim+60};render()">Tampilkan lebih banyak (${l.length-lim})</button>`:'')};
+ P.ordadm=()=>{
+  const all=S.d.sales||[],cnt={MENUNGGU:0,SELESAI:0,BATAL:0,REFUND:0,SEMUA:all.length};all.forEach(s=>{const k=sk(s);if(cnt[k]!==undefined)cnt[k]++});
+  const f=S.of||'MENUNGGU',L={MENUNGGU:'Menunggu',SELESAI:'Selesai',BATAL:'Dibatalkan',REFUND:'Refund',SEMUA:'Semua'},on=all.filter(s=>sk(s)==='MENUNGGU'&&onlInfo(s.sale_id)).length;
+  return hd('Pesanan Masuk','dash')+`<div class="pg">${on?`<div class="card" style="border:1px solid #D97706"><b>🛒 ${on} pesanan online menunggu diproses</b><br><small>Buka pesanan lalu konfirmasi pembayaran atau batalkan.</small></div>`:''}
+  <div class="stk-f"><div class="stk-s"><input aria-label="Cari pesanan" placeholder="🔍 Cari invoice / HP / nama pembeli" value="${esc(S.oq||'')}" oninput="S.oq=this.value;S.olim=60;ordadmList()"></div>
+  <div class="stk-c">${Object.keys(L).map(k=>`<span class="chip ${f===k?'on':''}" onclick="S.of='${k}';S.olim=60;render()">${L[k]}<em>${cnt[k]}</em></span>`).join('')}</div>
+  <div class="buyer-sort"><span>Sumber:</span><select aria-label="Sumber pesanan" onchange="S.osrc=this.value;S.olim=60;render()">${[['SEMUA','Semua'],['ONLINE','Pesanan online'],['KASIR','Kasir / toko']].map(x=>`<option value="${x[0]}" ${(S.osrc||'SEMUA')===x[0]?'selected':''}>${x[1]}</option>`).join('')}</select></div></div>
+  <div class="card" id="ol">${ordHTML()}</div></div>`};
+
+ const buyers=()=>(S.d.users||[]).filter(u=>String(u.role_id||'').replace(/^ROLE_/i,'').toUpperCase()==='PEMBELI');
+ const statOf=id=>{const l=(S.d.sales||[]).filter(s=>String(s.cashier_id)===String(id));return{n:l.length,ok:l.filter(s=>s.sale_status==='SELESAI'&&s.payment_status==='LUNAS').reduce((a,s)=>a+(+s.final_total||0),0)}};
+ const custHTML=()=>{const q=String(S.pq||'').toLowerCase().trim(),l=buyers().filter(u=>!q||`${u.full_name} ${u.username} ${u.phone} ${u.email}`.toLowerCase().includes(q));
+  if(!l.length)return '<div class="empty">Belum ada pelanggan yang cocok</div>';
+  const can=ROLE()==='SUPERADMIN';
+  return l.map(u=>{const st=statOf(u.user_id),off=String(u.is_active).toUpperCase()==='FALSE';
+   return `<div class="sw"><span><b>${esc(u.full_name||u.username)}</b> <small>${off?'· Nonaktif':'· Aktif'}</small><br><small>@${esc(u.username)}${u.phone?' · '+esc(u.phone):''}${u.email?' · '+esc(u.email):''}</small><br><small>${st.n} pesanan · belanja lunas ${rp(st.ok)}</small></span>${can?`<div><button class="btn" onclick="userM('${esc(u.user_id)}')">Ubah</button><button class="btn ${off?'g':'r'}" onclick="custToggle('${esc(u.user_id)}')">${off?'Aktifkan':'Nonaktifkan'}</button></div>`:''}</div>`}).join('')};
+ window.custList=()=>{const e=$('#pl');if(e)e.innerHTML=custHTML()};
+ window.custToggle=id=>{const u=buyers().find(x=>String(x.user_id)===String(id));if(!u)return;const off=String(u.is_active).toUpperCase()==='FALSE';
+  if(!confirm((off?'Aktifkan':'Nonaktifkan')+' akun '+(u.full_name||u.username)+'?'+(off?'':' Pelanggan tidak akan bisa masuk.')))return;
+  run(async()=>{await act('saveUser',{user_id:u.user_id,username:u.username,full_name:u.full_name,role_id:u.role_id,phone:u.phone||'',email:u.email||'',is_active:off})},()=>{toast(off?'Akun diaktifkan':'Akun dinonaktifkan');render()})};
+ P.pelanggan=()=>hd('Pelanggan','dash')+`<div class="pg"><div class="buyer-section"><div><h3>Daftar Pelanggan</h3><p>Akun pembeli yang terdaftar</p></div><span class="buyer-count">${buyers().length} akun</span></div><div class="stk-s"><input aria-label="Cari pelanggan" placeholder="🔍 Cari nama / username / WhatsApp" value="${esc(S.pq||'')}" oninput="S.pq=this.value;custList()"></div><div class="card" id="pl" style="margin-top:10px">${custHTML()}</div></div>`;
+})();
+</script>
 </body></html>
