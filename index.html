@@ -5,10 +5,10 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="SURKUS">
+<meta name="apple-mobile-web-app-title" content="NABLO">
 <meta name="format-detection" content="telephone=no">
 <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('sk_theme')||'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
-<title>SURKUS SMARTPHONE</title>
+<title>NABLO SMARTPHONE</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 :root{--n:#0a4fd6;--n2:#0b63f0;--dk:#031a4d;--g:#2aa1ff;--gold:#d4a017;--bg:#eef3fc;--t:#0f1f3d;--mut:#6a7a99;--ok:#1fa65f;--warn:#f08a1c;--bad:#e03a3a;--card:#fff;--sh:0 6px 22px #0a2a7a14}
@@ -158,7 +158,7 @@ nav{bottom:0;width:100%;max-width:430px;border-radius:24px 24px 0 0;padding:8px 
 @media(max-width:600px){#mod{align-items:flex-end;padding:0}#mod>div{max-width:none;border-radius:26px 26px 0 0;max-height:92dvh;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px));animation:up .3s cubic-bezier(.2,.8,.2,1)}}
 @keyframes up{from{transform:translateY(100%)}to{transform:none}}
 
-/* === SURKUS SMARTPHONE · penyegaran visual profesional === */
+/* === NABLO SMARTPHONE · penyegaran visual profesional === */
 :root{--n:#155e75;--n2:#0e7490;--dk:#102a43;--g:#14b8a6;--gold:#c99a2e;--bg:#f3f6f8;--t:#172b3a;--mut:#718096;--ok:#16845b;--warn:#b96b12;--bad:#c43d4b;--card:#fff;--sh:0 3px 14px rgba(16,42,67,.055)}
 html{background:#e8eef2}
 body{background:#e8eef2;color:var(--t)}
@@ -360,7 +360,7 @@ const costOf=id=>{const c=costParts(id);return c.beli+c.part+c.jasa+c.lain};
 const hppOfSale=s=>{const h=s.hpp_snapshot;return(h!==undefined&&h!==null&&h!=='')?(+h||0):costOf(s.unit_id)};
 const profit=s=>(+s.final_total||0)-hppOfSale(s);
 const inf=()=>((S.d&&S.d.settings)||S.pub||{});
-const shopName=()=>inf().store_name||'SURKUS SMARTPHONE';
+const shopName=()=>inf().store_name||'NABLO SMARTPHONE';
 /* Logo bawaan. Untuk memakai logo Anda: ganti isi ICON dengan data base64 logo lama, atau isi URL Logo di Pengaturan. */
 const ICON='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2aa1ff"/><stop offset="1" stop-color="#0a3fb8"/></linearGradient></defs><rect width="100" height="100" rx="24" fill="url(#g)"/><rect x="32" y="16" width="36" height="68" rx="8" fill="none" stroke="#fff" stroke-width="5"/><circle cx="50" cy="74" r="3.5" fill="#fff"/><path d="M42 36h16M42 46h16M42 56h10" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>'),LOGO=ICON;
 const logo=(sz=90)=>`<img src="${esc((S.d&&S.d.settings&&S.d.settings.store_logo_url)||(S.pub&&S.pub.store_logo_url)||ICON)}" onerror="this.onerror=null;this.src=ICON" style="width:${sz}px;height:${sz}px;border-radius:${sz*.26}px;object-fit:cover;flex:none;box-shadow:0 2px 8px #0a4fd655">`;
@@ -398,14 +398,14 @@ $('#drw').onclick=closeMenu;
 /* ---------- Halaman ---------- */
 const P={
 kalk:()=>kalkView(),
-beranda:()=>{const cat=Array.isArray(S.cat)?S.cat:[],brands=[...new Set(cat.map(x=>String(x.brand||'').trim()).filter(Boolean))].sort(),featured=cat.slice(0,4);return `<div class="hd">${logo(36)}<b>${esc(shopName())}</b><button class="ic" title="Akun saya" onclick="nav('akun')">♙</button></div><div class="pg"><div class="buyer-topline"><span class="dot"></span><span>Katalog unit siap jual · Informasi produk mengikuti data toko</span></div><section class="buyer-welcome"><div class="buyer-hero-layout"><div class="buyer-hero-copy"><div class="buyer-eyebrow">SURKUS SMARTPHONE</div><h2>Selamat datang, ${esc(((S.u&&S.u.full_name)||'Pembeli').split(' ')[0])}!</h2><p>Temukan HP yang cocok, cek spesifikasi dan hasil QC, lalu tanyakan langsung kepada kami.</p><div class="buyer-actions"><button class="btn primary" onclick="nav('kat')">Jelajahi Katalog →</button><button class="btn ghost" onclick="nav('bandingkan')">Bandingkan HP</button></div></div><div class="buyer-device-art" aria-hidden="true"><div class="buyer-device-back"></div><div class="buyer-device"></div></div></div></section><div class="buyer-stats"><div class="buyer-stat"><span class="stat-icon">📱</span><div><b>${S.cat===undefined||S.cat===null?'…':cat.length}</b><small>Unit tersedia</small></div></div><div class="buyer-stat"><span class="stat-icon">🏷️</span><div><b>${brands.length}</b><small>Merek tersedia</small></div></div></div><div class="buyer-trust"><div class="trust"><i>♧</i><b>Informasi QC</b><small>Periksa hasil pengecekan</small></div><div class="trust"><i>▤</i><b>Spesifikasi</b><small>Kenali unit lebih dulu</small></div><div class="trust"><i>☏</i><b>Tanya Penjual</b><small>Hubungi lewat WhatsApp</small></div></div><div class="buyer-section"><div><h3>Jelajahi</h3><p>Pilih fitur yang ingin kamu buka</p></div></div><div class="buyer-shortcuts"><button class="buyer-shortcut" onclick="nav('kat')"><span>▣</span><b>Katalog HP</b><small>Lihat semua unit tersedia</small></button><button class="buyer-shortcut" onclick="nav('terjual')"><span>◷</span><b>HP Terjual</b><small>Lihat riwayat penjualan</small></button><button class="buyer-shortcut" onclick="nav('bandingkan')"><span>⇄</span><b>Bandingkan</b><small>Bandingkan hingga 3 HP</small></button></div><div class="buyer-section"><div><h3>HP Pilihan</h3><p>Beberapa unit dari katalog saat ini</p></div><button class="btn l" onclick="nav('kat')">Lihat semua →</button></div>${featured.length?`<div class="buyer-grid">${featured.map(x=>`<article class="card buyer-product"><div class="buyer-photo">${x.photo_url?`<img src="${esc(x.photo_url)}" alt="${esc((x.brand||'')+' '+(x.model||''))}" onerror="this.style.display='none'">`:'📱'}${x.reserved?'<span class="ready-pill" style="background:#f08a1c">● DIPESAN</span>':'<span class="ready-pill">● SIAP JUAL</span>'}</div><div class="buyer-info"><div class="buyer-brand">${esc(x.brand||'Smartphone')}</div><h4>${esc(x.model||'Model HP')}</h4><div class="buyer-memory">${esc(x.ram||'-')} RAM · ${esc(x.rom||'-')} Memori</div><div class="buyer-price">${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</div><div class="buyer-buttons"><button class="btn g" onclick="katDetail('${esc(x.id)}')">Lihat Detail</button></div></div></article>`).join('')}</div>`:'<div class="buyer-empty"><b>Memuat katalog HP…</b>Produk pilihan akan muncul setelah data katalog tersedia.</div>'}<div style="text-align:center;color:#718096;font-size:10px;padding:14px 0 6px">SURKUS SMARTPHONE · Pilih HP dengan informasi yang jelas.</div></div>`},
+beranda:()=>{const cat=Array.isArray(S.cat)?S.cat:[],brands=[...new Set(cat.map(x=>String(x.brand||'').trim()).filter(Boolean))].sort(),featured=cat.slice(0,4);return `<div class="hd">${logo(36)}<b>${esc(shopName())}</b><button class="ic" title="Akun saya" onclick="nav('akun')">♙</button></div><div class="pg"><div class="buyer-topline"><span class="dot"></span><span>Katalog unit siap jual · Informasi produk mengikuti data toko</span></div><section class="buyer-welcome"><div class="buyer-hero-layout"><div class="buyer-hero-copy"><div class="buyer-eyebrow">NABLO SMARTPHONE</div><h2>Selamat datang, ${esc(((S.u&&S.u.full_name)||'Pembeli').split(' ')[0])}!</h2><p>Temukan HP yang cocok, cek spesifikasi dan hasil QC, lalu tanyakan langsung kepada kami.</p><div class="buyer-actions"><button class="btn primary" onclick="nav('kat')">Jelajahi Katalog →</button><button class="btn ghost" onclick="nav('bandingkan')">Bandingkan HP</button></div></div><div class="buyer-device-art" aria-hidden="true"><div class="buyer-device-back"></div><div class="buyer-device"></div></div></div></section><div class="buyer-stats"><div class="buyer-stat"><span class="stat-icon">📱</span><div><b>${S.cat===undefined||S.cat===null?'…':cat.length}</b><small>Unit tersedia</small></div></div><div class="buyer-stat"><span class="stat-icon">🏷️</span><div><b>${brands.length}</b><small>Merek tersedia</small></div></div></div><div class="buyer-trust"><div class="trust"><i>♧</i><b>Informasi QC</b><small>Periksa hasil pengecekan</small></div><div class="trust"><i>▤</i><b>Spesifikasi</b><small>Kenali unit lebih dulu</small></div><div class="trust"><i>☏</i><b>Tanya Penjual</b><small>Hubungi lewat WhatsApp</small></div></div><div class="buyer-section"><div><h3>Jelajahi</h3><p>Pilih fitur yang ingin kamu buka</p></div></div><div class="buyer-shortcuts"><button class="buyer-shortcut" onclick="nav('kat')"><span>▣</span><b>Katalog HP</b><small>Lihat semua unit tersedia</small></button><button class="buyer-shortcut" onclick="nav('terjual')"><span>◷</span><b>HP Terjual</b><small>Lihat riwayat penjualan</small></button><button class="buyer-shortcut" onclick="nav('bandingkan')"><span>⇄</span><b>Bandingkan</b><small>Bandingkan hingga 3 HP</small></button></div><div class="buyer-section"><div><h3>HP Pilihan</h3><p>Beberapa unit dari katalog saat ini</p></div><button class="btn l" onclick="nav('kat')">Lihat semua →</button></div>${featured.length?`<div class="buyer-grid">${featured.map(x=>`<article class="card buyer-product"><div class="buyer-photo">${x.photo_url?`<img src="${esc(x.photo_url)}" alt="${esc((x.brand||'')+' '+(x.model||''))}" onerror="this.style.display='none'">`:'📱'}${x.reserved?'<span class="ready-pill" style="background:#f08a1c">● DIPESAN</span>':'<span class="ready-pill">● SIAP JUAL</span>'}</div><div class="buyer-info"><div class="buyer-brand">${esc(x.brand||'Smartphone')}</div><h4>${esc(x.model||'Model HP')}</h4><div class="buyer-memory">${esc(x.ram||'-')} RAM · ${esc(x.rom||'-')} Memori</div><div class="buyer-price">${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</div><div class="buyer-buttons"><button class="btn g" onclick="katDetail('${esc(x.id)}')">Lihat Detail</button></div></div></article>`).join('')}</div>`:'<div class="buyer-empty"><b>Memuat katalog HP…</b>Produk pilihan akan muncul setelah data katalog tersedia.</div>'}<div style="text-align:center;color:#718096;font-size:10px;padding:14px 0 6px">NABLO SMARTPHONE · Pilih HP dengan informasi yang jelas.</div></div>`},
 kat:()=>{const brands=[...new Set((S.cat||[]).map(x=>String(x.brand||'').trim()).filter(Boolean))].sort();return `<div class="hd">${logo(36)}<b>${esc(shopName())}</b>${S.u?`<button class="ic" title="Akun saya" onclick="nav('akun')">👤</button>`:`<button class="ic" title="Masuk" onclick="nav('login')">↗</button>`}</div><div class="pg">
  <div class="buyer-topline"><span class="dot"></span><span>Katalog unit siap jual · Gunakan pencarian dan filter untuk menemukan HP</span></div>
  <div id="buyerCatalog" class="buyer-section"><div><h3>Pilih HP Favoritmu</h3><p>Temukan unit yang tersedia saat ini</p></div><span class="buyer-count">${S.cat===undefined?'Memuat…':(S.cat||[]).length+' unit'}</span></div>
  <div class="buyer-search"><span>⌕</span><input aria-label="Cari HP" placeholder="Cari merek, model, atau warna..." value="${esc(S.kq||'')}" oninput="S.kq=this.value;const e=$('#kl');if(e)e.innerHTML=katCards()"></div>
  <div class="buyer-filters"><button class="buyer-chip ${!S.kbrand||S.kbrand==='SEMUA'?'active':''}" onclick="S.kbrand='SEMUA';const e=$('#kl');if(e)e.innerHTML=katCards();render()">Semua HP</button>${brands.map(b=>`<button class="buyer-chip ${S.kbrand===b?'active':''}" onclick="S.kbrand='${esc(b).replace(/'/g,"\\'")}';const e=$('#kl');if(e)e.innerHTML=katCards();render()">${esc(b)}</button>`).join('')}</div>
  <div class="buyer-sort"><span>Urutkan:</span><select aria-label="Urutkan produk" onchange="S.ksort=this.value;const e=$('#kl');if(e)e.innerHTML=katCards()"><option value="rekomendasi" ${S.ksort==='rekomendasi'?'selected':''}>Rekomendasi</option><option value="harga-naik" ${S.ksort==='harga-naik'?'selected':''}>Harga terendah</option><option value="harga-turun" ${S.ksort==='harga-turun'?'selected':''}>Harga tertinggi</option><option value="nama" ${S.ksort==='nama'?'selected':''}>Nama A–Z</option></select></div>
- <div id="kl">${katCards()}</div><div style="text-align:center;color:#718096;font-size:10px;padding:14px 0 6px">SURKUS SMARTPHONE · Informasi produk mengikuti data yang tersedia di katalog.</div></div>`},
+ <div id="kl">${katCards()}</div><div style="text-align:center;color:#718096;font-size:10px;padding:14px 0 6px">NABLO SMARTPHONE · Informasi produk mengikuti data yang tersedia di katalog.</div></div>`},
 daftar:()=>{const R=k=>esc((S.reg||{})[k]||'');return `<div class="hd"><button class="bk" onclick="nav('kat')">←</button><b>Buat Akun</b></div><div class="pg"><div class="card"><label>Nama lengkap</label><input id="rn" value="${R('full_name')}" autocomplete="name"><label>Username</label><input id="ru" value="${R('username')}" autocapitalize="off" autocomplete="username"><label>No. WhatsApp</label><input id="rh" type="tel" value="${R('phone')}"><label>Email (untuk reset password)</label><input id="re" type="email" value="${R('email')}" autocomplete="email" autocapitalize="off"><label>Password (minimal 8 karakter)</label><input id="rw" type="password" autocomplete="new-password"><button class="btn g w" onclick="doDaftar()">DAFTAR</button><button class="btn l w" onclick="nav('login')">Sudah punya akun? Masuk</button></div></div>`},
 terjual:()=>{const sales=Array.isArray(S.sold)?S.sold:[];return `<div class="hd"><b>HP Terjual</b><button class="ic" title="Akun saya" onclick="nav('akun')">♙</button></div><div class="pg"><div class="buyer-section"><div><h3>HP yang sudah terjual</h3><p>Transaksi selesai dan pembayaran lunas</p></div><span class="buyer-count">${S.sold===undefined?'Memuat…':sales.length+' unit'}</span></div>${sales.length?`<div class="buyer-grid">${sales.map(s=>`<article class="card buyer-product"><div class="buyer-photo">${s.photo_url?`<img src="${esc(s.photo_url)}" alt="${esc((s.brand||'')+' '+(s.model||''))}" onerror="this.style.display='none'">`:'📱'}<span class="ready-pill" style="background:#e5e7eb;color:#374151">TERJUAL</span></div><div class="buyer-info"><div class="buyer-brand">${esc(s.brand||'Smartphone')}</div><h4>${esc(s.model||'Unit HP')}</h4><div class="buyer-memory">${esc(s.ram||'-')} RAM · ${esc(s.rom||'-')} Memori</div><div class="buyer-memory">Terjual: ${esc(s.sale_date?fmtDT(s.sale_date):'-')}</div></div></article>`).join('')}</div>`:(S.sold===undefined?'<div class="buyer-empty"><b>Memuat riwayat penjualan…</b>Mohon tunggu sebentar.</div>':'<div class="buyer-empty"><b>Belum ada riwayat penjualan</b>Produk yang transaksinya selesai dan lunas akan tampil di sini.</div>')}</div>`},
 bandingkan:()=>{const cat=S.cat||[],ids=S.compareIds||[],selected=ids.map(id=>S.compareDetails[String(id)]||cat.find(x=>String(x.id)===String(id))).filter(Boolean);const fields=[['Harga',x=>Number(x.price)>0?rp(x.price):'Hubungi toko'],['RAM',x=>x.ram||'-'],['Memori internal',x=>x.rom||'-'],['Warna',x=>x.color||'-'],['Jaringan',x=>(x.specification||{}).network||'-'],['Ukuran layar',x=>(x.specification||{}).screen_size?String(x.specification.screen_size)+' inci':'-'],['Resolusi layar',x=>(x.specification||{}).screen_resolution||'-'],['Jenis panel',x=>(x.specification||{}).screen_type||'-'],['Chipset',x=>(x.specification||{}).chipset||'-'],['CPU / GPU',x=>(x.specification||{}).cpu_gpu||'-'],['Sistem operasi',x=>(x.specification||{}).os_version||'-'],['Kamera belakang',x=>(x.specification||{}).rear_camera||'-'],['Kamera depan',x=>(x.specification||{}).front_camera||'-'],['Baterai',x=>(x.specification||{}).battery_capacity?String(x.specification.battery_capacity)+' mAh':'-'],['Pengisian daya',x=>(x.specification||{}).charging_watt?String(x.specification.charging_watt)+' W':'-'],['Konektivitas',x=>(x.specification||{}).connectivity||'-'],['Port dan sensor',x=>(x.specification||{}).ports_sensors||'-'],['Kondisi fisik',x=>(x.specification||{}).physical_condition||'-'],['Catatan fungsi',x=>(x.specification||{}).fault_description||'Tidak dicatat'],['Kelengkapan',x=>(x.specification||{}).accessories||'-'],['Garansi toko',x=>(x.specification||{}).warranty_days!==undefined&&String((x.specification||{}).warranty_days)!=='0'?String(x.specification.warranty_days)+' hari':'Tidak ada'],['Status QC',x=>x.qc_status||'Belum ada data QC'],['Fungsi lulus QC',x=>(x.qc||[]).join(', ')||'-'],['Catatan hasil QC',x=>[(x.faults||[]).join(', '),(x.fault_reason||'')].filter(Boolean).join(' — ')||'-']];return `<div class="hd"><b>Bandingkan HP</b><button class="ic" title="Akun saya" onclick="nav('akun')">♙</button></div><div class="pg"><div class="buyer-section"><div><h3>Bandingkan spesifikasi</h3><p>Pilih maksimal 3 HP · data diambil dari detail publik tiap unit</p></div></div><div class="card"><label>Pilih HP</label><select id="comparePick"><option value="">Pilih produk...</option>${cat.map(x=>`<option value="${esc(x.id)}" ${ids.some(id=>String(id)===String(x.id))?'disabled':''}>${esc((x.brand||'')+' '+(x.model||'')+' · '+(x.ram||'-')+'/'+(x.rom||'-'))}</option>`).join('')}</select><button class="btn g w" onclick="addCompare()">Tambahkan untuk dibandingkan</button><small>Spesifikasi yang belum dicatat akan ditampilkan sebagai tanda strip.</small></div>${selected.length?`<div class="card"><div class="buyer-section"><div><h3>Hasil perbandingan</h3></div><button class="btn l" onclick="S.compareIds=[];S.compareDetails={};render()">Hapus pilihan</button></div><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr><th style="text-align:left;padding:9px;min-width:115px">Spesifikasi</th>${selected.map(x=>`<th style="padding:9px;min-width:125px">${esc(x.brand||'')} ${esc(x.model||'')}</th>`).join('')}</tr></thead><tbody>${fields.map(([label,get])=>`<tr><td style="padding:9px;border-top:1px solid var(--line);font-weight:700">${label}</td>${selected.map(x=>`<td style="padding:9px;border-top:1px solid var(--line);text-align:center;overflow-wrap:anywhere">${esc(get(x))}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`:'<div class="buyer-empty"><b>Belum ada HP dipilih</b>Pilih produk di atas untuk membandingkan harga, spesifikasi, kondisi, dan hasil QC.</div>'}</div>`},
@@ -413,7 +413,7 @@ lupa:()=>{const f=S.fp||{step:1,id:''};const s2=f.step===2;return `<div class="h
 notifikasi:()=>`<div class="hd"><b>Notifikasi</b><button class="btn l" onclick="loadNotifications()">Muat ulang</button></div><div class="pg"><div id="notifList"><div class="card">Memuat notifikasi…</div></div>${['SUPERADMIN','OWNER'].includes(ROLE())?`<div class="card"><b>Kirim pengumuman</b><label>Judul</label><input id="nt_title" maxlength="100" placeholder="Contoh: Stok baru tersedia"><label>Pesan</label><textarea id="nt_message" rows="4" maxlength="1500" placeholder="Tulis informasi untuk penerima…"></textarea><label>Penerima</label><select id="nt_audience"><option value="ALL">Semua pengguna</option><option value="PEMBELI">Pembeli</option><option value="STAFF">Semua staf</option><option value="GUDANG">Gudang</option><option value="KASIR">Kasir</option><option value="TEKNISI">Teknisi</option><option value="QC">QC</option><option value="SPESIFIKASI">Petugas spesifikasi</option><option value="OWNER">Owner</option><option value="SUB_OWNER">Sub Owner</option></select><label style="display:flex;align-items:center;gap:8px"><input id="nt_email" type="checkbox" style="width:auto"> Kirim juga melalui email</label><button class="btn g w" onclick="sendNotifUI()">KIRIM PENGUMUMAN</button><small>Email dikirim ke alamat yang terdaftar dan sesuai penerima. Aktifkan izin MailApp terlebih dahulu.</small></div>`:''}</div>`,
 profil:()=>{const u=S.u||{},f=S.pf||{},V=k=>esc(f[k]!==undefined?f[k]:(u[k]||'')),back=ROLE()==='PEMBELI'?'akun':'dash';return `<div class="hd"><button class="bk" onclick="nav('${back}')">←</button><b>Profil Saya</b></div><div class="pg"><div class="card" style="text-align:center"><div class="av" style="width:96px;height:96px;border-radius:30px;margin:0 auto 10px;font-size:30px;color:inherit">${avHTML()}</div><b>${esc(u.full_name||'')}</b><br><small>@${esc(u.username||'')} · ${esc(ROLE())}</small><div class="row" style="justify-content:center;margin-top:10px;gap:8px"><label class="btn g"><input type="file" accept="image/*" hidden onchange="pickProfilePhoto(this)">📷 ${u.photo_url?'Ganti Foto':'Unggah Foto'}</label>${u.photo_url?`<button class="btn l" onclick="delProfilePhoto()">Hapus Foto</button>`:''}</div></div><div class="card"><b>Data diri</b><label>Nama lengkap</label><input id="pf_n" value="${V('full_name')}" autocomplete="name"><label>No. WhatsApp</label><input id="pf_h" type="tel" value="${V('phone')}"><label>Email (untuk reset password)</label><input id="pf_e" type="email" value="${V('email')}" autocapitalize="off" autocomplete="email"><label>Password saat ini (wajib bila mengganti email)</label><input id="pf_c" type="password" autocomplete="current-password"><button class="btn g w" onclick="saveProfile()">SIMPAN PROFIL</button></div><div class="card"><b>Ubah password</b><label>Password saat ini</label><input id="pw_o" type="password" autocomplete="current-password"><label>Password baru (minimal 8 karakter)</label><input id="pw_n" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="pw_k" type="password" autocomplete="new-password"><button class="btn g w" onclick="doChangePw()">UBAH PASSWORD</button><small>Setelah diubah, perangkat lain harus masuk ulang.</small></div><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`},
 boot:()=>`<div class="lg"><div class="lgl">${logo(90)}</div><p class="sub" style="text-align:center">Memuat…</p></div>`,
-akun:()=>`<div class="hd"><button class="bk" onclick="nav('beranda')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN SURKUS SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
+akun:()=>`<div class="hd"><button class="bk" onclick="nav('beranda')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN NABLO SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
 login:()=>`<div class="lg"><div class="lgl">${logo(90)}</div>
 <h1>Selamat Datang!</h1><p class="sub">Masuk ke akun Anda untuk melanjutkan</p><div class="bar2"></div>
 <div class="box">
@@ -1911,6 +1911,246 @@ html[data-theme] #app :is(.card,.tile,.kpi .k,.sm .k,.pt,.qa div,.buyer-product,
  /* tombol kembali / aksi memanggil render() sendiri; ini jaring pengaman untuk perubahan S.p tanpa re-render */
  window.addEventListener('resize',function(){sig=''});
  build();
+})();
+</script>
+
+<style id="nablo-liquid">
+/* ---------- Palet ---------- */
+:root{
+ --nb-1:#0A3D91;--nb-2:#1E6BFF;--nb-3:#5AA9FF;--nb-4:#BFDCFF;--nb-ink:#071a3d;
+ --nb-glass:rgba(255,255,255,.58);--nb-glass2:rgba(255,255,255,.34);
+ --nb-edge:rgba(255,255,255,.75);--nb-shadow:0 18px 44px -22px rgba(10,61,145,.45);
+ --nb-gold:#D9B56A;
+ --bg:#EAF2FF;--t:#071a3d;--text:#071a3d;--mut:#5b6e94;--line:rgba(30,107,255,.14)}
+
+/* ---------- Latar cair (blob biru) ---------- */
+html body{background:
+  radial-gradient(520px 420px at 8% 4%,rgba(90,169,255,.55),transparent 65%),
+  radial-gradient(560px 460px at 96% 12%,rgba(30,107,255,.35),transparent 65%),
+  radial-gradient(640px 520px at 50% 108%,rgba(191,220,255,.9),transparent 65%),
+  linear-gradient(180deg,#F6FAFF 0%,#DCEBFF 100%) fixed!important;color:var(--t)!important}
+html #app,html #app.noav{background:transparent!important;box-shadow:none!important}
+html #app.noav{background:linear-gradient(160deg,#0A3D91,#1E6BFF 60%,#5AA9FF)!important}
+
+/* ---------- Header kaca ---------- */
+html body #app .hd{
+ background:linear-gradient(135deg,rgba(7,26,61,.88),rgba(10,61,145,.82) 60%,rgba(30,107,255,.78))!important;
+ backdrop-filter:blur(22px) saturate(1.6)!important;-webkit-backdrop-filter:blur(22px) saturate(1.6)!important;
+ border:0!important;border-bottom:1px solid rgba(255,255,255,.35)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 14px 34px -18px rgba(10,61,145,.8)!important;border-radius:0 0 26px 26px!important}
+html body #app .hd b{background:none!important;-webkit-text-fill-color:#fff!important;color:#fff!important;
+ font-family:"Playfair Display",Georgia,serif!important;letter-spacing:.6px!important}
+html body #app .bk,html body #app .ic{background:rgba(255,255,255,.16)!important;border:1px solid rgba(255,255,255,.5)!important;color:#fff!important;
+ backdrop-filter:blur(8px)}
+
+/* ---------- Kartu = liquid glass ---------- */
+html body #app :is(.card,.tile,.kpi .k,.sm .k,.pt,.qa div,.buyer-product,.buyer-stat,.buyer-trust .trust,.buyer-shortcut,.buyer-empty,.buyer-how,.fin-note,.dclock){
+ background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(255,255,255,.46))!important;
+ backdrop-filter:blur(18px) saturate(1.5)!important;-webkit-backdrop-filter:blur(18px) saturate(1.5)!important;
+ border:1px solid var(--nb-edge)!important;border-radius:22px!important;
+ box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(30,107,255,.08),var(--nb-shadow)!important;color:var(--t)}
+html body #app :is(.card>b:first-child,.item h4,.ct b,.sec,.pg h3,.buyer-section h3,.pt b,.tile b,.buyer-product h4){color:#071a3d!important}
+html body #app .card>b:first-child{border-bottom:1px solid var(--line)!important}
+html body #app .card>b:first-child:after{background:linear-gradient(90deg,var(--nb-2),var(--nb-3))!important;height:3px!important;border-radius:3px}
+html body #app .pt:after{background:linear-gradient(90deg,var(--nb-2),var(--nb-3))!important}
+html body #app :is(.sm .k.a,.kpi .k.w){background:linear-gradient(135deg,#0A3D91,#1E6BFF 70%,#5AA9FF)!important;border:1px solid rgba(255,255,255,.55)!important}
+html body #app :is(.sm .k.a,.kpi .k.w) :is(b,small,em){color:#fff!important}
+html body #app :is(.hero,.buyer-welcome){
+ background:radial-gradient(circle at 90% 0,rgba(255,255,255,.35),transparent 45%),linear-gradient(140deg,#0A3D91 0%,#1E6BFF 65%,#5AA9FF 130%)!important;
+ border:1px solid rgba(255,255,255,.6)!important;border-radius:28px!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 30px 50px -28px rgba(10,61,145,.85)!important}
+html body #app .hero .big b{-webkit-text-fill-color:#fff!important;color:#fff!important;text-shadow:0 2px 16px rgba(7,26,61,.35)!important}
+html body #app :is(.qa i,.buyer-stat .stat-icon,.buyer-trust i){background:linear-gradient(145deg,#1E6BFF,#5AA9FF)!important;color:#fff!important;border:1px solid rgba(255,255,255,.7)!important;border-radius:50%!important;filter:none!important}
+html body #app .item .ph{background:linear-gradient(135deg,#1E6BFF,#BFDCFF)!important;border:1px solid #fff!important}
+html body #app .buyer-product .buyer-photo{background:linear-gradient(145deg,#EAF2FF,#CFE3FF)!important}
+html body #app :is(.buyer-product .buyer-price,.buyer-product .buyer-brand){color:#0A3D91!important}
+html body #app .buyer-product .ready-pill{background:rgba(255,255,255,.8)!important;color:#0A3D91!important;border:1px solid #fff!important}
+html body #app .buyer-count{background:rgba(30,107,255,.12)!important;color:#0A3D91!important;border:1px solid rgba(30,107,255,.25)!important}
+@media(hover:hover){html body #app :is(.card.item,.pt,.qa div,.buyer-product,.buyer-shortcut):hover{transform:translateY(-3px)!important;border-color:#fff!important;box-shadow:inset 0 1px 0 #fff,0 26px 44px -22px rgba(30,107,255,.6)!important}}
+
+/* ---------- Tombol ---------- */
+html body :is(#app,#mod,#drw) .btn{background:linear-gradient(135deg,#1E6BFF,#0A3D91)!important;color:#fff!important;border:1px solid rgba(255,255,255,.55)!important;
+ border-radius:14px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 12px 22px -14px rgba(10,61,145,.9)!important}
+html body :is(#app,#mod,#drw) .btn.g,html body #app .fab{background:linear-gradient(135deg,#5AA9FF,#1E6BFF 55%,#0A3D91)!important;color:#fff!important}
+html body :is(#app,#mod,#drw) .btn.l{background:rgba(255,255,255,.7)!important;color:#0A3D91!important;border:1px solid rgba(30,107,255,.3)!important;box-shadow:none!important}
+html body :is(#app,#mod,#drw) .btn.r{background:linear-gradient(135deg,#B8283A,#E0485A)!important;color:#fff!important}
+html body #app :is(.chip,.buyer-chip){background:rgba(255,255,255,.7)!important;border:1px solid rgba(30,107,255,.22)!important;color:#0A3D91!important;backdrop-filter:blur(8px)}
+html body #app :is(.chip.on,.buyer-chip.active){background:linear-gradient(135deg,#1E6BFF,#0A3D91)!important;color:#fff!important;border-color:#fff!important}
+html body #app .buyer-actions .btn.primary{background:#fff!important;color:#0A3D91!important}
+html body #app .buyer-actions .btn.ghost{background:rgba(255,255,255,.18)!important;color:#fff!important}
+
+/* ---------- Form ---------- */
+html body :is(#app .pg,#mod) :is(input,select,textarea):not([type=checkbox]):not([type=file]){background:rgba(255,255,255,.75)!important;border:1px solid rgba(30,107,255,.22)!important;border-radius:14px!important;color:#071a3d!important}
+html body :is(#app .pg,#mod) :is(input,select,textarea):focus{border-color:#1E6BFF!important;box-shadow:0 0 0 4px rgba(30,107,255,.18)!important;background:#fff!important}
+html body :is(#app,#mod) label:not(.btn){color:#0A3D91!important}
+html body :is(#app,#mod) th{background:linear-gradient(135deg,#0A3D91,#1E6BFF)!important;color:#fff!important;border:0!important}
+html body :is(#app,#mod) td{border-bottom:1px solid rgba(30,107,255,.1)!important}
+
+/* ---------- Menu bawah, drawer, sidebar, modal ---------- */
+html body #app nav{background:rgba(255,255,255,.62)!important;backdrop-filter:blur(22px) saturate(1.6)!important;-webkit-backdrop-filter:blur(22px) saturate(1.6)!important;
+ border:1px solid rgba(255,255,255,.85)!important;border-radius:28px!important;box-shadow:inset 0 1px 0 #fff,0 22px 44px -18px rgba(10,61,145,.55)!important}
+html body #app nav button{color:#4a6190!important}
+html body #app nav button.on,html body #app nav .on{background:linear-gradient(135deg,#1E6BFF,#0A3D91)!important;color:#fff!important;box-shadow:0 10px 20px -10px rgba(30,107,255,.9)!important}
+html body #app nav button.on i{filter:none!important}
+html body #drw>div,html body #sb{background:linear-gradient(180deg,rgba(10,61,145,.94),rgba(7,26,61,.96))!important;backdrop-filter:blur(22px)!important;border-right:1px solid rgba(255,255,255,.3)!important}
+html body #drw .dg div,html body #sb .sb-it{color:#EAF2FF!important}
+html body #drw .dg div.cur,html body #sb .sb-it.on{background:linear-gradient(135deg,#fff,#BFDCFF)!important;color:#0A3D91!important}
+html body #sb .sb-top b,html body #drw .dtop b{color:#fff!important;font-family:"Playfair Display",Georgia,serif}
+html body #sb .sb-prof small,html body #drw .dprof .rl{background:#fff!important;color:#0A3D91!important}
+html body #mod>div{background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(234,242,255,.9))!important;backdrop-filter:blur(24px);border:1px solid #fff!important;border-radius:26px!important;box-shadow:0 40px 90px -30px rgba(10,61,145,.7)!important}
+html body :is(#toast,#ntoast){background:rgba(7,26,61,.9)!important;color:#fff!important;border:1px solid rgba(255,255,255,.4)!important;backdrop-filter:blur(14px)}
+html body #bar{background:linear-gradient(90deg,#5AA9FF,#1E6BFF,#fff)!important}
+html body .sp{border-color:rgba(30,107,255,.2)!important;border-top-color:#1E6BFF!important}
+html body .ntp-box{background:rgba(255,255,255,.92)!important;backdrop-filter:blur(22px);border:1px solid #fff!important}
+html body .ntb.p{background:#1E6BFF!important;color:#fff!important;border-color:#1E6BFF!important}
+html body .nbadge{background:#E0485A!important;color:#fff!important}
+
+/* ---------- Login ---------- */
+html body #app .lg{background:radial-gradient(520px 420px at 15% 8%,rgba(90,169,255,.6),transparent 65%),radial-gradient(520px 420px at 90% 90%,rgba(191,220,255,.5),transparent 65%),linear-gradient(160deg,#071a3d,#0A3D91 55%,#1E6BFF)!important}
+html body #app .lg:after{border-top:1px solid rgba(255,255,255,.5)!important;box-shadow:0 -10px 40px rgba(90,169,255,.5)!important}
+html body #app .lg h1{background:none!important;-webkit-text-fill-color:#fff!important;color:#fff!important;font-family:"Playfair Display",Georgia,serif!important}
+html body #app .lg .box{background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(255,255,255,.62))!important;backdrop-filter:blur(24px) saturate(1.6)!important;border:1px solid #fff!important;border-radius:30px!important;box-shadow:inset 0 1px 0 #fff,0 40px 80px -30px rgba(7,26,61,.8)!important}
+html body #app .lg .inp{background:rgba(255,255,255,.8)!important;border:1px solid rgba(30,107,255,.25)!important}
+html body #app .lg .inp svg{fill:#1E6BFF!important}
+html body #app .lg .mbtn{background:linear-gradient(135deg,#5AA9FF,#1E6BFF 55%,#0A3D91)!important;color:#fff!important;border:1px solid #fff!important}
+html body #app .lg .mbtn svg{stroke:#fff!important}
+html body #app .lg .opt a,html body #app .lg .foot span{color:#0A3D91!important}
+html body #app .lg .tag{color:#BFDCFF!important}
+
+/* ---------- RESPONSIF: grafik & tabel tidak raksasa di laptop ---------- */
+html body #app .cv{width:100%;height:auto;max-height:230px}
+html body #app .dn svg{width:clamp(96px,12vw,132px)}
+html body #app .card:has(table){overflow:auto;max-height:560px}
+html body #app table{font-size:clamp(11px,.25vw + 10px,13px)}
+html body #app th{position:sticky;top:0;z-index:1}
+@media(min-width:900px){
+ html body #app .pg:has(.cv,table){display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:16px;align-items:start}
+ html body #app .pg:has(.cv,table)>*{margin-bottom:0!important}
+ html body #app .pg:has(.cv,table)>:not(.card){grid-column:1/-1}
+ html body #app .pg:has(.cv,table)>.card:has(table){grid-column:1/-1}
+ html body #app .pg{max-width:1200px}
+}
+@media(min-width:1500px){html body #app .pg{max-width:1360px}}
+
+/* ---------- BANNER PELANGGAN ---------- */
+.nb-bn{position:relative;margin:0 0 18px;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.8);
+ box-shadow:inset 0 1px 0 #fff,0 28px 50px -28px rgba(10,61,145,.7);aspect-ratio:16/6;min-height:150px;max-height:300px;background:#0A3D91;grid-column:1/-1}
+.nb-sl{position:absolute;inset:0;display:flex;align-items:flex-end;padding:clamp(14px,3vw,34px);color:#fff;opacity:0;transform:scale(1.03);
+ transition:opacity .8s ease,transform 1.2s ease;background-size:cover;background-position:center;background-image:linear-gradient(135deg,#071a3d,#1E6BFF 70%,#5AA9FF)}
+.nb-sl.on{opacity:1;transform:none}
+.nb-sl:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,26,61,.78),rgba(7,26,61,.1) 70%)}
+.nb-sl>div{position:relative;max-width:560px}
+.nb-sl small{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.6px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(8px);margin-bottom:8px}
+.nb-sl h3{font-family:"Playfair Display",Georgia,serif;font-size:clamp(18px,2.4vw,30px);line-height:1.2;color:#fff!important;margin:0 0 6px}
+.nb-sl p{font-size:clamp(11.5px,1vw + 8px,14px);color:#EAF2FF;line-height:1.5}
+.nb-dots{position:absolute;right:14px;bottom:12px;display:flex;gap:6px;z-index:2}
+.nb-dots i{width:8px;height:8px;border-radius:8px;background:rgba(255,255,255,.5);cursor:pointer;transition:.3s}
+.nb-dots i.on{width:22px;background:#fff}
+.nb-ed textarea{min-height:64px}
+.nb-ed .nb-g{border:1px solid var(--line);border-radius:16px;padding:10px;margin-bottom:10px;background:rgba(255,255,255,.5)}
+
+/* ---------- MODE GELAP (tetap ada): kaca biru tua ---------- */
+html[data-theme=dark] body{background:
+  radial-gradient(520px 420px at 8% 4%,rgba(30,107,255,.4),transparent 65%),
+  radial-gradient(560px 460px at 96% 12%,rgba(90,169,255,.22),transparent 65%),
+  linear-gradient(180deg,#050B1E 0%,#030614 100%) fixed!important}
+html[data-theme=dark] #app{background:transparent!important}
+html[data-theme=dark] body #app :is(.card,.tile,.kpi .k,.sm .k,.pt,.qa div,.buyer-product,.buyer-stat,.buyer-trust .trust,.buyer-shortcut,.buyer-empty,.buyer-how,.fin-note,.dclock){
+ background:linear-gradient(145deg,rgba(30,60,140,.34),rgba(10,20,52,.55))!important;border:1px solid rgba(143,190,255,.28)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 24px 50px -28px #000!important;color:#EAF2FF}
+html[data-theme=dark] body #app :is(.card>b:first-child,.item h4,.ct b,.sec,.pg h3,.buyer-section h3,.pt b,.tile b,.buyer-product h4,.buyer-stat b,.buyer-trust b,.buyer-shortcut b){color:#EAF2FF!important}
+html[data-theme=dark] body #app :is(.item .in,.sw small,.ct small,.empty,.pt small,.tile small,.fin-row small,.buyer-section p,.buyer-memory){color:#9DB4DE!important}
+html[data-theme=dark] body #app :is(.buyer-product .buyer-price,.buyer-product .buyer-brand){color:#8FC0FF!important}
+html[data-theme=dark] body #app nav{background:rgba(6,14,40,.72)!important;border:1px solid rgba(143,190,255,.3)!important}
+html[data-theme=dark] body #app nav button:not(.on){color:#8DA5D6!important}
+html[data-theme=dark] body :is(#app .pg,#mod) :is(input,select,textarea):not([type=checkbox]):not([type=file]){background:rgba(6,14,40,.7)!important;color:#EAF2FF!important;border:1px solid rgba(143,190,255,.3)!important}
+html[data-theme=dark] body :is(#app,#mod) label:not(.btn){color:#8FC0FF!important}
+html[data-theme=dark] body :is(#app,#mod,#drw) .btn.l{background:rgba(255,255,255,.06)!important;color:#BFDCFF!important;border:1px solid rgba(143,190,255,.4)!important}
+html[data-theme=dark] body #app :is(.chip,.buyer-chip){background:rgba(255,255,255,.06)!important;color:#BFDCFF!important;border:1px solid rgba(143,190,255,.3)!important}
+html[data-theme=dark] body #app :is(.chip.on,.buyer-chip.active){color:#fff!important}
+html[data-theme=dark] body #mod>div{background:linear-gradient(145deg,rgba(18,36,90,.95),rgba(6,14,40,.95))!important;border:1px solid rgba(143,190,255,.4)!important;color:#EAF2FF}
+html[data-theme=dark] body #mod h3{color:#fff!important}
+html[data-theme=dark] body #app .lg .box{background:linear-gradient(145deg,rgba(18,36,90,.85),rgba(6,14,40,.85))!important;border:1px solid rgba(143,190,255,.4)!important}
+html[data-theme=dark] body #app .lg .inp{background:rgba(6,14,40,.7)!important}
+html[data-theme=dark] body #app .lg .inp input{color:#EAF2FF!important}
+html[data-theme=dark] body #app .lg :is(.opt a,.foot span){color:#8FC0FF!important}
+html[data-theme=dark] .nb-bn{border-color:rgba(143,190,255,.4)}
+</style>
+
+<script id="nablo-js">
+/* Nama toko, banner pelanggan, editor banner. Tidak mengubah logika bisnis. */
+(function(){
+ 'use strict';
+ var BRAND='NABLO SMARTPHONE',OLD=/SURKUS\s*SMARTPHONE/gi;
+ var DEF=[
+  {tag:'PROMO',title:'Selamat datang di '+BRAND,sub:'HP pilihan, sudah melalui QC, harga jelas.',img:''},
+  {tag:'GARANSI',title:'Unit teruji, informasi transparan',sub:'Cek spesifikasi dan hasil QC sebelum membeli.',img:''},
+  {tag:'TANYA KAMI',title:'Konsultasi langsung via WhatsApp',sub:'Tanya stok, harga, dan tukar tambah.',img:''}];
+ var timer=0,idx=0;
+
+ /* ----- ganti nama merek di seluruh tampilan ----- */
+ function rename(root){
+  var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),n,l=[];
+  while((n=w.nextNode()))if(OLD.test(n.nodeValue)){OLD.lastIndex=0;l.push(n)}OLD.lastIndex=0;
+  l.forEach(function(t){t.nodeValue=t.nodeValue.replace(OLD,BRAND)});
+ }
+ function brand(){
+  document.title=BRAND;
+  var m=document.querySelector('meta[name="apple-mobile-web-app-title"]');if(m)m.content='NABLO';
+  ['app','drw','sb','mod'].forEach(function(i){var e=document.getElementById(i);if(e)rename(e)});
+ }
+
+ /* ----- data banner ----- */
+ function banners(){
+  var raw='';
+  try{raw=(S.d&&S.d.settings&&S.d.settings.banner_json)||(S.pub&&S.pub.banner_json)||localStorage.getItem('nb_banner')||''}catch(e){}
+  try{var a=JSON.parse(raw);if(Array.isArray(a)){a=a.filter(function(x){return x&&(x.title||x.img)});if(a.length)return a}}catch(e){}
+  return DEF;
+ }
+ function bannerHTML(){
+  var b=banners();
+  return '<div class="nb-bn" id="nbBn">'+b.map(function(x,i){
+   var img=/^https?:\/\//i.test(x.img||'')?'background-image:url(\''+esc(x.img)+'\')':'';
+   return '<div class="nb-sl'+(i?'':' on')+'" style="'+img+'"><div>'+(x.tag?'<small>'+esc(x.tag)+'</small>':'')+'<h3>'+esc(x.title||'')+'</h3><p>'+esc(x.sub||'')+'</p></div></div>'}).join('')+
+   (b.length>1?'<div class="nb-dots">'+b.map(function(_,i){return '<i class="'+(i?'':'on')+'" onclick="nbGo('+i+')"></i>'}).join('')+'</div>':'')+'</div>';
+ }
+ window.nbGo=function(i){
+  var s=document.querySelectorAll('#nbBn .nb-sl'),d=document.querySelectorAll('#nbBn .nb-dots i');if(!s.length)return;
+  idx=(i+s.length)%s.length;
+  s.forEach(function(e,j){e.classList.toggle('on',j===idx)});d.forEach(function(e,j){e.classList.toggle('on',j===idx)});
+ };
+ function startAuto(){clearInterval(timer);idx=0;timer=setInterval(function(){if(!document.hidden&&document.getElementById('nbBn'))nbGo(idx+1)},5500)}
+ function injectBanner(){
+  if(typeof S==='undefined'||!['beranda','kat'].includes(S.p))return;
+  var pg=document.querySelector('#app .pg');if(!pg||pg.querySelector('#nbBn'))return;
+  pg.insertAdjacentHTML('afterbegin',bannerHTML());startAuto();
+ }
+
+ /* ----- editor banner (SUPERADMIN, halaman Pengaturan) ----- */
+ function editor(){
+  if(typeof S==='undefined'||S.p!=='set'||ROLE()!=='SUPERADMIN')return;
+  var pg=document.querySelector('#app .pg');if(!pg||pg.querySelector('#nbEd'))return;
+  var b=banners().slice(0,3);while(b.length<3)b.push({tag:'',title:'',sub:'',img:''});
+  var h='<div class="card nb-ed" id="nbEd"><b>Banner Pelanggan</b><small>Tampil di Beranda & Katalog pembeli. Kosongkan judul untuk menghapus slide. Gambar: tempel link https (disarankan rasio 16:6).</small>'+
+   b.map(function(x,i){return '<div class="nb-g"><label>Slide '+(i+1)+' · Label</label><input id="nb_t'+i+'" value="'+esc(x.tag||'')+'" maxlength="24"><label>Judul</label><input id="nb_h'+i+'" value="'+esc(x.title||'')+'" maxlength="80"><label>Keterangan</label><textarea id="nb_s'+i+'" maxlength="160">'+esc(x.sub||'')+'</textarea><label>Link gambar (opsional)</label><input id="nb_i'+i+'" value="'+esc(x.img||'')+'" placeholder="https://..."></div>'}).join('')+
+   '<button class="btn g w" onclick="nbSave()">SIMPAN BANNER</button><button class="btn l w" onclick="nbReset()">Kembalikan bawaan</button></div>';
+  pg.insertAdjacentHTML('afterbegin',h);
+ }
+ window.nbSave=function(){
+  var a=[0,1,2].map(function(i){var g=function(k){return(document.getElementById('nb_'+k+i)||{}).value||''};return{tag:g('t').trim(),title:g('h').trim(),sub:g('s').trim(),img:g('i').trim()}}).filter(function(x){return x.title});
+  var js=JSON.stringify(a);
+  try{localStorage.setItem('nb_banner',js)}catch(e){}
+  run(async function(){await act('saveSettings',{banner_json:js});if(S.d&&S.d.settings)S.d.settings.banner_json=js;toast('Banner tersimpan')},function(){render()});
+ };
+ window.nbReset=function(){try{localStorage.removeItem('nb_banner')}catch(e){}
+  run(async function(){await act('saveSettings',{banner_json:''});if(S.d&&S.d.settings)S.d.settings.banner_json='';toast('Banner dikembalikan')},function(){render()})};
+
+ function tick(){try{brand();injectBanner();editor()}catch(e){console.warn('Nablo:',e)}}
+ var app=document.getElementById('app');
+ if(app)new MutationObserver(tick).observe(app,{childList:true});
+ var d=document.getElementById('drw');if(d)new MutationObserver(brand).observe(d,{childList:true});
+ var sb=document.getElementById('sb');if(sb)new MutationObserver(brand).observe(sb,{childList:true});
+ tick();
 })();
 </script>
 
