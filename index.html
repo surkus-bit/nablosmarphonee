@@ -2103,6 +2103,14 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
 </style>
 
 
+<style id="nablo-scrollfix">
+/* Perbaikan geser 1 jari di Android: jangan jadikan html/body wadah scroll */
+html,body{overflow-x:clip!important;overflow-y:visible!important;height:auto!important;touch-action:manipulation;overscroll-behavior:auto!important;-webkit-overflow-scrolling:touch}
+html{overflow-y:auto!important}
+body{background-attachment:scroll!important;position:static!important}
+#app{overflow:visible!important;touch-action:pan-y pinch-zoom}
+.buyer-filters,[style*="overflow-x:auto"]{touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch}
+</style>
 <script id="nablo-js">
 /* Nama toko, banner pelanggan, editor banner. Tidak mengubah logika bisnis. */
 (function(){
