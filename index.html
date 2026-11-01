@@ -365,6 +365,12 @@ nav button.on{color:var(--blue);background:var(--blue-l)}
 .in-staff b{display:block;font-size:14px;color:var(--navy)}.in-staff p{font-size:13px;color:var(--mut);margin-top:3px;max-width:520px;line-height:1.5}
 
 .ms .mi i{display:none}
+/* UPDATE 2: keranjang, checkout, pesanan */
+.cartbtn{position:relative}.cartbtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.cartbtn .cb{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#DC2626;color:#fff;font-size:10px;font-weight:700;line-height:17px;font-style:normal;text-align:center}.cartbtn .cb:empty{display:none}
+.ord-steps{display:flex;gap:6px;margin:10px 0 2px;font-size:11px;flex-wrap:wrap}.ord-steps span{padding:3px 9px;border-radius:999px;background:#EEF2F7;color:#64748B}.ord-steps span.on{background:#DCFCE7;color:#166534;font-weight:700}.ord-steps span.cur{background:#FEF3C7;color:#B45309;font-weight:700}.ord-steps span.bad{background:#FEE2E2;color:#B91C1C;font-weight:700}
+.ord-ok{border:1px solid #16A34A;background:#F0FDF4}.co-hint{font-size:12px;color:#64748B;margin:4px 0 10px}
+.cart-row .in h4{margin:2px 0}.cart-warn{color:#B91C1C;font-size:12px;font-weight:600}
 </style></head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
 <div id="app"></div><div id="drw"></div><div id="mod"></div><div id="toast"></div>
@@ -519,8 +525,8 @@ const ni=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${NI[k]||''}</svg>`;
 const MENU=[['dash',ni('dash'),'Beranda',ALL],['stok',ni('stok'),'Stok HP',['SUPERADMIN','OWNER','SUB_OWNER','GUDANG']],['servis',ni('servis'),'Servis',['SUPERADMIN','OWNER','SUB_OWNER','TEKNISI']],['qc',ni('qc'),'QC',['SUPERADMIN','OWNER','SUB_OWNER','QC','TEKNISI']],['jual',ni('jual'),'Penjualan',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['lap',ni('lap'),'Laporan',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['keu',ni('keu'),'Keuangan',['SUPERADMIN','OWNER','SUB_OWNER']],['kalk',ni('kalk'),'Kalkulator',['SUPERADMIN','OWNER','GUDANG']],['data',ni('data'),'Data & Akun',['SUPERADMIN','OWNER','SUB_OWNER','GUDANG']],['set',ni('set'),'Pengaturan',['SUPERADMIN']],['spesifikasi',ni('spesifikasi'),'Spesifikasi',['SUPERADMIN','SPESIFIKASI']],['notifikasi',ni('notifikasi'),'Pengumuman',['SUPERADMIN','OWNER']],['profil',ni('profil'),'Profil Saya',ALL]];
 /* Pengelompokan menu (hanya tampilan; hak akses tetap dari daftar peran di atas) */
 const MENUGRP=[{k:['dash']},{id:'jual',n:'Penjualan',i:'jual',k:['jual','lap']},{id:'stok',n:'Produk & Stok',i:'stok',k:['stok','spesifikasi','kalk']},{id:'servis',n:'Layanan Servis',i:'servis',k:['servis','qc']},{k:['keu']},{id:'data',n:'Data & Akun',i:'data',k:['data','notifikasi']},{k:['set']},{k:['profil']}];
-const BUYERMENU=[['beranda',ni('dash'),'Beranda'],['kat',ni('kat'),'Katalog HP'],['terjual',ni('terjual'),'HP Terjual'],['bandingkan',ni('bandingkan'),'Bandingkan'],['akun',ni('profil'),'Akun Saya']];
-const BUYERGRP=[{k:['beranda']},{id:'belanja',n:'Belanja',i:'kat',k:['kat','terjual','bandingkan']},{k:['akun']}];
+const BUYERMENU=[['beranda',ni('dash'),'Beranda'],['kat',ni('kat'),'Katalog HP'],['terjual',ni('terjual'),'HP Terjual'],['bandingkan',ni('bandingkan'),'Bandingkan'],['pesanan',ni('jual'),'Pesanan Saya'],['akun',ni('profil'),'Akun Saya']];
+const BUYERGRP=[{k:['beranda']},{id:'belanja',n:'Belanja',i:'kat',k:['kat','terjual','bandingkan','pesanan']},{k:['akun']}];
 const menuHTML=()=>{const r=ROLE(),buyer=r==='PEMBELI',src=buyer?BUYERMENU:MENU,grp=buyer?BUYERGRP:MENUGRP,
  map={form:'stok',inv:'jual',qris:'jual',profil:buyer?'akun':'profil'},c=map[S.p]||S.p,
  vis=k=>src.find(x=>x[0]===k&&(buyer||x[3].includes(r))),
@@ -569,7 +575,7 @@ lupa:()=>{const f=S.fp||{step:1,id:''};const s2=f.step===2;return `<div class="h
 notifikasi:()=>`<div class="hd"><b>Notifikasi</b><button class="btn l" onclick="loadNotifications()">Muat ulang</button></div><div class="pg"><div id="notifList"><div class="card">Memuat notifikasi…</div></div>${['SUPERADMIN','OWNER'].includes(ROLE())?`<div class="card"><b>Kirim pengumuman</b><label>Judul</label><input id="nt_title" maxlength="100" placeholder="Contoh: Stok baru tersedia"><label>Pesan</label><textarea id="nt_message" rows="4" maxlength="1500" placeholder="Tulis informasi untuk penerima…"></textarea><label>Penerima</label><select id="nt_audience"><option value="ALL">Semua pengguna</option><option value="PEMBELI">Pembeli</option><option value="STAFF">Semua staf</option><option value="GUDANG">Gudang</option><option value="KASIR">Kasir</option><option value="TEKNISI">Teknisi</option><option value="QC">QC</option><option value="SPESIFIKASI">Petugas spesifikasi</option><option value="OWNER">Owner</option><option value="SUB_OWNER">Sub Owner</option></select><label style="display:flex;align-items:center;gap:8px"><input id="nt_email" type="checkbox" style="width:auto"> Kirim juga melalui email</label><button class="btn g w" onclick="sendNotifUI()">KIRIM PENGUMUMAN</button><small>Email dikirim ke alamat yang terdaftar dan sesuai penerima. Aktifkan izin MailApp terlebih dahulu.</small></div>`:''}</div>`,
 profil:()=>{const u=S.u||{},f=S.pf||{},V=k=>esc(f[k]!==undefined?f[k]:(u[k]||'')),back=ROLE()==='PEMBELI'?'akun':'dash';return `<div class="hd"><button class="bk" onclick="nav('${back}')">←</button><b>Profil Saya</b></div><div class="pg"><div class="card" style="text-align:center"><div class="av" style="width:96px;height:96px;border-radius:30px;margin:0 auto 10px;font-size:30px;color:inherit">${avHTML()}</div><b>${esc(u.full_name||'')}</b><br><small>@${esc(u.username||'')} · ${esc(ROLE())}</small><div class="row" style="justify-content:center;margin-top:10px;gap:8px"><label class="btn g"><input type="file" accept="image/*" hidden onchange="pickProfilePhoto(this)">📷 ${u.photo_url?'Ganti Foto':'Unggah Foto'}</label>${u.photo_url?`<button class="btn l" onclick="delProfilePhoto()">Hapus Foto</button>`:''}</div></div><div class="card"><b>Data diri</b><label>Nama lengkap</label><input id="pf_n" value="${V('full_name')}" autocomplete="name"><label>No. WhatsApp</label><input id="pf_h" type="tel" value="${V('phone')}"><label>Email (untuk reset password)</label><input id="pf_e" type="email" value="${V('email')}" autocapitalize="off" autocomplete="email"><label>Password saat ini (wajib bila mengganti email)</label><input id="pf_c" type="password" autocomplete="current-password"><button class="btn g w" onclick="saveProfile()">SIMPAN PROFIL</button></div><div class="card"><b>Ubah password</b><label>Password saat ini</label><input id="pw_o" type="password" autocomplete="current-password"><label>Password baru (minimal 8 karakter)</label><input id="pw_n" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="pw_k" type="password" autocomplete="new-password"><button class="btn g w" onclick="doChangePw()">UBAH PASSWORD</button><small>Setelah diubah, perangkat lain harus masuk ulang.</small></div><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`},
 boot:()=>`<div class="lg"><div class="lgl">${logo(90)}</div><p class="sub" style="text-align:center">Memuat…</p></div>`,
-akun:()=>`<div class="hd"><button class="bk" onclick="nav('beranda')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN NABLO SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
+akun:()=>`<div class="hd"><button class="bk" onclick="nav('beranda')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN NABLO SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('pesanan')">🧾 Pesanan Saya</button><button class="btn l w" onclick="openCart()">🛒 Keranjang</button><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
 login:()=>`<div class="lg"><div class="lgl">${logo(90)}</div>
 <h1>Masuk</h1><p class="sub">Masuk ke akun Anda untuk melanjutkan</p>
 <div class="box">
@@ -622,7 +628,7 @@ qc:()=>{const w=S.d.units.filter(u=>u.current_status=='MENUNGGU_QC');if(!w.some(
 
 jual:()=>{const r=S.d.units.filter(u=>u.current_status=='READY'),ia=S.if||'',ib=S.it||'',hasI=!!(ia||ib),td=dkey(NOW()),s=[...S.d.sales].reverse().filter(x=>hasI?inRange(x.sale_date,ia,ib):(dOf(x.sale_date)===td||x.sale_status==='MENUNGGU_PEMBAYARAN'));
  return hd('Penjualan','dash')+`<div class="pg"><b>Stok Ready (${r.length})</b><br><br>${r.map(u=>`<div class="card item"><div class="ph">${photo(u)}</div><div class="in">${badge('READY')}<h4>${esc(u.brand)} ${esc(u.model)}</h4>${esc(u.ram)}/${esc(u.rom)} · ${esc(u.color)}<br>Harga: <b>${rp(PR(u.unit_id).final_price)}</b><br><button class="btn g" onclick="sellM('${u.unit_id}')">Jual</button></div></div>`).join('')||'<div class="card">Tidak ada stok READY. Selesaikan servis & QC terlebih dahulu.</div>'}
- <b>${hasI?'Invoice pada rentang tanggal':'Transaksi Hari Ini'}</b><div class="flt-d" style="margin-top:8px"><label>Dari<input type="date" value="${esc(ia)}" onchange="S.if=this.value;render()"></label><label>Sampai<input type="date" value="${esc(ib)}" onchange="S.it=this.value;render()"></label><button class="btn l" onclick="S.if='';S.it='';render()">Reset</button></div><small class="stk-n">${hasI?s.length+' invoice':'Invoice lama: pilih tanggal untuk mencari'}</small><div class="card" style="margin-top:8px">${s.map(x=>`<div class="sw" onclick="nav('inv',{inv:'${x.sale_id}'})"><span>${esc(x.invoice_number)}<br><small>${esc(U(x.unit_id).model)}</small></span><b>${rp(x.final_total)}</b></div>`).join('')||(hasI?'Tidak ada invoice pada tanggal tersebut':'Belum ada transaksi hari ini')}</div></div>`},
+ <b>${hasI?'Invoice pada rentang tanggal':'Transaksi Hari Ini'}</b><div class="flt-d" style="margin-top:8px"><label>Dari<input type="date" value="${esc(ia)}" onchange="S.if=this.value;render()"></label><label>Sampai<input type="date" value="${esc(ib)}" onchange="S.it=this.value;render()"></label><button class="btn l" onclick="S.if='';S.it='';render()">Reset</button></div><small class="stk-n">${hasI?s.length+' invoice':'Invoice lama: pilih tanggal untuk mencari'}</small><div class="card" style="margin-top:8px">${s.map(x=>`<div class="sw" onclick="nav('inv',{inv:'${x.sale_id}'})"><span>${esc(x.invoice_number)}<br><small>${esc(U(x.unit_id).model)}</small>${onlTag(x.sale_id)}</span><b>${rp(x.final_total)}</b></div>`).join('')||(hasI?'Tidak ada invoice pada tanggal tersebut':'Belum ada transaksi hari ini')}</div></div>`},
 
 qris:()=>{const x=S.sale,img=S.d.settings.qris_image_url;
  if(!x||x.price==null)return '<div class="pg"><div class="card">Data transaksi hilang.</div><button class="btn w" onclick="nav(\'jual\')">KEMBALI</button></div>';
@@ -634,7 +640,7 @@ inv:()=>{const s=S.d.sales.find(x=>x.sale_id==S.inv)||{},p=S.d.payments.find(x=>
  return `<div class="hd"><button class="bk" onclick="nav('jual')">←</button><b>Invoice</b></div><div class="pg"><div class="card"><div class="item" style="align-items:center">${logo(48)}<div><b>${esc(shopName())}</b><br><small>${esc(st.store_address||'')}<br>${esc(st.store_phone||'')}</small></div></div><hr style="margin:10px 0;border:0;border-top:1px solid #dde">
  <small>No. Invoice: <b>${esc(s.invoice_number)}</b><br>Waktu Penjualan: ${fmtDT(s.sale_date)}${p.paid_at&&String(p.paid_at).slice(0,16)!=String(s.sale_date).slice(0,16)?`<br>Dibayar: ${fmtDT(p.paid_at)}`:''}${s.cashier_id==S.u.user_id?`<br>Kasir: ${esc(S.u.full_name)}`:''}</small>
  <table style="margin-top:8px"><tr><th>Barang</th><th>Harga</th></tr><tr><td>${esc(u.brand)} ${esc(u.model)}<br><small>IMEI ${esc(u.imei1)}</small></td><td>${rp(s.selling_price)}</td></tr><tr><td>Diskon</td><td>- ${rp(s.discount)}</td></tr><tr><td><b>Total</b></td><td><b>${rp(s.final_total)}</b></td></tr></table>
- <p style="margin:12px 0">Pembayaran: <b>${esc(p.payment_method)}</b> <span class="stamp" style="float:right;border-color:${s.payment_status==='LUNAS'?'#16A34A':'#d97706'};color:${s.payment_status==='LUNAS'?'#16A34A':'#d97706'}">${esc(s.payment_status||'')}</span></p>${p.reference_number?`<small>Referensi: ${esc(p.reference_number)}</small>`:''}${p.proof_photo_url?`<div style="margin:12px 0"><b>Bukti dokumentasi pembayaran</b><br>${proofImg(s.sale_id,'width:100%;max-width:260px;max-height:300px;object-fit:contain;border-radius:12px;margin-top:8px',true)}</div>`:'<div class="empty" style="margin:10px 0">Belum ada foto bukti pembayaran.</div>'}${s.sale_status==='SELESAI'&&s.payment_status==='LUNAS'&&['SUPERADMIN','OWNER'].includes(ROLE())?`<button class="btn r w noprint" onclick="refundSale('${s.sale_id}')">REFUND TRANSAKSI</button>`:''}${s.sale_status==='REFUND'?`<p class="noprint" style="margin:10px 0;color:#DC2626"><b>Transaksi direfund</b> ${rp(s.refund_amount)} · ${esc(fmtDT(s.refunded_at))}<br><small>${esc(s.refund_reason||'')}</small></p>`:''}${canEditProof?`<button class="btn l w noprint" onclick="editProof('${s.sale_id}')">✏️ ${p.proof_photo_url?'Ubah Foto Bukti Pembayaran':'Tambah Foto Bukti Pembayaran'}</button>`:''}${s.payment_status!=='LUNAS'&&s.sale_status!=='BATAL'&&['SUPERADMIN','KASIR','OWNER'].includes(ROLE())?`<button class="btn g w noprint" onclick="confirmPending()">KONFIRMASI PEMBAYARAN DITERIMA</button><button class="btn r w noprint" onclick="cancelPending('${s.sale_id}')">BATALKAN TRANSAKSI PENDING</button>`:''}</div>
+ ${onlBlock(s.sale_id)}<p style="margin:12px 0">Pembayaran: <b>${esc(p.payment_method)}</b> <span class="stamp" style="float:right;border-color:${s.payment_status==='LUNAS'?'#16A34A':'#d97706'};color:${s.payment_status==='LUNAS'?'#16A34A':'#d97706'}">${esc(s.payment_status||'')}</span></p>${p.reference_number?`<small>Referensi: ${esc(p.reference_number)}</small>`:''}${p.proof_photo_url?`<div style="margin:12px 0"><b>Bukti dokumentasi pembayaran</b><br>${proofImg(s.sale_id,'width:100%;max-width:260px;max-height:300px;object-fit:contain;border-radius:12px;margin-top:8px',true)}</div>`:'<div class="empty" style="margin:10px 0">Belum ada foto bukti pembayaran.</div>'}${s.sale_status==='SELESAI'&&s.payment_status==='LUNAS'&&['SUPERADMIN','OWNER'].includes(ROLE())?`<button class="btn r w noprint" onclick="refundSale('${s.sale_id}')">REFUND TRANSAKSI</button>`:''}${s.sale_status==='REFUND'?`<p class="noprint" style="margin:10px 0;color:#DC2626"><b>Transaksi direfund</b> ${rp(s.refund_amount)} · ${esc(fmtDT(s.refunded_at))}<br><small>${esc(s.refund_reason||'')}</small></p>`:''}${canEditProof?`<button class="btn l w noprint" onclick="editProof('${s.sale_id}')">✏️ ${p.proof_photo_url?'Ubah Foto Bukti Pembayaran':'Tambah Foto Bukti Pembayaran'}</button>`:''}${s.payment_status!=='LUNAS'&&s.sale_status!=='BATAL'&&['SUPERADMIN','KASIR','OWNER'].includes(ROLE())?`<button class="btn g w noprint" onclick="confirmPending()">KONFIRMASI PEMBAYARAN DITERIMA</button><button class="btn r w noprint" onclick="cancelPending('${s.sale_id}')">BATALKAN TRANSAKSI PENDING</button>`:''}</div>
  <div class="row noprint"><button class="btn g" onclick="window.print()">🖨 Cetak Invoice</button><button class="btn l" onclick="nav('lap')">Laporan</button><button class="btn l" onclick="nav('jual')">Penjualan</button></div></div>`},
 
 lap:()=>{
@@ -861,7 +867,7 @@ const katCards=()=>{
  if(S.ksort==='harga-naik')list.sort((a,b)=>(+a.price||0)-(+b.price||0));
  else if(S.ksort==='harga-turun')list.sort((a,b)=>(+b.price||0)-(+a.price||0));
  else if(S.ksort==='nama')list.sort((a,b)=>`${a.brand||''} ${a.model||''}`.localeCompare(`${b.brand||''} ${b.model||''}`,'id'));
- return `<div class="buyer-grid">${list.map(x=>`<article class="card buyer-product"><div class="buyer-photo">${x.photo_url?photo(x):'📱'}${x.reserved?'<span class="ready-pill" style="background:#FEF3C7;color:#B45309">● DIPESAN</span>':'<span class="ready-pill">● SIAP JUAL</span>'}</div><div class="buyer-info"><div class="buyer-brand">${esc(x.brand||'Smartphone')}</div><h4>${esc(x.model||'Model HP')}</h4><div class="buyer-memory">${esc(x.ram||'-')} RAM · ${esc(x.rom||'-')} Memori${x.color?' · '+esc(x.color):''}</div><div class="buyer-price">${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</div><div class="buyer-buttons"><button class="btn g" onclick="katDetail('${esc(x.id)}')">Lihat Detail</button>${wa?`<a class="btn whatsapp" target="_blank" rel="noopener" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Halo, saya tertarik dengan '+x.brand+' '+x.model+' ('+x.ram+'/'+x.rom+'). Apakah unit ini masih tersedia?')}">WhatsApp ↗</a>`:''}</div></div></article>`).join('')||'<div class="buyer-empty"><b>HP belum ditemukan</b>Coba kata kunci lain atau pilih filter “Semua HP”.</div>'}</div>`;
+ return `<div class="buyer-grid">${list.map(x=>`<article class="card buyer-product"><div class="buyer-photo">${x.photo_url?photo(x):'📱'}${x.reserved?'<span class="ready-pill" style="background:#FEF3C7;color:#B45309">● DIPESAN</span>':'<span class="ready-pill">● SIAP JUAL</span>'}</div><div class="buyer-info"><div class="buyer-brand">${esc(x.brand||'Smartphone')}</div><h4>${esc(x.model||'Model HP')}</h4><div class="buyer-memory">${esc(x.ram||'-')} RAM · ${esc(x.rom||'-')} Memori${x.color?' · '+esc(x.color):''}</div><div class="buyer-price">${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</div><div class="buyer-buttons"><button class="btn g" onclick="katDetail('${esc(x.id)}')">Lihat Detail</button>${x.reserved?'':`<button class="btn l" onclick="cartAdd('${esc(x.id)}')">🛒 Keranjang</button>`}${wa?`<a class="btn whatsapp" target="_blank" rel="noopener" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Halo, saya tertarik dengan '+x.brand+' '+x.model+' ('+x.ram+'/'+x.rom+'). Apakah unit ini masih tersedia?')}">WhatsApp ↗</a>`:''}</div></div></article>`).join('')||'<div class="buyer-empty"><b>HP belum ditemukan</b>Coba kata kunci lain atau pilih filter “Semua HP”.</div>'}</div>`;
 };
 const loadSold=()=>{if(S.soldLoading)return;S.soldLoading=true;api('getSoldCatalog',S.t).then(x=>{S.sold=Array.isArray(x)?x:[];S.soldLoading=false;if(S.p==='terjual')render()}).catch(e=>{S.sold=[];S.soldLoading=false;if(S.p==='terjual')render();toast('Riwayat terjual gagal dimuat: '+String(e&&e.message||e))})};
 const loadCat=()=>{S.cat=null;const e=$('#kl');if(e)e.innerHTML=katCards();api('getCatalog').then(x=>{S.cat=Array.isArray(x)?x:[];if(['kat','beranda','bandingkan'].includes(S.p))render();else{const target=$('#kl');if(target)target.innerHTML=katCards()}}).catch(e=>{S.cat=[];if(['kat','beranda','bandingkan'].includes(S.p))render();else{const target=$('#kl');if(target)target.innerHTML=katCards()}toast(String(e&&e.message||e))})};
@@ -887,7 +893,7 @@ const katDetail=id=>{
    <b style="display:block;margin:12px 0 4px">Hasil QC${d.qc_date?` <small style="font-weight:500;color:var(--mut)">· ${esc(fmtDT(d.qc_date))}</small>`:''}</b>
    ${d.qc_status==='LULUS_DENGAN_CATATAN'||d.qc_status==='LULUS DENGAN CATATAN'?`<div class="card" style="border:1px solid #d97706"><b>⚠️ Lulus dengan catatan</b><p>Fungsi bermasalah: ${esc((d.faults||[]).join(', '))}</p><p>${esc(d.fault_reason||'Lihat keterangan kondisi unit.')}</p></div>`:''}
    ${d.qc.length?d.qc.map(k=>`<div class="sw"><span>✅ ${esc(k)}</span><small>Lulus</small></div>`).join(''):'<div class="empty">Belum ada data QC</div>'}
-   <button class="btn l w" onclick="closeM()">Tutup</button>`);
+   <button class="btn g w" onclick="closeM();cartAdd('${esc(id)}')">🛒 Tambah ke Keranjang</button><button class="btn l w" onclick="closeM()">Tutup</button>`);
  });
 };
 
@@ -1019,7 +1025,7 @@ async function sendNotifUI(){const title=($('#nt_title')||{}).value||'',message=
   ()=>{if($('#nt_title'))$('#nt_title').value='';if($('#nt_message'))$('#nt_message').value='';pollNotifs(true)})}
 function render(){
  if(!S.u&&!['intro','login','kat','daftar','lupa','boot'].includes(S.p))S.p='intro';
- if(S.u&&ROLE()==='PEMBELI'&&!['beranda','kat','akun','terjual','bandingkan','profil','notifikasi'].includes(S.p))S.p='beranda';
+ if(S.u&&ROLE()==='PEMBELI'&&!['beranda','kat','akun','terjual','bandingkan','profil','notifikasi','keranjang','checkout','pesanan'].includes(S.p))S.p='beranda';
  if(S.u&&!P[S.p])S.p='dash';
  const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot'].includes(S.p), role=ROLE();
  if(S.u&&!['inv','qris','form','beranda','kat','terjual','bandingkan','akun','profil'].includes(S.p)){
@@ -1262,6 +1268,102 @@ if(new URLSearchParams(window.location.search).get('v')==='katalog'&&!S.u)nav('k
  var d=document.getElementById('drw');if(d)new MutationObserver(brand).observe(d,{childList:true});
  var sb=document.getElementById('sb');if(sb)new MutationObserver(brand).observe(sb,{childList:true});
  tick();
+})();
+</script>
+<script id="update2-order">
+/* ===== UPDATE 2: keranjang, checkout, riwayat pesanan pembeli ===== */
+(function(){
+ NI.cart='<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h2.5l2.2 11h10.6l2-8H6.5"/>';
+ const CK=()=>'nb_cart_'+(S.u?S.u.user_id:'tamu');
+ const CART=()=>{try{const a=JSON.parse(localStorage.getItem(CK())||'[]');return Array.isArray(a)?a.filter(x=>typeof x==='string').slice(0,10):[]}catch(e){return[]}};
+ const SAVE=a=>{try{localStorage.setItem(CK(),JSON.stringify(a))}catch(e){}};
+ const isBuyer=()=>!!S.u&&ROLE()==='PEMBELI';
+ const waNum=()=>String(inf().store_phone||'').replace(/\D/g,'').replace(/^0/,'62');
+ const badgeCart=()=>{const n=CART().length;document.querySelectorAll('.cartbtn .cb').forEach(e=>{e.textContent=n?String(n):''})};
+ const injectCartBtn=()=>{document.querySelectorAll('#app .hd').forEach(h=>{if(h.querySelector('.cartbtn'))return;const b=document.createElement('button');b.type='button';b.className='ic cartbtn';b.setAttribute('aria-label','Keranjang');b.title='Keranjang';b.onclick=()=>openCart();b.innerHTML=ni('cart')+'<em class="cb"></em>';h.appendChild(b)});badgeCart()};
+
+ window.openCart=()=>{if(!isBuyer()){toast('Masuk sebagai pembeli untuk memakai keranjang');return nav('login')}S.cf=false;S.cfErr=false;nav('keranjang')};
+ window.cartAdd=id=>{
+  if(!isBuyer()){modal(`<h3>Masuk untuk memesan</h3><p style="margin:10px 0">Silakan masuk atau buat akun pembeli terlebih dahulu untuk memakai keranjang.</p><button class="btn g w" onclick="closeM();nav('login')">Masuk</button><button class="btn l w" onclick="closeM();nav('daftar')">Buat Akun</button><button class="btn l w" onclick="closeM()">Nanti</button>`);return}
+  id=String(id);const a=CART();
+  if(a.includes(id))return toast('HP ini sudah ada di keranjang');
+  if(a.length>=5)return toast('Maksimal 5 HP dalam satu pesanan');
+  a.push(id);SAVE(a);badgeCart();toast('Ditambahkan ke keranjang. Stok belum dikurangi sebelum Anda checkout.');
+ };
+ window.cartDel=id=>{SAVE(CART().filter(x=>x!==String(id)));render()};
+ const items=()=>{const cat=Array.isArray(S.cat)?S.cat:null;return CART().map(id=>({id,x:cat?cat.find(c=>String(c.id)===id)||null:null}))};
+ const okItems=()=>items().filter(i=>i.x&&!i.x.reserved);
+ const sumOf=l=>l.reduce((a,i)=>a+(+i.x.price||0),0);
+ const catFetch=()=>{if(S.catBusy)return;S.catBusy=true;api('getCatalog').then(x=>{S.cat=Array.isArray(x)?x:[];S.catBusy=false;S.cfErr=false;if(['keranjang','checkout'].includes(S.p))render()}).catch(e=>{S.catBusy=false;S.cfErr=true;if(['keranjang','checkout'].includes(S.p))render();toast(String(e&&e.message||e))})};
+
+ P.keranjang=()=>{
+  const loading=!Array.isArray(S.cat),l=items(),ok=okItems();
+  let body;
+  if(S.cfErr&&loading)body=`<div class="card"><b>Katalog gagal dimuat</b><p style="margin:8px 0">Periksa koneksi lalu coba lagi.</p><button class="btn g" onclick="S.cf=false;S.cfErr=false;render()">Coba lagi</button></div>`;
+  else if(loading&&l.length)body='<div class="buyer-empty"><b>Memeriksa ketersediaan…</b>Sebentar ya.</div>';
+  else if(!l.length)body=`<div class="buyer-empty"><b>Keranjang masih kosong</b>Pilih HP dari katalog lalu tekan “Keranjang”.</div><button class="btn g w" onclick="nav('kat')">Lihat Katalog HP</button>`;
+  else body=l.map(i=>{const x=i.x;
+   if(!x)return `<div class="card item cart-row"><div class="ph">📱</div><div class="in"><h4>HP tidak tersedia lagi</h4><span class="cart-warn">Unit ini sudah terjual atau ditarik dari katalog.</span><br><button class="btn l" onclick="cartDel('${esc(i.id)}')">Hapus</button></div></div>`;
+   return `<div class="card item cart-row"><div class="ph">${photo(x)}</div><div class="in"><div class="buyer-brand">${esc(x.brand)}</div><h4>${esc(x.model)}</h4>${esc(x.ram||'-')}/${esc(x.rom||'-')}${x.color?' · '+esc(x.color):''}<br><b>${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</b>${x.reserved?'<br><span class="cart-warn">Sedang dipesan pembeli lain</span>':''}<br><button class="btn l" onclick="cartDel('${esc(i.id)}')">Hapus</button></div></div>`}).join('')+
+   `<div class="card"><div class="sw"><span>Jumlah HP</span><b>${ok.length}</b></div><div class="sw"><span>Perkiraan total</span><b>${rp(sumOf(ok))}</b></div><small class="co-hint">Memasukkan HP ke keranjang tidak memesan unit dan tidak mengurangi stok. Total resmi dihitung ulang oleh server saat checkout.</small></div><button class="btn g w" ${ok.length?'':'disabled'} onclick="nav('checkout')">Lanjut ke Checkout</button>`;
+  return hd('Keranjang','kat')+`<div class="pg">${body}</div>`;
+ };
+
+ const HINT={TUNAI:'Bayar tunai langsung di toko saat serah terima. Petugas akan mengonfirmasi pesanan Anda.',TRANSFER:'Petugas akan mengirim detail rekening lewat WhatsApp. Setelah transfer, kirim buktinya ke WhatsApp toko.',QRIS:'Kode QRIS akan ditampilkan setelah pesanan dibuat. Pesanan lunas setelah petugas memeriksa dana masuk.'};
+ window.coHint=()=>{const m=($('#co_m')||{}).value,e=$('#co_h');if(e)e.textContent=HINT[m]||''};
+ P.checkout=()=>{
+  if(!Array.isArray(S.cat))return hd('Checkout','keranjang')+'<div class="pg"><div class="buyer-empty"><b>Memuat data…</b></div></div>';
+  const ok=okItems(),c=S.co||{},m=c.m||'TUNAI';
+  if(!ok.length)return hd('Checkout','keranjang')+`<div class="pg"><div class="buyer-empty"><b>Tidak ada HP yang bisa dipesan</b>Keranjang kosong atau unit sudah tidak tersedia.</div><button class="btn g w" onclick="nav('kat')">Lihat Katalog HP</button></div>`;
+  return hd('Checkout','keranjang')+`<div class="pg"><div class="card"><b>Pesanan Anda</b>${ok.map(i=>`<div class="sw"><span>${esc(i.x.brand)} ${esc(i.x.model)}<br><small>${esc(i.x.ram||'-')}/${esc(i.x.rom||'-')}</small></span><b>${rp(i.x.price)}</b></div>`).join('')}<div class="sw"><span><b>Perkiraan total</b></span><b>${rp(sumOf(ok))}</b></div></div>
+  <div class="card"><b>Data penerima</b><label>Nama penerima</label><input id="co_n" maxlength="30" value="${esc(c.name!==undefined?c.name:(S.u.full_name||''))}"><label>No. WhatsApp</label><input id="co_p" type="tel" maxlength="16" value="${esc(c.phone!==undefined?c.phone:(S.u.phone||''))}"><label>Alamat / keterangan pengambilan</label><textarea id="co_a" maxlength="80" rows="2" placeholder="Contoh: Ambil di toko, atau alamat pengantaran">${esc(c.address||'')}</textarea><label>Catatan (opsional)</label><input id="co_t" maxlength="40" value="${esc(c.note||'')}">
+  <label>Metode pembayaran</label><select id="co_m" onchange="coHint()"><option value="TUNAI" ${m==='TUNAI'?'selected':''}>Tunai (bayar di toko)</option><option value="TRANSFER" ${m==='TRANSFER'?'selected':''}>Transfer bank</option><option value="QRIS" ${m==='QRIS'?'selected':''}>QRIS</option></select><div class="co-hint" id="co_h">${esc(HINT[m])}</div></div>
+  <button class="btn g w" onclick="coSubmit()">Buat Pesanan</button><button class="btn l w" onclick="nav('keranjang')">Kembali ke Keranjang</button></div>`;
+ };
+ window.coSubmit=()=>{
+  const ids=okItems().map(i=>i.id);if(!ids.length)return toast('Tidak ada HP yang bisa dipesan');
+  const o={name:$('#co_n').value,phone:$('#co_p').value,address:$('#co_a').value,note:$('#co_t').value},m=$('#co_m').value;
+  S.co=Object.assign({},o,{m});let r=null;
+  run(async()=>{r=await api('placeOrder',S.t,ids,m,o)},()=>{SAVE(CART().filter(x=>!ids.includes(x)));S.co=null;S.last=r;S.orders=undefined;S.cat=undefined;nav('pesanan')});
+ };
+
+ const ordSt=o=>o.sale_status==='SELESAI'&&o.payment_status==='LUNAS'?['Selesai · Lunas','b-gr']:o.sale_status==='BATAL'?['Dibatalkan','b-red']:o.sale_status==='REFUND'?['Direfund','b-gray']:['Menunggu pembayaran','b-or'];
+ const steps=o=>{const done=o.sale_status==='SELESAI'&&o.payment_status==='LUNAS',bad=o.sale_status==='BATAL'||o.sale_status==='REFUND';
+  return `<div class="ord-steps"><span class="on">Pesanan dibuat</span><span class="${done?'on':bad?'bad':'cur'}">${bad?(o.sale_status==='BATAL'?'Dibatalkan':'Direfund'):'Pembayaran dikonfirmasi'}</span>${bad?'':`<span class="${done?'on':''}">Selesai</span>`}</div>`};
+ const waLink=txt=>waNum()?`<a class="btn whatsapp" target="_blank" rel="noopener" href="https://wa.me/${esc(waNum())}?text=${encodeURIComponent(txt)}">Hubungi toko via WhatsApp ↗</a>`:'';
+ const lastHTML=L=>{const wa=waLink(`Halo, saya sudah membuat pesanan ${L.orders.map(o=>o.invoice_number).join(', ')} a.n. ${L.name}, total ${rp(L.total)} (${L.method}). Mohon diproses.`);
+  return `<div class="card ord-ok"><b>✅ Pesanan berhasil dibuat</b>${L.orders.map(o=>`<div class="sw"><span>${esc(o.invoice_number)}<br><small>${esc(o.brand)} ${esc(o.model)}</small></span><b>${rp(o.total)}</b></div>`).join('')}<div class="sw"><span><b>Total</b></span><b>${rp(L.total)}</b></div>
+  <p class="co-hint">${esc(HINT[L.method]||'')}</p>${L.method==='QRIS'&&L.qris_url?`<div style="text-align:center"><img src="${esc(L.qris_url)}" alt="QRIS" style="width:100%;max-width:260px;border-radius:12px" onerror="this.style.display='none'"><p style="margin:8px 0">Nominal: <b>${rp(L.total)}</b></p></div>`:''}${wa}<button class="btn l" onclick="S.last=null;render()">Tutup</button></div>`};
+ let ordBusy=false;
+ window.ordLoad=force=>{if(ordBusy)return;ordBusy=true;if(force)S.orders=undefined;api('getMyOrders',S.t).then(x=>{S.orders=Array.isArray(x)?x:[];ordBusy=false;if(S.p==='pesanan')render()}).catch(e=>{S.orders=[];ordBusy=false;if(S.p==='pesanan')render();toast(String(e&&e.message||e))})};
+ window.ordCancel=id=>{if(!confirm('Batalkan pesanan ini?'))return;run(async()=>{await api('cancelMyOrder',S.t,id)},()=>{S.orders=undefined;S.cat=undefined;toast('Pesanan dibatalkan');render()})};
+ P.pesanan=()=>{
+  const L=S.last,list=S.orders;
+  let body;
+  if(list===undefined)body='<div class="buyer-empty"><b>Memuat pesanan…</b></div>';
+  else if(!list.length)body=`<div class="buyer-empty"><b>Belum ada pesanan</b>Pesanan Anda akan muncul di sini.</div><button class="btn g w" onclick="nav('kat')">Lihat Katalog HP</button>`;
+  else body=list.map(o=>{const st=ordSt(o),pend=o.sale_status==='MENUNGGU_PEMBAYARAN';
+   return `<div class="card item"><div class="ph">${photo(o)}</div><div class="in"><span class="bd ${st[1]}">${st[0]}</span><h4>${esc(o.brand)} ${esc(o.model)}</h4>${esc(o.ram||'-')}/${esc(o.rom||'-')}${o.color?' · '+esc(o.color):''}<br><small>${esc(o.invoice_number)} · ${esc(fmtDT(o.sale_date))}</small><br><b>${rp(o.total)}</b> · ${esc(o.method)}${steps(o)}
+   ${pend?`${o.qris_url?`<button class="btn l" onclick="viewPhoto('${esc(o.qris_url)}')">Lihat QRIS</button>`:''}<button class="btn r" onclick="ordCancel('${esc(o.sale_id)}')">Batalkan</button>${waLink('Halo, saya ingin menanyakan pesanan '+o.invoice_number+'.')}`:''}</div></div>`}).join('');
+  return hd('Pesanan Saya','akun')+`<div class="pg">${L?lastHTML(L):''}<div class="buyer-section"><div><h3>Riwayat pesanan</h3><p>Status diperbarui oleh petugas toko</p></div><button class="btn l" onclick="ordLoad(true);render()">↻ Muat ulang</button></div>${body}</div>`;
+ };
+
+ /* tampilan petugas: identitas pembeli pada pesanan online */
+ window.onlInfo=sid=>{const p=((S.d&&S.d.payments)||[]).find(x=>String(x.sale_id)===String(sid)),n=String(p&&p.notes||'');if(n.indexOf('ONLINE|')!==0)return null;const a=n.split(' ## ')[0].split('|');return{name:a[1]||'',phone:a[2]||'',addr:a[3]||'',note:a[4]||''}};
+ window.onlTag=sid=>{const o=onlInfo(sid);return o?`<br><small style="color:#B45309">🛒 Online · ${esc(o.name)}</small>`:''};
+ window.onlBlock=sid=>{const o=onlInfo(sid);if(!o)return '';const ph=String(o.phone).replace(/\D/g,'').replace(/^0/,'62');return `<div class="card" style="border:1px solid #D97706;margin:10px 0"><b>🛒 Pesanan online</b><div class="sw"><span>Penerima</span><b>${esc(o.name)}</b></div><div class="sw"><span>WhatsApp</span><b>${ph?`<a href="https://wa.me/${esc(ph)}" target="_blank" rel="noopener">${esc(o.phone)}</a>`:esc(o.phone)}</b></div><div class="sw"><span>Alamat / pengambilan</span><b>${esc(o.addr)}</b></div>${o.note?`<div class="sw"><span>Catatan</span><b>${esc(o.note)}</b></div>`:''}</div>`};
+
+ const _render=window.render;
+ window.render=function(){
+  _render();
+  try{
+   if(isBuyer()){
+    injectCartBtn();
+    if(['keranjang','checkout'].includes(S.p)&&!S.cf&&!S.catBusy){S.cf=true;catFetch()}
+    if(S.p==='pesanan'&&S.orders===undefined)ordLoad();
+   }
+  }catch(e){console.warn('update2:',e)}
+ };
 })();
 </script>
 </body></html>
