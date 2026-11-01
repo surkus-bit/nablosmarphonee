@@ -2076,6 +2076,29 @@ html[data-theme=dark] body #app .lg .inp input{color:#EAF2FF!important}
 html[data-theme=dark] body #app .lg :is(.opt a,.foot span){color:#8FC0FF!important}
 html[data-theme=dark] .nb-bn{border-color:rgba(143,190,255,.4)}
 </style>
+<style id="nablo-soft">
+/* ---------- Mode terang: lebih lembut, tidak silau ---------- */
+html:not([data-theme=dark]){--bg:#C9DAF2;--t:#0c2347;--text:#0c2347;--mut:#4a5f86;--line:rgba(10,61,145,.22);
+ --nb-glass:rgba(226,236,250,.72);--nb-glass2:rgba(210,224,245,.55);--nb-edge:rgba(255,255,255,.5)}
+html:not([data-theme=dark]) body{background:
+  radial-gradient(520px 420px at 8% 4%,rgba(60,130,235,.45),transparent 65%),
+  radial-gradient(560px 460px at 96% 12%,rgba(30,107,255,.30),transparent 65%),
+  radial-gradient(640px 520px at 50% 108%,rgba(150,185,235,.8),transparent 65%),
+  linear-gradient(180deg,#D3E1F5 0%,#B4CBEA 100%) fixed!important}
+html:not([data-theme=dark]) body #app :is(.card,.tile,.kpi .k,.sm .k,.pt,.qa div,.buyer-product,.buyer-stat,.buyer-trust .trust,.buyer-shortcut,.buyer-empty,.buyer-how,.fin-note,.dclock){
+ background:linear-gradient(145deg,rgba(232,240,252,.86),rgba(212,226,246,.66))!important;
+ border-color:rgba(10,61,145,.20)!important;box-shadow:0 14px 34px -22px rgba(10,61,145,.5),inset 0 1px 0 rgba(255,255,255,.55)!important}
+html:not([data-theme=dark]) body #app :is(input,select,textarea){background:rgba(238,244,253,.9)!important;border-color:rgba(10,61,145,.28)!important;color:#0c2347!important}
+html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
+/* ---------- Tombol unduh APK ---------- */
+.nb-apk{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:12px 0;padding:14px 18px;border:1px solid rgba(255,255,255,.55);
+ border-radius:16px;font:700 15px/1 inherit;font-family:inherit;color:#fff;cursor:pointer;text-decoration:none;letter-spacing:.3px;
+ background:linear-gradient(135deg,#0A3D91,#1E6BFF 70%,#5AA9FF);box-shadow:0 14px 30px -14px rgba(10,61,145,.9),inset 0 1px 0 rgba(255,255,255,.45)}
+.nb-apk:active{transform:scale(.98)}
+.nb-apk svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nb-apk small{display:block;font-weight:500;font-size:11px;opacity:.85;margin-top:3px}
+</style>
+
 
 <script id="nablo-js">
 /* Nama toko, banner pelanggan, editor banner. Tidak mengubah logika bisnis. */
@@ -2110,7 +2133,7 @@ html[data-theme=dark] .nb-bn{border-color:rgba(143,190,255,.4)}
  function bannerHTML(){
   var b=banners();
   return '<div class="nb-bn" id="nbBn">'+b.map(function(x,i){
-   var img=/^https?:\/\//i.test(x.img||'')?'background-image:url(\''+esc(x.img)+'\')':'';
+   var img=/^(https?:\/\/|data:image\/)/i.test(x.img||'')?'background-image:url(\''+esc(x.img)+'\')':'';
    return '<div class="nb-sl'+(i?'':' on')+'" style="'+img+'"><div>'+(x.tag?'<small>'+esc(x.tag)+'</small>':'')+'<h3>'+esc(x.title||'')+'</h3><p>'+esc(x.sub||'')+'</p></div></div>'}).join('')+
    (b.length>1?'<div class="nb-dots">'+b.map(function(_,i){return '<i class="'+(i?'':'on')+'" onclick="nbGo('+i+')"></i>'}).join('')+'</div>':'')+'</div>';
  }
@@ -2126,26 +2149,58 @@ html[data-theme=dark] .nb-bn{border-color:rgba(143,190,255,.4)}
   pg.insertAdjacentHTML('afterbegin',bannerHTML());startAuto();
  }
 
+ /* ----- tombol unduh APK ----- */
+ var APK_DEF='';
+ function apkUrl(){var u='';try{u=(S.d&&S.d.settings&&S.d.settings.apk_url)||(S.pub&&S.pub.apk_url)||localStorage.getItem('nb_apk')||APK_DEF}catch(e){}return /^https?:\/\//i.test(u)?u:''}
+ function apkHTML(){
+  var u=apkUrl(),ic='<svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>';
+  return '<a class="nb-apk" id="nbApk" '+(u?'href="'+esc(u)+'" target="_blank" rel="noopener" download':'href="#" onclick="toast(\'Link APK belum diatur admin\');return false"')+'>'+ic+'<span>Unduh Aplikasi (APK)<small>Android</small></span></a>';
+ }
+ function injectApk(){
+  if(typeof S==='undefined'||document.getElementById('nbApk'))return;
+  var host=null,where='beforeend';
+  if(S.p==='login'){host=document.querySelector('#app .lg');}
+  else if(['beranda','kat'].includes(S.p)){var bn=document.getElementById('nbBn');if(bn){host=bn;where='afterend'}}
+  if(host)host.insertAdjacentHTML(where,apkHTML());
+ }
+
  /* ----- editor banner (SUPERADMIN, halaman Pengaturan) ----- */
+ var IM=['','',''];
+ function shrink(f,w,h,q){return new Promise(function(ok,no){
+  var u=URL.createObjectURL(f),im=new Image();
+  im.onload=function(){var c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');
+   var r=Math.max(w/im.width,h/im.height),dw=im.width*r,dh=im.height*r;
+   x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(im,(w-dw)/2,(h-dh)/2,dw,dh);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',q))};
+  im.onerror=function(){URL.revokeObjectURL(u);no(new Error('File bukan gambar yang valid'))};im.src=u})}
+ function prev(i){var v=document.getElementById('nb_v'+i);if(v)v.style.backgroundImage=IM[i]?'url(\''+IM[i]+'\')':'';
+  var t=document.getElementById('nb_n'+i);if(t)t.textContent=IM[i]?'Foto siap ('+Math.round(IM[i].length*.75/1024)+' KB)':'Belum ada foto'}
+ window.nbPick=async function(el,i){var f=el.files&&el.files[0];el.value='';if(!f)return;
+  if(!/^image\//i.test(f.type))return toast('Pilih file gambar');
+  try{IM[i]=await shrink(f,640,240,.55);prev(i)}catch(e){toast(e.message)}};
+ window.nbClr=function(i){IM[i]='';prev(i)};
  function editor(){
   if(typeof S==='undefined'||S.p!=='set'||ROLE()!=='SUPERADMIN')return;
   var pg=document.querySelector('#app .pg');if(!pg||pg.querySelector('#nbEd'))return;
   var b=banners().slice(0,3);while(b.length<3)b.push({tag:'',title:'',sub:'',img:''});
-  var h='<div class="card nb-ed" id="nbEd"><b>Banner Pelanggan</b><small>Tampil di Beranda & Katalog pembeli. Kosongkan judul untuk menghapus slide. Gambar: tempel link https (disarankan rasio 16:6).</small>'+
-   b.map(function(x,i){return '<div class="nb-g"><label>Slide '+(i+1)+' · Label</label><input id="nb_t'+i+'" value="'+esc(x.tag||'')+'" maxlength="24"><label>Judul</label><input id="nb_h'+i+'" value="'+esc(x.title||'')+'" maxlength="80"><label>Keterangan</label><textarea id="nb_s'+i+'" maxlength="160">'+esc(x.sub||'')+'</textarea><label>Link gambar (opsional)</label><input id="nb_i'+i+'" value="'+esc(x.img||'')+'" placeholder="https://..."></div>'}).join('')+
-   '<button class="btn g w" onclick="nbSave()">SIMPAN BANNER</button><button class="btn l w" onclick="nbReset()">Kembalikan bawaan</button></div>';
-  pg.insertAdjacentHTML('afterbegin',h);
+  b.forEach(function(x,i){IM[i]=/^data:image\//.test(x.img||'')?x.img:''});
+  var h='<div class="card nb-ed" id="nbEd"><b>Banner Pelanggan</b><small>Tampil di Beranda & Katalog pembeli. Kosongkan judul untuk menghapus slide. Foto dipilih dari galeri HP/laptop (otomatis dikecilkan).</small>'+
+   b.map(function(x,i){return '<div class="nb-g"><label>Slide '+(i+1)+' · Label</label><input id="nb_t'+i+'" value="'+esc(x.tag||'')+'" maxlength="24"><label>Judul</label><input id="nb_h'+i+'" value="'+esc(x.title||'')+'" maxlength="80"><label>Keterangan</label><input id="nb_s'+i+'" value="'+esc(x.sub||'')+'" maxlength="140">'+
+    '<label>Foto banner</label><div class="up"><div class="upv c" id="nb_v'+i+'" style="width:96px;height:36px;border-radius:10px;background:#cfdcf1 center/cover"></div><div class="upb"><label class="btn g"><input type="file" accept="image/*" hidden onchange="nbPick(this,'+i+')">🖼️ Pilih dari Galeri</label><button class="btn l" type="button" onclick="nbClr('+i+')">Hapus</button><small id="nb_n'+i+'"></small></div></div></div>'}).join('')+
+   '<div class="nb-g"><label>Link Download APK (https)</label><input id="nb_apk" value="'+esc(apkUrl())+'" placeholder="https://...apk atau link Google Drive"></div><button class="btn g w" onclick="nbSave()">SIMPAN BANNER & APK</button><button class="btn l w" onclick="nbReset()">Kembalikan bawaan</button></div>';
+  pg.insertAdjacentHTML('afterbegin',h);[0,1,2].forEach(prev);
  }
  window.nbSave=function(){
-  var a=[0,1,2].map(function(i){var g=function(k){return(document.getElementById('nb_'+k+i)||{}).value||''};return{tag:g('t').trim(),title:g('h').trim(),sub:g('s').trim(),img:g('i').trim()}}).filter(function(x){return x.title});
-  var js=JSON.stringify(a);
-  try{localStorage.setItem('nb_banner',js)}catch(e){}
-  run(async function(){await act('saveSettings',{banner_json:js});if(S.d&&S.d.settings)S.d.settings.banner_json=js;toast('Banner tersimpan')},function(){render()});
+  var g=function(k,i){return(document.getElementById('nb_'+k+i)||{}).value||''};
+  var a=[0,1,2].map(function(i){return{tag:g('t',i).trim(),title:g('h',i).trim(),sub:g('s',i).trim(),img:IM[i]||''}}).filter(function(x){return x.title});
+  var js=JSON.stringify(a),ap=((document.getElementById('nb_apk')||{}).value||'').trim();
+  if(js.length>46000)return toast('Foto terlalu besar, kurangi jumlah foto banner');
+  try{localStorage.setItem('nb_banner',js);localStorage.setItem('nb_apk',ap)}catch(e){}
+  run(async function(){await act('saveSettings',{banner_json:js,apk_url:ap});if(S.d&&S.d.settings){S.d.settings.banner_json=js;S.d.settings.apk_url=ap}toast('Banner tersimpan')},function(){render()});
  };
  window.nbReset=function(){try{localStorage.removeItem('nb_banner')}catch(e){}
   run(async function(){await act('saveSettings',{banner_json:''});if(S.d&&S.d.settings)S.d.settings.banner_json='';toast('Banner dikembalikan')},function(){render()})};
 
- function tick(){try{brand();injectBanner();editor()}catch(e){console.warn('Nablo:',e)}}
+ function tick(){try{brand();injectBanner();injectApk();editor()}catch(e){console.warn('Nablo:',e)}}
  var app=document.getElementById('app');
  if(app)new MutationObserver(tick).observe(app,{childList:true});
  var d=document.getElementById('drw');if(d)new MutationObserver(brand).observe(d,{childList:true});
