@@ -1410,4 +1410,21 @@ if(new URLSearchParams(window.location.search).get('v')==='katalog'&&!S.u)nav('k
  P.pelanggan=()=>hd('Pelanggan','dash')+`<div class="pg"><div class="buyer-section"><div><h3>Daftar Pelanggan</h3><p>Akun pembeli yang terdaftar</p></div><span class="buyer-count">${buyers().length} akun</span></div><div class="stk-s"><input aria-label="Cari pelanggan" placeholder="🔍 Cari nama / username / WhatsApp" value="${esc(S.pq||'')}" oninput="S.pq=this.value;custList()"></div><div class="card" id="pl" style="margin-top:10px">${custHTML()}</div></div>`;
 })();
 </script>
+<script id="update2-favicon">
+/* Ikon tab browser mengikuti Logo Toko (Pengaturan). Tanpa logo: memakai ikon bawaan. */
+(function(){
+ var cur='';
+ function ensure(rel){var l=document.querySelector('link[rel="'+rel+'"]');if(!l){l=document.createElement('link');l.rel=rel;document.head.appendChild(l)}return l}
+ function apply(u){if(u===cur)return;cur=u;var f=ensure('icon'),a=ensure('apple-touch-icon');f.removeAttribute('type');f.href=u;a.href=u}
+ function sync(){
+  try{
+   var u=(S.d&&S.d.settings&&S.d.settings.store_logo_url)||(S.pub&&S.pub.store_logo_url)||'';
+   if(!u){apply(ICON);return}
+   if(u===cur)return;
+   var im=new Image();im.onload=function(){apply(u)};im.onerror=function(){apply(ICON)};im.src=u;
+  }catch(e){}
+ }
+ apply(ICON);sync();setInterval(sync,2000);
+})();
+</script>
 </body></html>
