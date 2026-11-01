@@ -2129,7 +2129,7 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
  /* ----- data banner ----- */
  function banners(){
   var raw='';
-  try{raw=(S.d&&S.d.settings&&S.d.settings.banner_json)||(S.pub&&S.pub.banner_json)||localStorage.getItem('nb_banner')||''}catch(e){}
+  try{raw=(S.d&&S.d.settings&&S.d.settings.banner_json)||(S.pub&&S.pub.banner_json)||''}catch(e){}
   try{var a=JSON.parse(raw);if(Array.isArray(a)){a=a.filter(function(x){return x&&(x.title||x.img)});if(a.length)return a}}catch(e){}
   return DEF;
  }
@@ -2153,7 +2153,7 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
  }
 
  /* ----- tombol unduh APK ----- */
- function apkId(){var v='';try{v=(S.d&&S.d.settings&&S.d.settings.apk_file_id)||(S.pub&&S.pub.apk_file_id)||localStorage.getItem('nb_apkid')||''}catch(e){}return /^[\w-]{10,}$/.test(v)?v:''}
+ function apkId(){var v='';try{v=(S.d&&S.d.settings&&S.d.settings.apk_file_id)||(S.pub&&S.pub.apk_file_id)||''}catch(e){}return /^[\w-]{10,}$/.test(v)?v:''}
  function apkUrl(){var i=apkId();return i?'https://drive.google.com/uc?export=download&id='+i:''}
  function apkHTML(){
   var u=apkUrl(),ic='<svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>';
@@ -2210,7 +2210,7 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
  window.nbApkPick=async function(el){
   var f=el.files&&el.files[0];el.value='';if(!f)return;
   if(!/\.apk$/i.test(f.name))return toast('Pilih file berformat .apk');
-  if(f.size>60*1024*1024)return toast('Ukuran APK maksimal 60 MB');
+  if(f.size>24*1024*1024)return toast('Ukuran APK maksimal 24 MB');
   if(!confirm('Unggah '+f.name+' ('+(f.size/1048576).toFixed(1)+' MB)?'))return;
   var bar=document.getElementById('nb_apkp'),fill=bar&&bar.firstElementChild,note=document.getElementById('nb_apkn');
   if(bar)bar.style.display='block';
@@ -2224,8 +2224,8 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
     if(r&&r.r&&r.r.apk_file_id)id=r.r.apk_file_id;
    }
    if(!id)throw new Error('Unggah belum selesai di server');
-   try{localStorage.setItem('nb_apkid',id)}catch(e){}
    if(S.d&&S.d.settings)S.d.settings.apk_file_id=id;
+   if(S.pub)S.pub.apk_file_id=id;
    if(note)note.textContent='APK berhasil diunggah ✔';toast('APK berhasil diunggah')
   }catch(e){if(note)note.textContent='Gagal mengunggah';toast(cleanErr(e&&e.message||e))}
  };
@@ -2234,11 +2234,10 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
   var a=[0,1,2].map(function(i){return{tag:g('t',i).trim(),title:g('h',i).trim(),sub:g('s',i).trim(),img:IM[i]||''}}).filter(function(x){return x.title});
   var js=JSON.stringify(a);
   if(js.length>46000)return toast('Foto terlalu besar, kurangi jumlah foto banner');
-  try{localStorage.setItem('nb_banner',js)}catch(e){}
-  run(async function(){await act('saveSettings',{banner_json:js});if(S.d&&S.d.settings){S.d.settings.banner_json=js}toast('Banner tersimpan')},function(){render()});
+  run(async function(){await act('saveSettings',{banner_json:js});if(S.d&&S.d.settings){S.d.settings.banner_json=js}if(S.pub)S.pub.banner_json=js;toast('Banner tersimpan')},function(){render()});
  };
- window.nbReset=function(){try{localStorage.removeItem('nb_banner')}catch(e){}
-  run(async function(){await act('saveSettings',{banner_json:''});if(S.d&&S.d.settings)S.d.settings.banner_json='';toast('Banner dikembalikan')},function(){render()})};
+ window.nbReset=function(){
+  run(async function(){await act('saveSettings',{banner_json:''});if(S.d&&S.d.settings)S.d.settings.banner_json='';if(S.pub)S.pub.banner_json='';toast('Banner dikembalikan')},function(){render()})};
 
  function tick(){try{brand();injectBanner();injectApk();editor()}catch(e){console.warn('Nablo:',e)}}
  var app=document.getElementById('app');
