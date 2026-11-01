@@ -271,6 +271,9 @@ const $=s=>document.querySelector(s),rp=n=>'Rp '+Number(n||0).toLocaleString('id
 esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let S={u:null,t:null,d:null,p:'login',q:'',f:'TERSEDIA',edit:null,inv:null,sel:'',from:'',to:'',per:'30',kper:'bulan',kfrom:'',kto:'',sale:null,nextP:'dash',pub:{},cat:undefined,kq:'',kbrand:'SEMUA',ksort:'rekomendasi',reg:null,fp:null,pf:null,compareIds:[],compareDetails:{},sold:undefined,soldLoading:false};
 const API_URL='https://surkusstore-api.kusumaponsel566.workers.dev/';
+const SAFE_MSG='Layanan sedang sibuk atau bermasalah. Silakan coba lagi beberapa saat lagi.';
+const TECH_ERR=/cloudflare|worker|apps\s*script|script\.google|googleusercontent|deployment|<\/?[a-z!][^>]*>|exception|stack|typeerror|referenceerror|syntaxerror|rangeerror|undefined|\bnull\b|https?:\/\/|\bHTTP\s*\d|\bError\s*\d{3,4}|ray id|\bat\s+[\w$.]+\s*\(|\.gs\b|spreadsheet|\bapi\b|token|secret|key|quota|unauthorized|forbidden/i;
+const cleanErr=m=>{m=String(m==null?'':m).replace(/^Error:\s*/,'');if(m.indexOf('SESI_HABIS')>=0)return m;if(!m||m.length>220||TECH_ERR.test(m)){try{console.warn('[server]',m.slice(0,300))}catch(_){}return SAFE_MSG}return m};
 const api=async(fn,...a)=>{
   let response, raw, data;
   try {
@@ -282,13 +285,13 @@ const api=async(fn,...a)=>{
     });
     raw=await response.text();
     try { data=JSON.parse(raw); }
-    catch(_) { throw new Error('Respons server tidak valid. Periksa deployment Apps Script dan Cloudflare Worker.'); }
-    if(!response.ok) throw new Error(data&&data.error||('HTTP '+response.status));
-    if(!data || data.ok!==true) throw new Error(data&&data.error||'Permintaan API gagal');
+    catch(_) { throw new Error(SAFE_MSG); }
+    if(!response.ok) throw new Error(cleanErr(data&&data.error||('HTTP '+response.status)));
+    if(!data || data.ok!==true) throw new Error(cleanErr(data&&data.error||'Permintaan gagal'));
     return data.result;
   } catch(e) {
-    if(e instanceof TypeError) throw new Error('Koneksi ke server gagal. Periksa internet atau alamat API Cloudflare Worker.');
-    throw (e instanceof Error ? e : new Error(String(e)));
+    if(e instanceof TypeError) throw new Error('Koneksi gagal. Periksa internet Anda lalu coba lagi.');
+    throw new Error(cleanErr(e&&e.message||e));
   }
 };
 const RID=()=>Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6),
@@ -2156,8 +2159,20 @@ html:not([data-theme=dark]) body #app th{background:#cfdcf1!important}
   var u=apkUrl(),ic='<svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>';
   return '<a class="nb-apk" id="nbApk" '+(u?'href="'+esc(u)+'" target="_blank" rel="noopener" download':'href="#" onclick="toast(\'Link APK belum diatur admin\');return false"')+'>'+ic+'<span>Unduh Aplikasi (APK)<small>Android</small></span></a>';
  }
+ function inApp(){
+  try{
+   if(/[?&]app=1\b/.test(location.search))localStorage.setItem('nb_inapp','1');
+   if(localStorage.getItem('nb_inapp')==='1')return true;
+  }catch(e){}
+  var ua=navigator.userAgent||'';
+  if(/; wv\)|\bwv\b|Version\/[\d.]+ Chrome\/[\d.]+ (Mobile )?Safari/.test(ua)&&/Android/.test(ua))return true;
+  if(window.matchMedia&&(matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches))return true;
+  if(navigator.standalone)return true;
+  return false;
+ }
  function injectApk(){
   if(typeof S==='undefined'||document.getElementById('nbApk'))return;
+  if(inApp()){var o=document.getElementById('nbApk');if(o)o.remove();return}
   var host=null,where='beforeend';
   if(S.p==='login'){host=document.querySelector('#app .lg');}
   else if(['beranda','kat'].includes(S.p)){var bn=document.getElementById('nbBn');if(bn){host=bn;where='afterend'}}
