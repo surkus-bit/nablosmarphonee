@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id"><head><base target="_top"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -392,8 +391,64 @@ nav button.on{color:var(--blue);background:var(--blue-l)}
 .mp-dt{display:grid;grid-template-columns:1fr;gap:16px;margin-top:14px}@media(min-width:760px){.mp-dt{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 .mp-info h1{font-size:22px;margin:0 0 6px}.mp-pr{font-size:24px;font-weight:700;color:var(--navy)}.mp-act{display:flex;flex-wrap:wrap;gap:8px}.mp-act .btn{margin:0}
 .mp-lk{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.mp-lk .btn{margin:0}.mp-em{color:var(--mut);font-size:13px}
+
+ /* Seller Centre: dashboard mitra dengan navigasi kerja yang konsisten */
+ .sc-page{max-width:1200px}
+ .sc-welcome{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:20px;border-radius:14px;background:var(--navy);color:#fff;margin-bottom:14px}
+ .sc-welcome small{font-size:11px;color:#9DB8CF;font-weight:700;letter-spacing:.5px}
+ .sc-welcome h2{font-size:22px;color:#fff;margin:4px 0}
+ .sc-welcome p{font-size:13px;color:#CBD5E1}
+ .sc-tabs{display:flex;gap:7px;overflow-x:auto;padding:3px 0 12px;margin-bottom:4px;scrollbar-width:none}
+ .sc-tabs .btn{white-space:nowrap;flex:none}
+ .sc-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 14px}
+ .sc-kpi>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px}
+ .sc-kpi small{display:block;color:var(--mut);font-size:12px}
+ .sc-kpi b{display:block;color:var(--navy);font-size:21px;margin-top:4px;overflow-wrap:anywhere}
+ .sc-panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+ .sc-panels .card{margin:0}
+ .buyer-nav{box-shadow:0 -3px 14px rgba(20,43,69,.06)}
+ .buyer-nav button{font-size:10.5px}
+ .buyer-nav button i{font-size:18px}
+ @media(max-width:480px){.sc-welcome{align-items:flex-start;flex-direction:column}.sc-welcome .btn{width:100%}}
+
 .mp .pg{max-width:none}
-</style></head><body>
+</style>
+<style id="nablo-shopee">
+/* NABLO · perapian tata letak (tema navy/biru awal dipertahankan) */
+body{font-size:14px;line-height:1.5}
+.pg{padding:14px 12px 20px}
+.card{border-radius:var(--r);padding:16px;margin-bottom:12px}
+.card p{margin:6px 0}.card label{display:block;margin:12px 0 5px;font-size:12.5px;font-weight:600;color:#475569}
+.card>b:first-child{margin-bottom:12px}
+input,select,textarea{width:100%;padding:11px 12px;margin:0 0 4px;border:1px solid #CBD5E1;border-radius:8px;background:#fff;font-size:14px;min-height:44px}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 3px rgba(36,91,134,.15)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;margin:6px 6px 6px 0;line-height:1.2}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.bk,.ic{min-width:40px;min-height:40px}
+table{border-collapse:collapse}th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}th{background:#F8FAFC;font-size:12px;color:#475569}
+/* marketplace */
+.mp-top{padding:calc(10px + env(safe-area-inset-top,0px)) 12px 12px;margin:0 -12px}
+@media(min-width:900px){.mp-top{margin:0}}
+.mp-s{margin-top:18px}
+.mp-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.mp-cats button{padding:12px 6px;border-radius:10px;line-height:1.25}
+.mp-g{gap:10px}
+.mp-c{box-shadow:var(--sh);transition:transform .15s,box-shadow .15s}
+.mp-c:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(20,43,69,.14)}
+.mp-bd{padding:9px 10px 12px;gap:5px}
+.mp-f{gap:10px}
+/* navigasi bawah */
+.buyer-nav button,#app>nav button{gap:3px;padding:8px 2px}
+/* Seller Centre mitra */
+.sc-tabs{gap:8px;padding:6px 0 12px;position:sticky;top:56px;z-index:4;background:var(--bg)}
+.sc-tabs .btn{margin:0;border-radius:20px;padding:8px 16px;min-height:38px}
+.sc-kpi{gap:10px}.sc-kpi>div{border-left:4px solid var(--blue);box-shadow:var(--sh)}
+.sc-panels{gap:12px}
+.sc-st{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700;background:var(--blue-l);color:var(--blue)}
+@media(max-width:480px){.pg{padding:12px 10px 20px}.card{padding:14px}.btn{padding:10px 14px}}
+</style>
+</head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
 <div id="app"></div><div id="drw"></div><div id="mod"></div><div id="toast"></div>
 <script>
@@ -547,8 +602,8 @@ const ni=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${NI[k]||''}</svg>`;
 const MENU=[['dash',ni('dash'),'Beranda',ALL],['stok',ni('stok'),'Stok HP',['SUPERADMIN','OWNER','SUB_OWNER','GUDANG']],['servis',ni('servis'),'Servis',['SUPERADMIN','OWNER','SUB_OWNER','TEKNISI']],['qc',ni('qc'),'QC',['SUPERADMIN','OWNER','SUB_OWNER','QC','TEKNISI']],['jual',ni('jual'),'Penjualan',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['lap',ni('lap'),'Laporan',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['keu',ni('keu'),'Keuangan',['SUPERADMIN','OWNER','SUB_OWNER']],['kalk',ni('kalk'),'Kalkulator',['SUPERADMIN','OWNER','GUDANG']],['data',ni('data'),'Data & Akun',['SUPERADMIN','OWNER','SUB_OWNER','GUDANG']],['set',ni('set'),'Pengaturan',['SUPERADMIN']],['spesifikasi',ni('spesifikasi'),'Spesifikasi',['SUPERADMIN','SPESIFIKASI']],['notifikasi',ni('notifikasi'),'Pengumuman',['SUPERADMIN','OWNER']],['profil',ni('profil'),'Profil Saya',ALL]];
 /* Pengelompokan menu (hanya tampilan; hak akses tetap dari daftar peran di atas) */
 const MENUGRP=[{k:['dash']},{id:'jual',n:'Penjualan',i:'jual',k:['jual','lap']},{id:'stok',n:'Produk & Stok',i:'stok',k:['stok','spesifikasi','kalk']},{id:'servis',n:'Layanan Servis',i:'servis',k:['servis','qc']},{k:['keu']},{id:'data',n:'Data & Akun',i:'data',k:['data','notifikasi']},{k:['set']},{k:['profil']}];
-const BUYERMENU=[['beranda',ni('dash'),'Beranda'],['kat',ni('kat'),'Katalog HP'],['terjual',ni('terjual'),'HP Terjual'],['bandingkan',ni('bandingkan'),'Bandingkan'],['pesanan',ni('jual'),'Pesanan Saya'],['akun',ni('profil'),'Akun Saya']];
-const BUYERGRP=[{k:['beranda']},{id:'belanja',n:'Belanja',i:'kat',k:['kat','terjual','bandingkan','pesanan']},{k:['akun']}];
+const BUYERMENU=[['intro',ni('kat'),'Beranda / Katalog'],['keranjang',ni('cart'),'Keranjang'],['mporders',ni('jual'),'Pesanan Saya'],['mpfav','♡','Favorit'],['akun',ni('profil'),'Akun Saya']];
+const BUYERGRP=[{k:['intro']},{id:'belanja',n:'Belanja',i:'kat',k:['keranjang','mporders','mpfav']},{k:['akun']}];
 const menuHTML=()=>{const r=ROLE(),buyer=r==='PEMBELI',src=buyer?BUYERMENU:MENU,grp=buyer?BUYERGRP:MENUGRP,
  map={form:'stok',inv:'jual',qris:'jual',profil:buyer?'akun':'profil'},c=map[S.p]||S.p,
  vis=k=>src.find(x=>x[0]===k&&(buyer||x[3].includes(r))),
@@ -597,7 +652,7 @@ lupa:()=>{const f=S.fp||{step:1,id:''};const s2=f.step===2;return `<div class="h
 notifikasi:()=>`<div class="hd"><b>Notifikasi</b><button class="btn l" onclick="loadNotifications()">Muat ulang</button></div><div class="pg"><div id="notifList"><div class="card">Memuat notifikasi…</div></div>${['SUPERADMIN','OWNER'].includes(ROLE())?`<div class="card"><b>Kirim pengumuman</b><label>Judul</label><input id="nt_title" maxlength="100" placeholder="Contoh: Stok baru tersedia"><label>Pesan</label><textarea id="nt_message" rows="4" maxlength="1500" placeholder="Tulis informasi untuk penerima…"></textarea><label>Penerima</label><select id="nt_audience"><option value="ALL">Semua pengguna</option><option value="PEMBELI">Pembeli</option><option value="STAFF">Semua staf</option><option value="GUDANG">Gudang</option><option value="KASIR">Kasir</option><option value="TEKNISI">Teknisi</option><option value="QC">QC</option><option value="SPESIFIKASI">Petugas spesifikasi</option><option value="OWNER">Owner</option><option value="SUB_OWNER">Sub Owner</option></select><label style="display:flex;align-items:center;gap:8px"><input id="nt_email" type="checkbox" style="width:auto"> Kirim juga melalui email</label><button class="btn g w" onclick="sendNotifUI()">KIRIM PENGUMUMAN</button><small>Email dikirim ke alamat yang terdaftar dan sesuai penerima. Aktifkan izin MailApp terlebih dahulu.</small></div>`:''}</div>`,
 profil:()=>{const u=S.u||{},f=S.pf||{},V=k=>esc(f[k]!==undefined?f[k]:(u[k]||'')),back=ROLE()==='PEMBELI'?'akun':'dash';return `<div class="hd"><button class="bk" onclick="nav('${back}')">←</button><b>Profil Saya</b></div><div class="pg"><div class="card" style="text-align:center"><div class="av" style="width:96px;height:96px;border-radius:30px;margin:0 auto 10px;font-size:30px;color:inherit">${avHTML()}</div><b>${esc(u.full_name||'')}</b><br><small>@${esc(u.username||'')} · ${esc(ROLE())}</small><div class="row" style="justify-content:center;margin-top:10px;gap:8px"><label class="btn g"><input type="file" accept="image/*" hidden onchange="pickProfilePhoto(this)">📷 ${u.photo_url?'Ganti Foto':'Unggah Foto'}</label>${u.photo_url?`<button class="btn l" onclick="delProfilePhoto()">Hapus Foto</button>`:''}</div></div><div class="card"><b>Data diri</b><label>Nama lengkap</label><input id="pf_n" value="${V('full_name')}" autocomplete="name"><label>No. WhatsApp</label><input id="pf_h" type="tel" value="${V('phone')}"><label>Email (untuk reset password)</label><input id="pf_e" type="email" value="${V('email')}" autocapitalize="off" autocomplete="email"><label>Password saat ini (wajib bila mengganti email)</label><input id="pf_c" type="password" autocomplete="current-password"><button class="btn g w" onclick="saveProfile()">SIMPAN PROFIL</button></div><div class="card"><b>Ubah password</b><label>Password saat ini</label><input id="pw_o" type="password" autocomplete="current-password"><label>Password baru (minimal 8 karakter)</label><input id="pw_n" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="pw_k" type="password" autocomplete="new-password"><button class="btn g w" onclick="doChangePw()">UBAH PASSWORD</button><small>Setelah diubah, perangkat lain harus masuk ulang.</small></div><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`},
 boot:()=>`<div class="lg"><div class="lgl">${logo(90)}</div><p class="sub" style="text-align:center">Memuat…</p></div>`,
-akun:()=>`<div class="hd"><button class="bk" onclick="nav('beranda')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN NABLO SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('pesanan')">🧾 Pesanan Saya</button><button class="btn l w" onclick="openCart()">🛒 Keranjang</button><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
+akun:()=>`<div class="hd"><button class="bk" onclick="nav('intro')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN NABLO SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('mporders')">🧾 Pesanan Marketplace Saya</button><button class="btn l w" onclick="nav('keranjang')">🛒 Keranjang</button><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('intro')">Lihat Katalog Marketplace</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
 login:()=>`<div class="lg"><div class="lgl">${logo(90)}</div>
 <h1>Masuk</h1><p class="sub">Masuk ke akun Anda untuk melanjutkan</p>
 <div class="box">
@@ -813,7 +868,7 @@ const stokList=l=>{const sm=S.f==='TERJUAL'||S.f==='ALL'?soldMap():{},lim=S.lim|
 const stokLabel=f=>f==='TERSEDIA'?'Tersedia':f==='ALL'?'Semua':(ST[f]||[f])[0];
 const list=()=>{const l=filt();$('#ls').innerHTML=stokList(l);const n=$('#sn');if(n)n.textContent=l.length+' unit · '+stokLabel(S.f)};
 const stokDeb=()=>{clearTimeout(stokDeb.t);S.lim=60;stokDeb.t=setTimeout(list,120)};
-const doLogin=()=>{const r=$('#lr').checked,n=$('#lu').value.trim();S.lu=n;run(async()=>{const x=await api('login',n,$('#lp').value);S.u=x.u;S.t=x.t;S.d=x.d;try{localStorage.setItem('sk_token',x.t);localStorage.setItem('sk_token_exp',String(Date.now()+30*24*60*60*1000));r?localStorage.setItem('sk_u',n):localStorage.removeItem('sk_u')}catch(e){}},()=>{S.lu='';const pending=S.pendingDetail;S.pendingDetail=null;nav(ROLE()==='PEMBELI'?'beranda':'dash');if(pending&&ROLE()==='PEMBELI')katDetail(pending)})};
+const doLogin=()=>{const r=$('#lr').checked,n=$('#lu').value.trim();S.lu=n;run(async()=>{const x=await api('login',n,$('#lp').value);S.u=x.u;S.t=x.t;S.d=x.d;try{localStorage.setItem('sk_token',x.t);localStorage.setItem('sk_token_exp',String(Date.now()+30*24*60*60*1000));r?localStorage.setItem('sk_u',n):localStorage.removeItem('sk_u')}catch(e){}},()=>{S.lu='';const pending=S.pendingDetail;S.pendingDetail=null;const target=S.nextP||(ROLE()==='PEMBELI'?'intro':ROLE()==='MITRA'?'mitrabiz':'dash');S.nextP=null;nav(target);if(pending&&ROLE()==='PEMBELI')katDetail(pending)})};
 const setTok=t=>{S.t=t;try{localStorage.setItem('sk_token',t);localStorage.setItem('sk_token_exp',String(Date.now()+30*24*60*60*1000))}catch(e){}};
 const PW_OK=(p,c)=>{if(String(p).length<8)throw new Error('Password baru minimal 8 karakter');if(p!==c)throw new Error('Konfirmasi password tidak sama')};
 const lupaKirim=()=>{const id=($('#fpi').value||'').trim();S.fp=Object.assign({},S.fp,{step:1,id});run(async()=>{if(!id)throw new Error('Isi username atau email');const x=await api('requestPasswordReset',id);S.fp={step:2,id,msg:(x&&x.message)||''}},()=>render())};
@@ -1047,18 +1102,18 @@ async function sendNotifUI(){const title=($('#nt_title')||{}).value||'',message=
   ()=>{if($('#nt_title'))$('#nt_title').value='';if($('#nt_message'))$('#nt_message').value='';pollNotifs(true)})}
 function render(){
  if(!S.u&&!['intro','login','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav'].includes(S.p))S.p='intro';
- if(S.u&&ROLE()==='MITRA'&&!['mitra','mitrabiz'].includes(S.p))S.p='mitra';
- if(S.u&&ROLE()==='PEMBELI'&&!['beranda','kat','akun','terjual','bandingkan','profil','notifikasi','keranjang','checkout','pesanan'].includes(S.p))S.p='beranda';
+ if(S.u&&ROLE()==='MITRA'&&!['mitra','mitrabiz','intro','mpsearch','mpprod','mpfav','tokos','tokod','lacak','mptrack','keranjang'].includes(S.p))S.p='mitrabiz';
+ if(S.u&&ROLE()==='PEMBELI'&&!['intro','mpsearch','mpprod','mpfav','mporders','akun','profil','notifikasi','keranjang','mptrack','beranda','kat','terjual','bandingkan','pesanan'].includes(S.p))S.p='intro';
  if(S.u&&!P[S.p])S.p='dash';
- const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav'].includes(S.p), role=ROLE();
+ const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav','mporders'].includes(S.p), role=ROLE();
  if(S.u&&!['inv','qris','form','beranda','kat','terjual','bandingkan','akun','profil'].includes(S.p)){
   if(role==='PEMBELI'&&['terjual','bandingkan','akun'].includes(S.p)){}else{const m=MENU.find(x=>x[0]===S.p);if(m&&!m[3].includes(role))S.p='dash'
   }
  }
  const prim=(lg||publicPage||role==='PEMBELI')?[]:(PRIMARY[role]||['dash']).map(k=>MENU.find(x=>x[0]===k)).filter(Boolean),
  inPrim=prim.some(x=>x[0]===S.p),
- n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='beranda'?'on':''}" onclick="nav('beranda')"><i>${ni('dash')}</i>Beranda</button><button class="${S.p==='kat'?'on':''}" onclick="nav('kat')"><i>${ni('kat')}</i>Katalog</button><button class="${S.p==='terjual'?'on':''}" onclick="nav('terjual')"><i>${ni('terjual')}</i>Terjual</button><button class="${S.p==='bandingkan'?'on':''}" onclick="nav('bandingkan')"><i>${ni('bandingkan')}</i>Bandingkan</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${S.p==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
- $('#app').className=(lg||S.p==='intro')?'noav':'';$('#app').innerHTML=P[S.p]()+n;ntfSync();
+ n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='intro'?'on':''}" onclick="nav('intro')"><i>${ni('dash')}</i>Katalog</button><button class="${S.p==='keranjang'?'on':''}" onclick="nav('keranjang')"><i>${ni('cart')}</i>Keranjang</button><button class="${S.p==='mporders'?'on':''}" onclick="nav('mporders')"><i>${ni('jual')}</i>Pesanan</button><button class="${S.p==='mpfav'?'on':''}" onclick="nav('mpfav')"><i>♡</i>Favorit</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${S.p==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
+ $('#app').className=(lg||(S.p==='intro'&&!(role==='PEMBELI'&&S.u)))?'noav':'';$('#app').innerHTML=P[S.p]()+n;ntfSync();
  if(role==='SUB_OWNER'&&S.p!=='profil'){
    // Mode pemeriksaan: tombol navigasi/lihat tetap aktif, seluruh tombol aksi perubahan dinonaktifkan.
    $('#app').querySelectorAll('button').forEach(b=>{const h=b.getAttribute('onclick')||'';if(!/nav\s*\(|openMenu\s*\(|doLogout\s*\(|viewPhoto\s*\(|toggleNotif\s*\(|ntf[A-Z]\w*\s*\(|pollNotifs\s*\(/.test(h)){b.disabled=true;b.title='SUB OWNER hanya dapat melihat data';b.style.opacity='.48';b.style.cursor='not-allowed';}});
@@ -1082,7 +1137,7 @@ render();
   try{
     const x=await api('resume',token);
     S.u=x.u;S.t=x.t;S.d=x.d;
-    S.p=String(x.u.role_id||'').replace(/^ROLE_/i,'').toUpperCase()==='PEMBELI'?'beranda':'dash';
+    const rr=String(x.u.role_id||'').replace(/^ROLE_/i,'').toUpperCase();S.p=rr==='PEMBELI'?'intro':rr==='MITRA'?'mitrabiz':'dash';
     render();
   }catch(e){const m=String(e&&e.message||e);if(m.indexOf('SESI_HABIS')>=0){try{localStorage.removeItem('sk_token');localStorage.removeItem('sk_token_exp')}catch(err){}}else toast('Koneksi bermasalah. Muat ulang halaman untuk melanjutkan sesi.');if(S.p==='boot'){S.p='login';render()}}
 })();
@@ -1540,19 +1595,19 @@ u3admin:()=>{u3auto('adm',u3adm);const a=U3.adm;if(!a)return u3hd('Mitra & Langg
  <div class="sec">Monitoring servis</div><div class="card">${Object.keys(a.svc_status).map(k=>`${esc(U3ST[k]||k)}: <b>${a.svc_status[k]}</b>`).join(' · ')||'Belum ada servis.'}${a.svc_recent.map(x=>`<p style="font-size:12px;color:var(--mut)">${esc(x.svc_no)} · ${esc(x.store_name)} · ${esc(U3ST[x.status]||x.status)}</p>`).join('')}</div>
  <div class="card"><b>Moderasi produk</b><br><button class="btn l" onclick="U3.mod=null;U3.fmod=0;nav('u3mod')">Buka Moderasi Produk</button></div><div class="sec">Log aktivitas</div><div class="card">${a.log.map(l=>`<p style="font-size:12px;color:var(--mut)">${esc(l.logged_at)} · ${esc(l.username)} · ${esc(l.action)} · ${esc(l.detail)}</p>`).join('')||'Belum ada.'}</div></div>`}
 });
-MENU.push(['mitra',ni('dash'),'Toko Saya',['MITRA']],['u3admin',ni('data'),'Mitra & Langganan',['SUPERADMIN']]);
-MENUGRP.splice(1,0,{k:['mitra','u3admin']});PRIMARY.MITRA=['mitra'];
+MENU.push(['mitrabiz',ni('dash'),'Seller Centre',['MITRA']],['mitra',ni('set'),'Toko & Langganan',['MITRA']],['u3admin',ni('data'),'Mitra & Langganan',['SUPERADMIN']]);
+MENUGRP.splice(1,0,{id:'seller',n:'Seller Centre',i:'dash',k:['mitrabiz','mitra']},{k:['u3admin']});PRIMARY.MITRA=['mitrabiz','mitra'];
 /* routing publik sederhana: ?toko=slug atau #toko/slug (GitHub Pages tidak punya server routing) */
 (()=>{const q=new URLSearchParams(location.search).get('toko')||(location.hash.match(/^#toko\/([a-z0-9-]+)/)||[])[1];if(q&&!S.u)u3open(q)})();
 </script>
 <script id="u3b">
 /* NABLO UPDATE 3b — katalog, keranjang per toko, bisnis mitra, moderasi (aditif) */
-Object.assign(U3,{cart:{},tab:'prod',pe:null});
+Object.assign(U3,{cart:{},tab:'home',pe:null});
 const u3ck=()=>Object.values(U3.cart).reduce((a,g)=>a+g.items.reduce((b,i)=>b+i.qty,0),0);
 const u3add=i=>{const p=U3.prods[i],m=U3.store,g=U3.cart[m.slug]||(U3.cart[m.slug]={name:m.store_name,pay:m.pay_info||'',phone:m.phone,items:[]}),it=g.items.find(x=>x.id===p.prod_id);if(it){if(it.qty<p.stock)it.qty++}else g.items.push({id:p.prod_id,name:p.name,price:p.price,qty:1,max:p.stock});toast('Masuk keranjang');render()};
 const u3qty=(s,i,d)=>{const g=U3.cart[s],it=g.items[i];it.qty+=d;if(it.qty<1)g.items.splice(i,1);else if(it.max&&it.qty>it.max)it.qty=it.max;if(!g.items.length)delete U3.cart[s];render()};
 const u3co=s=>{u3draft();const g=U3.cart[s];u3run(async()=>{const r=await api('u3Order',{slug:s,items:g.items.map(i=>({prod_id:i.id,qty:i.qty})),customer_name:u3v('cn_'+s),phone:u3v('cp_'+s),address:u3v('ca_'+s),pay_method:u3v('cm_'+s),note:u3v('ct_'+s)});r.pay=g.pay;U3.ores=r;delete U3.cart[s];U3.dr={}})};
-const u3bizLoad=()=>u3run(async()=>{U3.biz=await api('u3MyBiz',S.t)});
+const u3bizLoad=()=>u3run(async()=>{U3.biz=await api('u3MyBiz',S.t);U3.my=await api('u3MyStore',S.t)});
 const u3bizDo=(fn,ok,...a)=>u3run(async()=>{await api(fn,S.t,...a);U3.biz=await api('u3MyBiz',S.t);toast(ok)});
 const u3pedit=i=>{U3.pe=i<0?null:U3.biz.products[i];U3.dr={};U3.imgs.pph=[];render()};
 const u3psave=()=>{u3draft();const pe=U3.pe,o={prod_id:pe&&pe.prod_id,name:u3v('pn'),category:u3v('pc'),price:u3v('pp'),cost:u3v('pcs'),stock:u3v('ps'),description:u3v('pd'),photo:(U3.imgs.pph||[])[0]};u3run(async()=>{await api('u3ProdSave',S.t,o);U3.biz=await api('u3MyBiz',S.t);U3.pe=null;U3.imgs.pph=[];toast('Produk disimpan')})};
@@ -1575,12 +1630,14 @@ P.keranjang=()=>{const gs=Object.keys(U3.cart),r=U3.ores;
 
 P.mitrabiz=()=>{u3auto('biz',u3bizLoad);const b=U3.biz;if(!b)return u3hd('Bisnis Toko','mitra')+'<div class="pg">'+u3wait('biz')+'</div>';
  const T=(k,l)=>`<button class="btn ${U3.tab===k?'g':'l'}" style="margin:0 6px 6px 0" onclick="U3.tab='${k}';render()">${l}</button>`,pe=U3.pe||{},store=(U3.my&&U3.my.store&&U3.my.store.store_name)||'toko';let body='';
- if(U3.tab==='prod'){body=`<div class="card"><b>${pe.prod_id?'Edit produk':'Tambah produk'}</b>${u3f('pn','Nama produk','text',pe.name)}<label>Kategori</label><select id="u3_pc">${['HP baru','HP bekas','Aksesoris','Sparepart','Lainnya'].map(c=>`<option ${(pe.category||(U3.dr&&U3.dr.pc))===c?'selected':''}>${c}</option>`).join('')}</select>${u3f('pp','Harga jual (Rp)','number',pe.price)}${u3f('pcs','Modal (Rp)','number',pe.cost)}${u3f('ps','Stok','number',pe.stock)}${u3ta('pd','Deskripsi',pe.description)}${pe.photo_url&&!(U3.imgs.pph||[]).length?`<img src="${esc(pe.photo_url)}" alt="" style="width:72px;height:72px;object-fit:cover;border-radius:8px;display:block;margin-top:6px" referrerpolicy="no-referrer">`:''}${u3ph('pph','Foto produk (dari galeri/kamera/file)',1)}<button class="btn g" onclick="u3psave()">Simpan</button>${pe.prod_id?' <button class="btn l" onclick="u3pedit(-1)">Batal</button>':''}</div>`+b.products.map((p,i)=>`<div class="card"><b>${esc(p.name)}</b> <small>${esc(p.category)} · ${esc(p.status)}</small><p>${u3rp(p.price)} · stok ${p.stock}</p>${p.status==='BLOKIR'?'<p style="color:var(--bad)">Diblokir admin NABLO</p>':`<button class="btn l" onclick="u3pedit(${i})">Edit</button> <button class="btn l" onclick="u3bizDo('u3ProdStatus','Status diubah','${p.prod_id}','${p.status==='AKTIF'?'NONAKTIF':'AKTIF'}')">${p.status==='AKTIF'?'Nonaktifkan':'Aktifkan'}</button> <button class="btn l" onclick="if(confirm('Hapus produk ini?'))u3bizDo('u3ProdStatus','Produk dihapus','${p.prod_id}','DIHAPUS')">Hapus</button>`}</div>`).join('')}
+ if(U3.tab==='home'){const active=b.products.filter(p=>p.status==='AKTIF').length,low=b.products.filter(p=>p.status==='AKTIF'&&(+p.stock||0)<=3).length,newOrders=b.orders.filter(o=>o.status==='BARU').length,processing=b.orders.filter(o=>['DIKONFIRMASI','DIKIRIM'].includes(o.status)).length,done=b.orders.filter(o=>o.status==='SELESAI').length,today=new Date(Date.now()+7*36e5).toISOString().slice(0,10),salesToday=(b.report[today]||{}).sales||0;body=`<div class="sc-kpi"><div><small>Produk aktif</small><b>${active}</b></div><div><small>Pesanan baru</small><b>${newOrders}</b></div><div><small>Pesanan diproses</small><b>${processing}</b></div><div><small>Penjualan hari ini</small><b>${u3rp(salesToday)}</b></div></div><div class="sc-panels"><div class="card"><b>Ringkasan pesanan</b><p>Pesanan baru: <b>${newOrders}</b></p><p>Diproses / dikirim: <b>${processing}</b></p><p>Selesai: <b>${done}</b></p><button class="btn g" onclick="U3.tab='ord';render()">Kelola pesanan</button></div><div class="card"><b>Perhatian stok</b><p>${low} produk memiliki stok 3 atau kurang.</p><button class="btn l" onclick="U3.tab='prod';render()">Kelola produk</button></div><div class="card"><b>Akses toko</b><p>Atur profil, alamat, layanan, dan informasi pembayaran toko.</p><button class="btn l" onclick="nav('mitra')">Pengaturan toko & langganan</button></div></div>`}
+ else if(U3.tab==='prod'){body=`<div class="card"><b>${pe.prod_id?'Edit produk':'Tambah produk'}</b>${u3f('pn','Nama produk','text',pe.name)}<label>Kategori</label><select id="u3_pc">${['HP baru','HP bekas','Aksesoris','Sparepart','Lainnya'].map(c=>`<option ${(pe.category||(U3.dr&&U3.dr.pc))===c?'selected':''}>${c}</option>`).join('')}</select>${u3f('pp','Harga jual (Rp)','number',pe.price)}${u3f('pcs','Modal (Rp)','number',pe.cost)}${u3f('ps','Stok','number',pe.stock)}${u3ta('pd','Deskripsi',pe.description)}${pe.photo_url&&!(U3.imgs.pph||[]).length?`<img src="${esc(pe.photo_url)}" alt="" style="width:72px;height:72px;object-fit:cover;border-radius:8px;display:block;margin-top:6px" referrerpolicy="no-referrer">`:''}${u3ph('pph','Foto produk (dari galeri/kamera/file)',1)}<button class="btn g" onclick="u3psave()">Simpan</button>${pe.prod_id?' <button class="btn l" onclick="u3pedit(-1)">Batal</button>':''}</div>`+b.products.map((p,i)=>`<div class="card"><b>${esc(p.name)}</b> <small>${esc(p.category)} · ${esc(p.status)}</small><p>${u3rp(p.price)} · stok ${p.stock}</p>${p.status==='BLOKIR'?'<p style="color:var(--bad)">Diblokir admin NABLO</p>':`<button class="btn l" onclick="u3pedit(${i})">Edit</button> <button class="btn l" onclick="u3bizDo('u3ProdStatus','Status diubah','${p.prod_id}','${p.status==='AKTIF'?'NONAKTIF':'AKTIF'}')">${p.status==='AKTIF'?'Nonaktifkan':'Aktifkan'}</button> <button class="btn l" onclick="if(confirm('Hapus produk ini?'))u3bizDo('u3ProdStatus','Produk dihapus','${p.prod_id}','DIHAPUS')">Hapus</button>`}</div>`).join('')}
  else if(U3.tab==='ord'){const G={},ids=[];b.orders.forEach(o=>{if(!G[o.order_id]){G[o.order_id]=[];ids.push(o.order_id)}G[o.order_id].push(o)});const NX={BARU:['DIKONFIRMASI','DIBATALKAN'],DIKONFIRMASI:['DIKIRIM','SELESAI','DIBATALKAN'],DIKIRIM:['SELESAI','DIBATALKAN']};
-  body=ids.map(id=>{const g=G[id],f=g[0];return `<div class="card"><b>${esc(id)}</b> <small>${esc(f.status)} · ${esc(f.created_at)}</small><p style="font-size:13px">${esc(f.customer_name)} · ${esc(f.phone)}<br>${esc(f.address)}<br>Bayar: ${esc(f.pay_method)}${f.note?' · '+esc(f.note):''}</p>${g.map(x=>`<p>${esc(x.prod_name)} × ${x.qty} = ${u3rp(x.total)}</p>`).join('')}<p><b>Total ${u3rp(g.reduce((a,x)=>a+(+x.total||0),0))}</b></p>${(NX[f.status]||[]).map(s=>`<button class="btn ${s==='DIBATALKAN'?'l':'g'}" style="margin:0 6px 4px 0" onclick="if(confirm('Ubah status ke ${s}?'))u3bizDo('u3OrderUpdate','Status pesanan diubah','${id}','${s}')">${s}</button>`).join('')}${u3wo(g,store)}</div>`}).join('')||'<div class="card">Belum ada pesanan.</div>'}
+  const OF=U3.of||'';body=`<div class="sc-tabs">${['','BARU','DIKONFIRMASI','DIKIRIM','SELESAI','DIBATALKAN'].map(s=>`<button class="btn ${OF===s?'g':'l'}" onclick="U3.of='${s}';render()">${s||'Semua'}</button>`).join('')}</div>`+(ids.filter(id=>!OF||G[id][0].status===OF).map(id=>{const g=G[id],f=g[0];return `<div class="card"><b>${esc(id)}</b> <span class="sc-st">${esc(f.status)}</span> <small> · ${esc(f.created_at)}</small><p style="font-size:13px">${esc(f.customer_name)} · ${esc(f.phone)}<br>${esc(f.address)}<br>Bayar: ${esc(f.pay_method)}${f.note?' · '+esc(f.note):''}</p>${g.map(x=>`<p>${esc(x.prod_name)} × ${x.qty} = ${u3rp(x.total)}</p>`).join('')}<p><b>Total ${u3rp(g.reduce((a,x)=>a+(+x.total||0),0))}</b></p>${(NX[f.status]||[]).map(s=>`<button class="btn ${s==='DIBATALKAN'?'l':'g'}" style="margin:0 6px 4px 0" onclick="if(confirm('Ubah status ke ${s}?'))u3bizDo('u3OrderUpdate','Status pesanan diubah','${id}','${s}')">${s}</button>`).join('')}${u3wo(g,store)}</div>`}).join('')||'<div class="card">Belum ada pesanan.</div>')}
+ else if(U3.tab==='svc'){body=`<div class="card"><b>Servis HP</b><p>Kelola permintaan servis dari pelanggan: ubah status, isi diagnosa, estimasi biaya, dan kirim kabar via WhatsApp.</p><button class="btn g" onclick="nav('mitra')">Buka daftar servis</button><button class="btn l" onclick="nav('mitra')">Pengaturan toko & layanan</button></div><div class="card"><b>Tautan toko Anda</b><p>Bagikan halaman toko agar pelanggan bisa memesan servis:</p><p style="word-break:break-all"><small>?toko=${esc((U3.my&&U3.my.store&&U3.my.store.slug)||'')}</small></p></div>`}
  else{const R=b.report,mo=Object.keys(R).filter(k=>k.length===7).sort().reverse().slice(0,6),dy=Object.keys(R).filter(k=>k.length===10).sort().reverse().slice(0,7),row=k=>{const r=R[k];return `<tr><td>${k}</td><td>${u3rp(r.sales)}</td><td>${u3rp(r.svc)}</td><td>${u3rp(r.cogs+r.part)}</td><td>${u3rp(r.exp)}</td><td><b>${u3rp(r.sales-r.cogs+r.svc-r.part-r.exp)}</b></td></tr>`},th='<tr><th>Periode</th><th>Penjualan</th><th>Servis</th><th>Modal+Sparepart</th><th>Biaya</th><th>Laba</th></tr>';
   body=`<div class="card"><b>Laporan bulanan</b><div style="overflow-x:auto"><table style="width:100%;font-size:12px">${th}${mo.map(row).join('')||'<tr><td colspan=6>Belum ada transaksi selesai.</td></tr>'}</table></div><p style="font-size:11px;color:var(--mut)">Laba = penjualan − modal + pendapatan servis − biaya sparepart − pengeluaran. Hanya pesanan SELESAI dan servis SUDAH DISERAHKAN yang dihitung.</p></div><div class="card"><b>Transaksi harian (7 hari)</b><div style="overflow-x:auto"><table style="width:100%;font-size:12px">${th}${dy.map(row).join('')}</table></div></div><div class="card"><b>Stok & produk terlaris</b><p>Nilai stok (modal): ${u3rp(b.stock_value)}</p>${b.top.map(t=>`<p>${esc(t.name)} · ${t.qty} terjual</p>`).join('')||'<p>Belum ada.</p>'}</div><div class="card"><b>Catat pengeluaran</b>${u3f('el','Keterangan')}${u3f('ea','Jumlah (Rp)','number')}${u3f('ed','Tanggal','date')}<button class="btn g" onclick="u3exp()">Simpan</button>${b.expenses.map(e=>`<p style="font-size:12px;color:var(--mut)">${esc(String(e.date).slice(0,10))} · ${esc(e.label)} · ${u3rp(e.amount)}</p>`).join('')}</div>`}
- return u3hd('Bisnis Toko','mitra')+`<div class="pg"><div>${T('prod','Produk')}${T('ord','Pesanan')}${T('rep','Laporan')}</div>${body}</div>`};
+ return u3hd('Seller Centre · '+esc(store),'intro')+`<div class="pg sc-page"><div class="sc-welcome"><div><small>RUANG KERJA MITRA</small><h2>${esc(store)}</h2><p>Kelola produk, pesanan, stok, dan performa toko dari satu dashboard.</p></div><button class="btn l" onclick="nav('mitra')">Pengaturan toko</button></div><div class="sc-tabs">${T('home','Ringkasan')}${T('prod','Produk')}${T('ord','Pesanan')}${T('svc','Servis HP')}${T('rep','Laporan')}</div><div>${body}</div></div>`};
 
 P.u3mod=()=>{u3auto('mod',u3modLoad);const L=U3.mod;if(!L)return u3hd('Moderasi Produk','u3admin')+'<div class="pg">'+u3wait('mod')+'</div>';
  return u3hd('Moderasi Produk','u3admin')+`<div class="pg">${L.map(p=>`<div class="card"><b>${esc(p.name)}</b> <small>${esc(p.store_name)} · ${esc(p.category)} · ${esc(p.status)}</small><p>${u3rp(p.price)} · stok ${p.stock}</p>${p.status==='BLOKIR'?`<button class="btn g" onclick="u3block('${p.prod_id}',false)">Buka blokir</button>`:`<button class="btn l" onclick="if(confirm('Blokir produk ini dari katalog publik?'))u3block('${p.prod_id}',true)">Blokir</button>`}</div>`).join('')||'<div class="card">Belum ada produk.</div>'}</div>`};
@@ -1606,23 +1663,27 @@ const mpLoad=(k,get)=>{if(M[k]||M['l'+k]||M['f'+k])return;M['l'+k]=1;get().then(
 const mpWait=(k,t)=>M['f'+k]?`<div class="card">Gagal memuat ${t}. <button class="btn l" onclick="M.f${k}=0;render()">Coba lagi</button></div>`:`<div class="card">Memuat ${t}…</div>`;
 const mpGo=q=>{M.q=String(q||'').trim();M.cat='';nav('mpsearch')};
 const mpCatGo=c=>{M.q='';M.cat=c;nav('mpsearch')};
-const mpAcc=()=>{if(!S.u)return nav('login');const r=ROLE(),t=r==='MITRA'?'mitra':r==='SUPERADMIN'?'u3admin':'beranda';nav(P[t]?t:'beranda')};
+const mpAcc=()=>{if(!S.u){S.nextP='intro';return nav('login')}const r=ROLE(),t=r==='MITRA'?'mitrabiz':r==='SUPERADMIN'?'u3admin':'akun';nav(P[t]?t:'intro')};
 const mpHead=()=>`<header class="mp-top"><div class="mp-lg" onclick="nav('intro')">${logo(34)}<b>${esc(shopName())}</b></div><div class="mp-sr"><input id="mp_q" type="search" value="${esc(M.q)}" placeholder="Cari produk atau toko" enterkeyhint="search" onkeydown="if(event.key==='Enter')mpGo(this.value)"><button onclick="mpGo(document.getElementById('mp_q').value)">Cari</button></div><div class="mp-ic"><button onclick="mpAcc()" aria-label="${S.u?'Akun saya':'Masuk'}">👤</button><button onclick="nav('mpfav')" aria-label="Favorit">♡</button><button onclick="nav('keranjang')" aria-label="Keranjang">🛒${u3ck()?`<i>${u3ck()}</i>`:''}</button></div></header>`;
 const mpCard=p=>{M.reg[p.prod_id]=p;return `<div class="mp-c" onclick="mpOpen('${esc(p.prod_id)}')"><div class="mp-im">${p.photo_url?`<img loading="lazy" src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>📱</span>'}</div><div class="mp-bd"><div class="mp-nm">${esc(p.name)}</div><b>${u3rp(p.price)}</b><small>${esc(p.store_name)}${p.location?' · '+esc(p.location):''}</small></div></div>`};
 const mpStore=s=>`<div class="mp-st" onclick="u3open('${esc(s.slug)}')"><div class="mp-sl">${s.logo_url||s.photo_url?`<img src="${esc(s.logo_url||s.photo_url)}" alt="" referrerpolicy="no-referrer">`:'🏪'}</div><div><b>${esc(s.store_name)}</b><small>${esc(s.location||s.address||'')}</small></div></div>`;
 const mpSec=(t,more,body)=>`<section class="mp-s"><div class="mp-sh"><h2>${t}</h2>${more||''}</div>${body}</section>`;
 const mpGrid=L=>L.length?`<div class="mp-g">${L.map(mpCard).join('')}</div>`:'<p class="mp-em">Belum ada produk.</p>';
-P.intro=()=>{mpLoad('home',()=>api('mpHome'));const h=M.home;
- const ban=`<section class="in-hero mp-ban"><h1>Marketplace HP, aksesoris, dan servis</h1><p>Belanja dari banyak toko mitra, bandingkan harga, dan temukan tempat servis HP terdekat.</p><div class="in-cta"><button class="btn g" onclick="mpGo('')">Lihat semua produk</button><button class="btn l" onclick="nav('tokos')">Cari tempat servis</button><button class="btn l" onclick="nav('mitrareg')">Buka toko di sini</button></div></section>`;
- if(!h)return `<div class="intro mp">${mpHead()}${ban}${mpWait('home','marketplace')}${pubFoot()}</div>`;
- return `<div class="intro mp">${mpHead()}${ban}
- ${mpSec('Kategori','',`<div class="mp-cats">${h.cats.map(c=>`<button onclick="mpCatGo('${esc(c).replace(/'/g,'&#39;')}')">${esc(c)}</button>`).join('')}</div>`)}
- ${mpSec('Produk pilihan','',mpGrid(h.featured))}
- ${mpSec('Produk terbaru','<a onclick="mpGo(\'\')">Lihat semua</a>',mpGrid(h.newest))}
- ${mpSec('Toko mitra unggulan','',h.stores.length?`<div class="mp-sg">${h.stores.map(mpStore).join('')}</div>`:'<p class="mp-em">Belum ada toko aktif.</p>')}
- ${mpSec('Tempat service HP','<a onclick="nav(\'tokos\')">Lihat semua</a>',h.service.length?`<div class="mp-sg">${h.service.map(s=>`<div class="mp-st mp-sv" onclick="u3open('${esc(s.slug)}')"><div><b>${esc(s.store_name)}</b><small>${esc(s.location||s.address||'')}</small><small>${esc(String(s.services||'').slice(0,90))}</small></div></div>`).join('')}</div>`:'<p class="mp-em">Belum ada tempat service.</p>')}
- ${h.more.length?mpSec('Rekomendasi lainnya','',mpGrid(h.more)):''}
- <div class="mp-lk"><button class="btn l" onclick="nav('mptrack')">Lacak pesanan</button><button class="btn l" onclick="nav('lacak')">Lacak servis</button><button class="btn l" onclick="mpAcc()">${S.u?'Akun saya':'Masuk'}</button></div>${pubFoot()}</div>`};
+P.intro=()=>{
+  mpLoad('home',()=>api('mpHome'));
+  mpLoadRes();
+  const h=M.home, r=M.res;
+  const ban=`<section class="in-hero mp-ban"><div class="buyer-eyebrow">NABLO MARKETPLACE</div><h1>Temukan produk dari banyak toko mitra</h1><p>Jelajahi katalog dalam satu aplikasi, bandingkan pilihan, lalu pesan dari toko yang Anda inginkan.</p><div class="in-cta"><button class="btn g" onclick="mpGo('')">Lihat semua produk</button><button class="btn l" onclick="nav('tokos')">Cari toko mitra</button>${S.u&&ROLE()==='MITRA'?'<button class="btn l" onclick="nav(\'mitrabiz\')">Seller Centre</button>':'<button class="btn l" onclick="nav(\'mitrareg\')">Buka toko</button>'}</div></section>`;
+  const cats=h&&h.cats?h.cats:(r&&r.cats?r.cats:[]);
+  const stores=h&&h.stores?h.stores:[];
+  const products=r&&r.items?r.items:[];
+  return `<div class="intro mp">${mpHead()}${ban}
+    ${cats.length?mpSec('Kategori produk','',`<div class="mp-cats">${cats.map(c=>`<button onclick="mpCatGo('${esc(c).replace(/'/g,'&#39;')}')">${esc(c)}</button>`).join('')}</div>`):''}
+    ${mpSec('Katalog produk','<a onclick="mpGo(\'\')">Filter & cari produk</a>',r?mpGrid(products):(M.rf?'<div class="card">Katalog gagal dimuat. <button class="btn l" onclick="M.rk=\'\';M.rf=0;render()">Coba lagi</button></div>':mpWait('res','katalog')))}
+    ${h&&h.service&&h.service.length?mpSec('Mitra layanan servis','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${h.service.map(mpStore).join('')}</div>`):''}
+    ${stores.length?mpSec('Toko mitra','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${stores.map(mpStore).join('')}</div>`):''}
+    <div class="mp-lk"><button class="btn l" onclick="nav('mptrack')">Lacak pesanan</button><button class="btn l" onclick="nav('mpfav')">Favorit</button><button class="btn l" onclick="mpAcc()">${S.u?'Akun saya':'Masuk / Daftar'}</button></div>${pubFoot()}</div>`;
+};
 const mpLoadRes=()=>{const k=JSON.stringify([M.q,M.cat,M.min,M.max,M.sort,M.loc]);if(M.rk===k||M.rb)return;M.rk=k;M.rb=1;api('mpSearch',{q:M.q,cat:M.cat,min:M.min,max:M.max,sort:M.sort,loc:M.loc}).then(r=>{M.res=r;M.rf=0}).catch(()=>{M.rf=1}).finally(()=>{M.rb=0;render()})};
 const mpApply=()=>{const g=i=>document.getElementById('mpf_'+i).value.trim();M.cat=g('c');M.min=g('a');M.max=g('b');M.loc=g('l');M.sort=g('s');render()};
 P.mpsearch=()=>{mpLoadRes();const r=M.res;
@@ -1637,14 +1698,46 @@ P.mpprod=()=>{const p=M.det;if(!p)return `<div class="intro mp">${mpHead()}<div 
 P.mpfav=()=>`<div class="intro mp">${mpHead()}${mpSec('Favorit saya','',M.fav.length?mpGrid(M.fav):'<p class="mp-em">Belum ada favorit. Tekan ♡ pada halaman produk. Favorit tersimpan di perangkat ini; harga dan stok dicek ulang saat checkout.</p>')}${pubFoot()}</div>`;
 /* Keranjang multi-toko: satu form, satu pesanan per toko */
 const mpq=(s,i,d)=>{u3draft();u3qty(s,i,d)};
-const mpCo=()=>{u3draft();const gs=Object.keys(U3.cart);if(!gs.length)return toast('Keranjang kosong');const ph=u3v('mp');
- u3run(async()=>{const r=await api('mpCheckout',{customer_name:u3v('mn'),phone:ph,address:u3v('ma'),pay_method:u3v('mm')||'TRANSFER',note:u3v('mt'),groups:gs.map(s=>({slug:s,items:U3.cart[s].items.map(i=>({prod_id:i.id,qty:i.qty}))}))});
-  M.ores=r;r.forEach(x=>M.ord.unshift({id:x.order_id,phone:ph}));mpSave();U3.cart={};U3.dr=null;toast('Pesanan dibuat')})};
-P.keranjang=()=>{const gs=Object.keys(U3.cart),r=M.ores;let all=0;
- const res=r?`<div class="card" style="border-color:var(--ok)"><b>${r.length} pesanan terkirim</b>${r.map(x=>`<div style="border-top:1px solid var(--line);padding:8px 0"><b>${esc(x.order_id)}</b> · ${esc(x.store_name)} · ${u3rp(x.total)}<p style="white-space:pre-wrap;font-size:13px">${esc(x.pay_info||'Hubungi toko untuk info pembayaran.')}</p><a class="btn g" style="display:inline-block;text-decoration:none" target="_blank" rel="noopener" href="${esc(u3wa(x.store_phone,'Halo '+x.store_name+', saya baru memesan dengan nomor '+x.order_id+'. Mohon konfirmasi.'))}">Konfirmasi via WhatsApp</a></div>`).join('')}<p style="font-size:12px;color:var(--mut)">Pesanan baru diproses setelah toko mengonfirmasi dan pembayaran Anda diterima toko.</p><button class="btn l" onclick="M.ores=null;nav('mptrack')">Lacak pesanan</button> <button class="btn l" onclick="M.ores=null;render()">Tutup</button></div>`:'';
- const list=gs.map(s=>{const g=U3.cart[s],t=g.items.reduce((a,i)=>a+i.price*i.qty,0);all+=t;return `<div class="card"><b>${esc(g.name)}</b>${g.items.map((i,k)=>`<p>${esc(i.name)} · ${u3rp(i.price)} × ${i.qty} <button class="btn l" onclick="mpq('${esc(s)}',${k},-1)">−</button><button class="btn l" onclick="mpq('${esc(s)}',${k},1)">+</button></p>`).join('')}<p>Subtotal: <b>${u3rp(t)}</b></p></div>`}).join('');
- const form=gs.length?`<div class="card"><b>Total pembayaran: ${u3rp(all)}</b><small style="display:block">${gs.length} toko · dibuat ${gs.length} pesanan terpisah</small>${u3f('mn','Nama penerima')}${u3f('mp','Nomor WhatsApp','tel')}${u3ta('ma','Alamat pengiriman / pengambilan')}<label>Pembayaran</label><select id="u3_mm"><option value="TRANSFER">Transfer bank</option><option value="QRIS">QRIS</option><option value="COD">COD</option><option value="DI_TOKO">Bayar di toko</option><option value="LAINNYA">Lainnya</option></select>${u3f('mt','Catatan (opsional)')}<button class="btn g" onclick="mpCo()">Checkout</button><p style="font-size:11px;color:var(--mut)">Pembayaran langsung ke masing-masing toko; NABLO tidak menyimpan dana Anda. Harga dan stok diperiksa ulang oleh server.</p></div>`:'';
- return `<div class="intro mp">${mpHead()}<div class="pg" style="padding:0">${res}${list||(r?'':'<div class="card">Keranjang kosong. <button class="btn g" onclick="mpGo(\'\')">Mulai belanja</button></div>')}${form}</div></div>`};
+const mpCo=()=>{u3draft();const gs=Object.keys(U3.cart);if(!gs.length)return toast('Keranjang kosong');if(!S.u||ROLE()!=='PEMBELI'){S.nextP='keranjang';toast('Masuk atau buat akun pelanggan untuk checkout');return nav('login')}const ph=u3v('mp')||String(S.u.phone||'');
+ u3run(async()=>{const r=await api('mpCheckout',S.t,{phone:ph,address:u3v('ma'),pay_method:u3v('mm')||'TRANSFER',note:u3v('mt'),groups:gs.map(s=>({slug:s,items:U3.cart[s].items.map(i=>({prod_id:i.id,qty:i.qty}))}))});
+  M.ores=r;r.forEach(x=>M.ord.unshift({id:x.order_id,phone:ph}));mpSave();U3.cart={};U3.dr=null;M.ordList=null;toast('Pesanan dibuat')})};
+P.keranjang=()=>{
+  const gs=Object.keys(U3.cart),r=M.ores;let all=0;
+  const res=r?`<div class="card" style="border-color:var(--ok)"><b>${r.length} pesanan berhasil dibuat</b>${r.map(x=>`<div style="border-top:1px solid var(--line);padding:8px 0"><b>${esc(x.order_id)}</b> · ${esc(x.store_name)} · ${u3rp(x.total)}<p style="white-space:pre-wrap;font-size:13px">${esc(x.pay_info||'Hubungi toko untuk info pembayaran.')}</p><a class="btn g" style="display:inline-block;text-decoration:none" target="_blank" rel="noopener" href="${esc(u3wa(x.store_phone,'Halo '+x.store_name+', saya baru memesan dengan nomor '+x.order_id+'. Mohon konfirmasi.'))}">Konfirmasi via WhatsApp</a></div>`).join('')}<p style="font-size:12px;color:var(--mut)">Pesanan diproses oleh masing-masing toko. Anda dapat memantau semuanya dari menu Pesanan Saya.</p><button class="btn l" onclick="M.ores=null;nav('mporders')">Lihat pesanan saya</button> <button class="btn l" onclick="M.ores=null;nav('intro')">Lanjut belanja</button></div>`:'';
+  const list=gs.map(s=>{const g=U3.cart[s],t=g.items.reduce((a,i)=>a+i.price*i.qty,0);all+=t;return `<div class="card"><b>${esc(g.name)}</b>${g.items.map((i,k)=>`<p>${esc(i.name)} · ${u3rp(i.price)} × ${i.qty} <button class="btn l" onclick="mpq('${esc(s)}',${k},-1)">−</button><button class="btn l" onclick="mpq('${esc(s)}',${k},1)">+</button></p>`).join('')}<p>Subtotal: <b>${u3rp(t)}</b></p></div>`}).join('');
+  const isCustomer=!!S.u&&ROLE()==='PEMBELI';
+  const form=gs.length?`<div class="card"><b>Total pembayaran: ${u3rp(all)}</b><small style="display:block">${gs.length} toko · setiap toko menerima pesanan terpisah</small>
+    ${isCustomer?`<div class="fin-note">Checkout menggunakan akun pelanggan <b>${esc(S.u.full_name||S.u.username)}</b>. Riwayat pesanan akan tersimpan di akun ini dan dapat dilihat dari perangkat lain setelah masuk.</div>`:`<div class="fin-note">Anda perlu masuk dengan akun pelanggan sebelum checkout. Belum punya akun? Buat akun terlebih dahulu, cukup satu akun untuk berbelanja di semua toko mitra.</div>`}
+    <label>Nama pelanggan</label><input value="${esc(S.u&&S.u.full_name||'')}" disabled>
+    <label>Nomor WhatsApp</label><input id="u3_mp" type="tel" value="${esc(S.u&&S.u.phone||'')}" placeholder="08xxxxxxxxxx">
+    ${u3ta('ma','Alamat pengiriman / pengambilan')}
+    <label>Pembayaran</label><select id="u3_mm"><option value="TRANSFER">Transfer bank</option><option value="QRIS">QRIS</option><option value="COD">COD</option><option value="DI_TOKO">Bayar di toko</option><option value="LAINNYA">Lainnya</option></select>
+    ${u3f('mt','Catatan (opsional)')}
+    ${isCustomer?`<button class="btn g w" onclick="mpCo()">Checkout sekarang</button>`:S.u?`<button class="btn g w" onclick="doLogout()">Keluar dari akun ini untuk masuk sebagai pelanggan</button>`:`<button class="btn g w" onclick="S.nextP='keranjang';nav('login')">Masuk untuk checkout</button><button class="btn l w" onclick="S.nextP='keranjang';nav('daftar')">Buat akun pelanggan</button>`}
+    <p style="font-size:11px;color:var(--mut)">Harga dan stok diperiksa ulang oleh server. Pembayaran langsung ke masing-masing toko; NABLO tidak menyimpan dana Anda.</p></div>`:'';
+  return `<div class="intro mp">${mpHead()}<div class="pg" style="padding:0">${res}${list||(r?'':'<div class="card">Keranjang kosong. <button class="btn g" onclick="mpGo(\'\')">Mulai belanja</button></div>')}${form}</div></div>`;
+};
+/* Riwayat pesanan marketplace milik akun pelanggan */
+const mpLoadOrders=(force)=>{
+  if(!S.u||ROLE()!=='PEMBELI'){M.ordList=[];M.ordUser='';return}
+  if(M.ordUser!==String(S.u.user_id)){M.ordUser=String(S.u.user_id);M.ordList=null;M.ordErr=false}
+  if(force){M.ordList=null;M.ordErr=false}
+  if(M.ordList||M.ordLoading||M.ordErr)return;
+  M.ordLoading=true;
+  api('mpMyOrders',S.t).then(x=>{M.ordList=Array.isArray(x)?x:[];M.ordErr=false})
+    .catch(()=>{M.ordErr=true})
+    .finally(()=>{M.ordLoading=false;render()});
+};
+const MP_ST={BARU:'Menunggu konfirmasi toko',DIKONFIRMASI:'Diproses',DIKIRIM:'Dikirim / siap diambil',SELESAI:'Selesai',DIBATALKAN:'Dibatalkan'};
+P.mporders=()=>{
+  mpLoadOrders();
+  const L=M.ordList||[];
+  return `<div class="intro mp">${mpHead()}<div class="pg" style="padding:0">
+    <div class="buyer-section"><div><h3>Pesanan Saya</h3><p>Semua pesanan dari seluruh toko mitra dalam satu akun</p></div><div><span class="buyer-count">${M.ordList?L.length:'…'} pesanan</span> <button class="btn l" onclick="mpLoadOrders(true)">↻</button></div></div>
+    ${M.ordErr?`<div class="card">Riwayat pesanan gagal dimuat. <button class="btn l" onclick="mpLoadOrders(true)">Coba lagi</button></div>`:''}
+    ${!M.ordList?`<div class="card">Memuat riwayat pesanan…</div>`:L.length?L.map(o=>`<div class="card"><div class="ct"><b>${esc(o.store_name||'Toko mitra')}</b><span class="bd ${o.status==='SELESAI'?'b-gr':o.status==='DIBATALKAN'?'b-red':'b-or'}">${esc(MP_ST[o.status]||o.status)}</span></div><small>${esc(o.order_id)} · ${esc(o.created_at)}</small>${o.lines.map(x=>`<div class="fin-row"><span>${esc(x.name)}<small>${x.qty} × ${u3rp(x.unit_price)}</small></span><b>${u3rp(x.total)}</b></div>`).join('')}<div class="fin-row tot"><span>Total</span><b>${u3rp(o.total)}</b></div><small>Metode pembayaran: ${esc(o.pay_method)}</small><div class="row" style="margin-top:10px"><button class="btn l" onclick="mpTrk('${esc(o.order_id)}','${esc(o.phone)}')">Detail / lacak</button><a class="btn l" style="display:inline-flex;text-decoration:none" target="_blank" rel="noopener" href="${esc(u3wa(o.store_phone,'Halo '+o.store_name+', saya ingin menanyakan pesanan '+o.order_id+'.'))}">Hubungi toko</a></div></div>`).join(''):`<div class="buyer-empty"><b>Belum ada pesanan</b>Pesanan dari semua toko mitra akan muncul di sini setelah checkout.</div>`}
+  </div></div>`;
+};
 /* Lacak pesanan (nomor pesanan + WhatsApp) */
 const mpTrk=(id,ph)=>{M.tc={id:id,ph:ph};u3run(async()=>{M.trk=await api('mpTrack',id,ph)})};
 const ST_={BARU:'Menunggu konfirmasi toko',DIKONFIRMASI:'Diproses',DIKIRIM:'Dikirim / siap diambil',SELESAI:'Selesai',DIBATALKAN:'Dibatalkan'};
