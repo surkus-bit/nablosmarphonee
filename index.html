@@ -449,79 +449,6 @@ table{border-collapse:collapse}th,td{padding:8px 10px;text-align:left;border-bot
 .sc-st{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700;background:var(--blue-l);color:var(--blue)}
 @media(max-width:480px){.pg{padding:12px 10px 20px}.card{padding:14px}.btn{padding:10px 14px}}
 </style>
-
-<style id="nablo-layout-refine">
-/* Tata letak terpadu: jarak konsisten, elemen tidak saling berhimpitan */
-:root{--space-1:6px;--space-2:10px;--space-3:14px;--space-4:18px}
-html,body,#app{max-width:100%;overflow-x:hidden}
-.pg{width:100%;padding:18px clamp(12px,2.2vw,26px) 28px}
-.card{min-width:0;padding:16px;margin:0 0 14px;overflow-wrap:anywhere}
-.card>*+*{margin-top:8px}
-.card .btn{margin:4px 6px 4px 0}
-.card .row{gap:8px}
-.card .row .btn{margin:0}
-.sec,.buyer-section,.mp-sh{margin-top:22px;margin-bottom:12px}
-.grid,.kpi,.sm,.pipe,.qa,.buyer-grid,.mp-g,.mp-sg,.sc-kpi,.sc-panels{gap:12px}
-button,.btn{line-height:1.35;white-space:normal}
-.btn{min-height:40px;padding:10px 14px}
-input,select,textarea{min-width:0;max-width:100%;margin-top:5px;margin-bottom:10px}
-label{margin-top:10px;margin-bottom:5px;line-height:1.4}
-.item,.fin-row,.sw,.mp-st{min-width:0}
-.item .in,.fin-row span,.sw span{overflow-wrap:anywhere}
-.mp{width:100%;max-width:1100px;margin-inline:auto;padding-inline:clamp(12px,2vw,22px)}
-.mp-top{position:relative;top:auto;margin:0;padding:10px 0 14px;gap:10px}
-.mp-ban{margin-top:16px;padding:clamp(18px,3vw,28px)}
-.mp-s{margin-top:26px}
-.mp-sh{align-items:center;flex-wrap:wrap}
-.mp-sh h2{font-size:18px;line-height:1.35}
-.mp-cats{display:flex;flex-wrap:wrap;gap:8px}
-.mp-cats button{min-height:40px;padding:9px 14px}
-.mp-g{grid-template-columns:repeat(auto-fill,minmax(155px,1fr))}
-.mp-c{min-width:0}
-.mp-bd{gap:7px;padding:12px}
-.mp-st{padding:14px;min-height:76px}
-.mp-lk{gap:8px}
-.mp-lk .btn{margin:0}
-.buyer-welcome,.hero,.sc-welcome{margin-bottom:18px}
-.buyer-actions{gap:8px}
-.buyer-stats{gap:10px}
-.buyer-product .buyer-info{gap:5px}
-.buyer-product .buyer-buttons{gap:8px}
-.buyer-product .buyer-buttons .btn{min-height:40px}
-nav button{min-height:52px;justify-content:center}
-#drw>div{padding:18px 14px calc(22px + env(safe-area-inset-bottom,0px))}
-.mi{min-height:42px;padding:10px}
-#app .pg:has(.card){display:block}
-#app .pg:has(.cv,table){display:grid}
-@media(max-width:600px){
- .pg{padding:14px 12px 24px}
- .card{padding:14px;margin-bottom:12px}
- .mp{padding-inline:12px}
- .mp-top{grid-template-columns:auto minmax(0,1fr) auto;gap:8px}
- .mp-lg b{max-width:90px}
- .mp-sr button{padding:0 11px}
- .mp-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .mp-bd{padding:10px}
- .mp-nm{font-size:13px}
- .mp-st{padding:11px;gap:10px}
- .buyer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .flt-d{gap:8px}
- .row .btn{flex:1}
-}
-@media(max-width:360px){
- .mp-g,.buyer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
- .mp-top{grid-template-columns:1fr auto}
- .mp-lg{grid-column:1/-1}
- .mp-sr{grid-column:1}
- .mp-ic{grid-column:2}
-}
-@media(min-width:900px){
- .mp-top{padding-top:14px}
- .mp-g{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
- .pg{padding-top:24px}
-}
-</style>
-
 </head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
 <div id="app"></div><div id="drw"></div><div id="mod"></div><div id="toast"></div>
@@ -559,8 +486,7 @@ NETERR=/network|timeout|timed out|failed to fetch|offline|connection|koneksi|loa
    server tidak menjalankannya dua kali (penjualan/stok tidak ganda). */
 const act=async(fn,...a)=>{const rid=RID();let x;try{x=await api('call',S.t,fn,a,rid)}catch(e){if(!NETERR.test(String(e&&e.message||e)))throw e;await new Promise(r=>setTimeout(r,1500));x=await api('call',S.t,fn,a,rid)}S.d=x.d;return x.r};
 const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',3200)};
-const cleanUiSymbols=root=>{if(!root)return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode())n.nodeValue=n.nodeValue.replace(/[\\u{1F000}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\uFE0F\\u200D]/gu,'').replace(/\\s{2,}/g,' ');};
-const modal=h=>{$('#mod').innerHTML='<div>'+h+'</div>';cleanUiSymbols($('#mod'));$('#mod').style.display='flex';hydrateProofs()},closeM=()=>$('#mod').style.display='none';
+const modal=h=>{$('#mod').innerHTML='<div>'+h+'</div>';$('#mod').style.display='flex';hydrateProofs()},closeM=()=>$('#mod').style.display='none';
 let busyN=0;
 let busyT=0;
 const busy=on=>{busyN+=on?1:-1;const b=$('#bar');if(busyN>0){clearTimeout(busyT);busyT=setTimeout(()=>{if(busyN>0)$('#ld').style.display='flex'},350);b.style.opacity=1;b.style.width='70%'}else{busyN=0;clearTimeout(busyT);$('#ld').style.display='none';b.style.width='100%';setTimeout(()=>{b.style.opacity=0;b.style.width=0},250)}};
@@ -575,7 +501,7 @@ const ST={HP_MASUK:['HP Masuk','b-gray'],DALAM_SERVIS:['Servis','b-or'],MENUNGGU
 const DOT={'b-gray':'#94A3B8','b-or':'#D97706','b-bl':'#245B86','b-red':'#DC2626','b-gr':'#16A34A','b-gold':'#142B45'};
 const SV={DALAM_SERVIS:['Diproses','b-or'],SELESAI:['Selesai','b-gr']};
 const badge=(s,m=ST)=>`<span class="bd ${(m[s]||[0,'b-gray'])[1]}">${(m[s]||[s])[0]}</span>`;
-const nav=(p,o={})=>{if(p==='beranda'||p==='kat')p='intro';S.og={};for(const k in IMG)delete IMG[k];if(p==='stok'&&!('f' in o)){S.f='TERSEDIA';S.q=''}if(p==='stok'){S.sf='';S.st='';S.lim=60}if(p==='servis'){S.vf='';S.vt=''}if(p==='jual'){S.if='';S.it=''}if(p==='kat')S.cat=undefined;if(p==='terjual')S.sold=undefined;Object.assign(S,{p},o);closeMenu();closeNotif();render();scrollTo(0,0)};
+const nav=(p,o={})=>{S.og={};for(const k in IMG)delete IMG[k];if(p==='stok'&&!('f' in o)){S.f='TERSEDIA';S.q=''}if(p==='stok'){S.sf='';S.st='';S.lim=60}if(p==='servis'){S.vf='';S.vt=''}if(p==='jual'){S.if='';S.it=''}if(p==='kat')S.cat=undefined;if(p==='terjual')S.sold=undefined;Object.assign(S,{p},o);closeMenu();closeNotif();render();scrollTo(0,0)};
 const hd=(t,b)=>`<div class="hd">${b?`<button class="bk" onclick="nav('${b}')">←</button>`:''}<b>${t}</b>${ROLE()==='SUPERADMIN'?`<button class="ic" onclick="nav('set')" aria-label="Pengaturan">${ni('set')}</button>`:''}</div>`;
 const dkey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const DN=['Min','Sen','Sel','Rab','Kam','Jum','Sab'],BN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
@@ -1188,7 +1114,7 @@ function render(){
  const prim=(lg||publicPage||role==='PEMBELI')?[]:(PRIMARY[role]||['dash']).map(k=>MENU.find(x=>x[0]===k)).filter(Boolean),
  inPrim=prim.some(x=>x[0]===S.p),
  n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='intro'?'on':''}" onclick="nav('intro')"><i>${ni('dash')}</i>Katalog</button><button class="${S.p==='keranjang'?'on':''}" onclick="nav('keranjang')"><i>${ni('cart')}</i>Keranjang</button><button class="${S.p==='mporders'?'on':''}" onclick="nav('mporders')"><i>${ni('jual')}</i>Pesanan</button><button class="${S.p==='mpfav'?'on':''}" onclick="nav('mpfav')"><i>♡</i>Favorit</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${S.p==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
- $('#app').className=(lg||(S.p==='intro'&&!(role==='PEMBELI'&&S.u)))?'noav':'';$('#app').innerHTML=P[S.p]()+n;cleanUiSymbols($('#app'));ntfSync();
+ $('#app').className=(lg||(S.p==='intro'&&!(role==='PEMBELI'&&S.u)))?'noav':'';$('#app').innerHTML=P[S.p]()+n;ntfSync();
  if(role==='SUB_OWNER'&&S.p!=='profil'){
    // Mode pemeriksaan: tombol navigasi/lihat tetap aktif, seluruh tombol aksi perubahan dinonaktifkan.
    $('#app').querySelectorAll('button').forEach(b=>{const h=b.getAttribute('onclick')||'';if(!/nav\s*\(|openMenu\s*\(|doLogout\s*\(|viewPhoto\s*\(|toggleNotif\s*\(|ntf[A-Z]\w*\s*\(|pollNotifs\s*\(/.test(h)){b.disabled=true;b.title='SUB OWNER hanya dapat melihat data';b.style.opacity='.48';b.style.cursor='not-allowed';}});
@@ -1748,14 +1674,15 @@ P.intro=()=>{
   mpLoad('home',()=>api('mpHome'));
   mpLoadRes();
   const h=M.home, r=M.res;
-  const ban=`<section class="in-hero mp-ban"><div class="buyer-eyebrow">NABLO MARKETPLACE</div><h1>Belanja produk dan temukan layanan mitra</h1><p>Cari produk, pilih toko mitra, dan ajukan layanan servis dari satu tempat.</p><div class="in-cta"><button class="btn g" onclick="mpGo('')">Lihat semua produk</button><button class="btn l" onclick="nav('tokos')">Toko & layanan mitra</button>${S.u&&ROLE()==='MITRA'?'<button class="btn l" onclick="nav(\'mitrabiz\')">Seller Centre</button>':'<button class="btn l" onclick="nav(\'mitrareg\')">Buka toko</button>'}</div></section>`;
+  const ban=`<section class="in-hero mp-ban"><div class="buyer-eyebrow">NABLO MARKETPLACE</div><h1>Temukan produk dari banyak toko mitra</h1><p>Jelajahi katalog dalam satu aplikasi, bandingkan pilihan, lalu pesan dari toko yang Anda inginkan.</p><div class="in-cta"><button class="btn g" onclick="mpGo('')">Lihat semua produk</button><button class="btn l" onclick="nav('tokos')">Cari toko mitra</button>${S.u&&ROLE()==='MITRA'?'<button class="btn l" onclick="nav(\'mitrabiz\')">Seller Centre</button>':'<button class="btn l" onclick="nav(\'mitrareg\')">Buka toko</button>'}</div></section>`;
   const cats=h&&h.cats?h.cats:(r&&r.cats?r.cats:[]);
   const stores=h&&h.stores?h.stores:[];
   const products=r&&r.items?r.items:[];
   return `<div class="intro mp">${mpHead()}${ban}
     ${cats.length?mpSec('Kategori produk','',`<div class="mp-cats">${cats.map(c=>`<button onclick="mpCatGo('${esc(c).replace(/'/g,'&#39;')}')">${esc(c)}</button>`).join('')}</div>`):''}
     ${mpSec('Katalog produk','<a onclick="mpGo(\'\')">Filter & cari produk</a>',r?mpGrid(products):(M.rf?'<div class="card">Katalog gagal dimuat. <button class="btn l" onclick="M.rk=\'\';M.rf=0;render()">Coba lagi</button></div>':mpWait('res','katalog')))}
-    ${(()=>{const all=[...stores,...(h&&h.service||[])],seen=new Set(),partners=all.filter(x=>{const k=String(x.slug||x.store_id||x.store_name||'');if(seen.has(k))return false;seen.add(k);return true});return partners.length?mpSec('Toko & Layanan Mitra','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${partners.map(mpStore).join('')}</div>`):''})()}
+    ${h&&h.service&&h.service.length?mpSec('Mitra layanan servis','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${h.service.map(mpStore).join('')}</div>`):''}
+    ${stores.length?mpSec('Toko mitra','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${stores.map(mpStore).join('')}</div>`):''}
     <div class="mp-lk"><button class="btn l" onclick="nav('mptrack')">Lacak pesanan</button><button class="btn l" onclick="nav('mpfav')">Favorit</button><button class="btn l" onclick="mpAcc()">${S.u?'Akun saya':'Masuk / Daftar'}</button></div>${pubFoot()}</div>`;
 };
 const mpLoadRes=()=>{const k=JSON.stringify([M.q,M.cat,M.min,M.max,M.sort,M.loc]);if(M.rk===k||M.rb)return;M.rk=k;M.rb=1;api('mpSearch',{q:M.q,cat:M.cat,min:M.min,max:M.max,sort:M.sort,loc:M.loc}).then(r=>{M.res=r;M.rf=0}).catch(()=>{M.rf=1}).finally(()=>{M.rb=0;render()})};
