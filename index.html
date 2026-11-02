@@ -445,6 +445,7 @@ table{border-collapse:collapse}th,td{padding:8px 10px;text-align:left;border-bot
 .sc-tabs .btn{margin:0;border-radius:20px;padding:8px 16px;min-height:38px}
 .sc-kpi{gap:10px}.sc-kpi>div{border-left:4px solid var(--blue);box-shadow:var(--sh)}
 .sc-panels{gap:12px}
+.mp-tag{display:inline-block;padding:1px 8px;border-radius:8px;font-size:11px;font-weight:600;background:var(--blue-l);color:var(--blue)}
 .sc-st{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700;background:var(--blue-l);color:var(--blue)}
 @media(max-width:480px){.pg{padding:12px 10px 20px}.card{padding:14px}.btn{padding:10px 14px}}
 </style>
@@ -1103,7 +1104,7 @@ async function sendNotifUI(){const title=($('#nt_title')||{}).value||'',message=
 function render(){
  if(!S.u&&!['intro','login','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav'].includes(S.p))S.p='intro';
  if(S.u&&ROLE()==='MITRA'&&!['mitra','mitrabiz','intro','mpsearch','mpprod','mpfav','tokos','tokod','lacak','mptrack','keranjang'].includes(S.p))S.p='mitrabiz';
- if(S.u&&ROLE()==='PEMBELI'&&!['intro','mpsearch','mpprod','mpfav','mporders','akun','profil','notifikasi','keranjang','mptrack','beranda','kat','terjual','bandingkan','pesanan'].includes(S.p))S.p='intro';
+ if(S.u&&ROLE()==='PEMBELI'&&!['intro','mpsearch','mpprod','mpfav','mporders','akun','profil','notifikasi','keranjang','mptrack','beranda','kat','terjual','bandingkan','pesanan','checkout'].includes(S.p))S.p='intro';
  if(S.u&&!P[S.p])S.p='dash';
  const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav','mporders'].includes(S.p), role=ROLE();
  if(S.u&&!['inv','qris','form','beranda','kat','terjual','bandingkan','akun','profil'].includes(S.p)){
@@ -1603,7 +1604,7 @@ MENUGRP.splice(1,0,{id:'seller',n:'Seller Centre',i:'dash',k:['mitrabiz','mitra'
 <script id="u3b">
 /* NABLO UPDATE 3b — katalog, keranjang per toko, bisnis mitra, moderasi (aditif) */
 Object.assign(U3,{cart:{},tab:'home',pe:null});
-const u3ck=()=>Object.values(U3.cart).reduce((a,g)=>a+g.items.reduce((b,i)=>b+i.qty,0),0);
+const u3ck=()=>Object.values(U3.cart).reduce((a,g)=>a+g.items.reduce((b,i)=>b+i.qty,0),0)+hpCartN();
 const u3add=i=>{const p=U3.prods[i],m=U3.store,g=U3.cart[m.slug]||(U3.cart[m.slug]={name:m.store_name,pay:m.pay_info||'',phone:m.phone,items:[]}),it=g.items.find(x=>x.id===p.prod_id);if(it){if(it.qty<p.stock)it.qty++}else g.items.push({id:p.prod_id,name:p.name,price:p.price,qty:1,max:p.stock});toast('Masuk keranjang');render()};
 const u3qty=(s,i,d)=>{const g=U3.cart[s],it=g.items[i];it.qty+=d;if(it.qty<1)g.items.splice(i,1);else if(it.max&&it.qty>it.max)it.qty=it.max;if(!g.items.length)delete U3.cart[s];render()};
 const u3co=s=>{u3draft();const g=U3.cart[s];u3run(async()=>{const r=await api('u3Order',{slug:s,items:g.items.map(i=>({prod_id:i.id,qty:i.qty})),customer_name:u3v('cn_'+s),phone:u3v('cp_'+s),address:u3v('ca_'+s),pay_method:u3v('cm_'+s),note:u3v('ct_'+s)});r.pay=g.pay;U3.ores=r;delete U3.cart[s];U3.dr={}})};
@@ -1750,4 +1751,32 @@ P.u3mod=()=>{const h=mpOldMod();mpLoad('home',()=>api('mpHome'));const c=M.home?
 
 if(S.p==='intro')render();
 </script>
+<script>
+/* NABLO — katalog HP unit dipadukan ke marketplace (satu beranda, satu pencarian, satu keranjang) */
+const HPL={busy:0,fail:0};
+function hpCartIds(){try{const a=JSON.parse(localStorage.getItem('nb_cart_'+(S.u?S.u.user_id:'tamu'))||'[]');return Array.isArray(a)?a.filter(x=>typeof x==='string'):[]}catch(e){return[]}}
+function hpCartN(){return hpCartIds().length}
+function hpLoad(){if(Array.isArray(S.cat)||HPL.busy||HPL.fail)return;HPL.busy=1;api('getCatalog').then(x=>{S.cat=Array.isArray(x)?x:[]}).catch(()=>{HPL.fail=1}).finally(()=>{HPL.busy=0;render()})}
+function hpList(){const q=String(M.q||'').toLowerCase().trim(),c=String(M.cat||'');if(c&&!/^hp/i.test(c))return[];return(Array.isArray(S.cat)?S.cat:[]).filter(x=>!q||`${x.brand||''} ${x.model||''} ${x.color||''} ${x.ram||''} ${x.rom||''} nablo hp`.toLowerCase().includes(q))}
+function hpCard(x){const id=esc(String(x.id)),img=x.photo_url?`<img loading="lazy" src="${esc(x.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>📱</span>';
+ return `<div class="mp-c"><div class="mp-im" onclick="katDetail('${id}')">${img}</div><div class="mp-bd" onclick="katDetail('${id}')"><div class="mp-nm">${esc(x.brand||'')} ${esc(x.model||'HP')}</div><b>${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</b><small>${esc(x.ram||'-')}/${esc(x.rom||'-')}${x.color?' · '+esc(x.color):''}</small><small>${esc(shopName())} · <span class="mp-tag">${x.reserved?'Dipesan':'Siap jual'}</span></small></div><div style="padding:0 10px 10px">${x.reserved?'<button class="btn l" style="width:100%;margin:0" disabled>Sedang dipesan</button>':`<button class="btn l" style="width:100%;margin:0" onclick="cartAdd('${id}')">+ Keranjang</button>`}</div></div>`}
+function hpInRange(x){const p=+x.price||0;if(M.min!==''&&p<+M.min)return false;if(M.max!==''&&p>+M.max)return false;if(M.loc&&!String(inf().store_address||'').toLowerCase().includes(String(M.loc).toLowerCase()))return false;return true}
+function hpAll(){const part=M.res&&M.res.items?M.res.items.slice():[],hp=hpList().filter(hpInRange);let out=[];
+ if(M.sort==='price_asc'||M.sort==='price_desc'){out=part.map(p=>({h:mpCard(p),p:+p.price||0})).concat(hp.map(x=>({h:hpCard(x),p:+x.price||0})));out.sort((a,b)=>M.sort==='price_asc'?a.p-b.p:b.p-a.p);return out.map(o=>o.h)}
+ const A=part.map(mpCard),B=hp.map(hpCard);for(let i=0;i<Math.max(A.length,B.length);i++){if(i<A.length)out.push(A[i]);if(i<B.length)out.push(B[i])}return out}
+function hpGrid(){const L=hpAll();if(L.length)return `<div class="mp-g">${L.join('')}</div>`;
+ if((!M.res&&!M.rf)||(!Array.isArray(S.cat)&&!HPL.fail))return'<div class="card">Memuat katalog…</div>';
+ if(M.rf)return'<div class="card">Katalog gagal dimuat. <button class="btn l" onclick="M.rk=\'\';M.rf=0;render()">Coba lagi</button></div>';
+ return'<p class="mp-em">Belum ada produk.</p>'}
+const _mpIntro=P.intro,_mpSearch=P.mpsearch,_mpKer=P.keranjang,_mpOrd=P.mporders;
+P.intro=()=>{hpLoad();const o=_mpIntro();return o.replace(/<section class="mp-s"><div class="mp-sh"><h2>Katalog produk.*?<\/section>/s,()=>mpSec('Katalog produk','<a onclick="mpGo(\'\')">Filter & cari produk</a>',hpGrid()))};
+P.kat=()=>P.intro();
+P.mpsearch=()=>{hpLoad();const o=_mpSearch();return o.replace(/<section class="mp-s"><div class="mp-sh"><h2>Produk \(.*?<\/section>/s,()=>mpSec('Produk ('+(((M.res&&M.res.total)||0)+hpList().filter(hpInRange).length)+')','',hpGrid()))};
+P.keranjang=()=>{hpLoad();const o=_mpKer(),ids=hpCartIds();if(!ids.length)return o;
+ const cat=Array.isArray(S.cat)?S.cat:null,rows=ids.map(id=>({id,x:cat?cat.find(c=>String(c.id)===id):null})),ok=rows.filter(r=>r.x&&!r.x.reserved),tot=ok.reduce((a,r)=>a+(+r.x.price||0),0);
+ const card=`<div class="card"><b>${esc(shopName())} · HP unit</b>${rows.map(r=>`<p>${r.x?esc(r.x.brand)+' '+esc(r.x.model)+' · '+rp(r.x.price)+(r.x.reserved?' <small>(sedang dipesan)</small>':''):(cat?'<small>Unit sudah tidak tersedia</small>':'<small>Memuat…</small>')} <button class="btn l" onclick="cartDel('${esc(r.id)}')">Hapus</button></p>`).join('')}<p>Subtotal: <b>${rp(tot)}</b></p>${ok.length?`<button class="btn g" onclick="S.cf=false;nav('checkout')">Checkout HP unit</button>`:''}<p style="font-size:11px;color:var(--mut)">HP unit dibayar lewat petugas toko (tunai/transfer/QRIS) dan dicek terpisah dari produk toko mitra.</p></div>`;
+ return o.replace('<div class="pg" style="padding:0">','<div class="pg" style="padding:0">'+card).replace('Keranjang kosong. <button','Belum ada produk toko mitra. <button')};
+P.mporders=()=>{const o=_mpOrd();return o.replace('<div class="buyer-section">','<div class="card"><b>Pesanan HP unit</b><p>Pembelian HP dari '+esc(shopName())+' dilacak di halaman ini juga.</p><button class="btn l" onclick="nav(\'pesanan\')">Lihat pesanan HP unit</button></div><div class="buyer-section">')};
+</script>
+
 </body></html>
