@@ -675,6 +675,11 @@ nav button i svg,.buyer-nav button i svg{width:21px;height:21px}
 .tlt{font-size:11.5px;font-weight:600;text-align:center;line-height:1.25;overflow-wrap:anywhere}
 @media(min-width:700px){.tls{grid-template-columns:repeat(auto-fit,minmax(96px,1fr))}}
 </style>
+<style id="nablo-seg">
+.seg{display:flex;background:#E8EEF4;border-radius:12px;padding:4px;gap:4px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:transparent;color:var(--mut);font-weight:600;font-size:13.5px;min-height:40px;border-radius:9px;cursor:pointer}
+.seg button.on{background:#fff;color:var(--navy);box-shadow:0 1px 3px rgba(20,43,69,.15)}
+</style>
 </head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
 <div id="app"></div><div id="drw"></div><div id="mod"></div><div id="toast"></div>
@@ -1796,7 +1801,7 @@ const u3set=()=>u3run(async()=>{await api('u3AdminSet',S.t,u3v('sp'),u3v('st'),u
 
 Object.assign(P,{
 tokos:()=>{u3auto('list',u3load);
- return u3hd('Toko Mitra NABLO')+`<div class="pg"><div class="card"><input id="u3_q" placeholder="Cari toko, layanan, atau lokasi" value="${esc(U3.q)}" onkeydown="if(event.key==='Enter'){U3.q=this.value.trim();U3.list=null;U3.flist=0;render()}"><button class="btn g" onclick="U3.q=u3v('q');U3.list=null;U3.flist=0;render()">Cari</button> <button class="btn l" onclick="nav('lacak')">Lacak Servis</button></div>
+ return u3hd('Toko Mitra & Servis HP')+`<div class="pg"><div class="card"><input id="u3_q" placeholder="Cari toko, layanan, atau lokasi" value="${esc(U3.q)}" onkeydown="if(event.key==='Enter'){U3.q=this.value.trim();U3.list=null;U3.flist=0;render()}"><button class="btn g" onclick="U3.q=u3v('q');U3.list=null;U3.flist=0;render()">Cari</button> <button class="btn l" onclick="nav('lacak')">Lacak Servis</button></div>
  ${(U3.list||[]).map(m=>`<div class="card">${m.logo_url?`<img src="${esc(m.logo_url)}" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:cover;float:right" referrerpolicy="no-referrer">`:''}<b>${esc(m.store_name)}</b><p style="color:var(--mut);font-size:13px">${esc(m.location)} · ${esc(m.services||'Servis HP')}</p><button class="btn g" onclick="u3open('${esc(m.slug)}')">Lihat Toko & Servis</button></div>`).join('')||(U3.list?'<div class="card">Belum ada toko yang cocok.</div>':(U3.flist?u3wait('list'):'<div class="card">Memuat…</div>'))}
  <div class="card"><b>Punya toko HP?</b><p>Gratis ${U3.plan.trial} hari, lalu ${u3rp(U3.plan.price)} per ${U3.plan.days} hari. Tanpa komisi.</p><button class="btn g" onclick="nav('mitrareg')">BUKA TOKO DI SINI</button></div></div>`},
 tokod:()=>{const m=U3.store;if(!m)return u3hd('Toko','tokos')+'<div class="pg"><div class="card">Toko tidak dipilih.</div></div>';
@@ -1895,10 +1900,10 @@ const bd=s=>`<span class="sc-st">${esc(lbl[s]||s)}</span>`;
 const NX={BARU:['DIKONFIRMASI','DIBATALKAN'],DIKONFIRMASI:['DIKIRIM','SELESAI','DIBATALKAN'],DIKIRIM:['SELESAI','DIBATALKAN']};
 const grp=b=>{const G={},ids=[];(b.orders||[]).forEach(o=>{if(!G[o.order_id]){G[o.order_id]=[];ids.push(o.order_id)}G[o.order_id].push(o)});return ids.map(i=>G[i])};
 const tot=g=>g.reduce((a,x)=>a+(+x.total||0),0);
-const SX=window.SX={t:'home',q:'',pg:1,f:''};
+const SX=window.SX={t:'home',q:'',pg:1,f:'',m:'ord'};
 const chips=(arr,cur)=>`<div class="sc-tabs" style="position:static;padding-top:0">${arr.map(x=>`<button class="btn ${cur===x[0]?'g':'l'}" onclick="SX.f='${x[0]}';SX.pg=1;render()">${x[1]}</button>`).join('')}</div>`;
 const pid=k=>k==='home'?'mitrabiz':'sc_'+k.replace(':','_');
-window.scGo=k=>nav(pid(k));
+window.scGo=k=>{if(k==='svc'){SX.m='svc';k='ord'}else if(k==='ord')SX.m='ord';nav(pid(k))};
 window.scQ=v=>{SX.q=v;SX.pg=1;clearTimeout(scQ.d);scQ.d=setTimeout(()=>{render();const e=document.getElementById('scq');if(e){e.focus();e.setSelectionRange(v.length,v.length)}},250)};
 const tbl=(h,rows)=>{const ia=h.indexOf('Aksi'),is=h.indexOf('Status'),ip=h.indexOf('Foto'),it=h.findIndex((x,n)=>n!==ia&&n!==is&&n!==ip);
  return rows.length?`<div class="scx-list">${rows.map(r=>`<div class="scx-row"><div class="scx-rh">${ip>=0?`<div class="scx-rp">${r[ip]}</div>`:''}<div class="scx-rt">${r[it]}</div>${is>=0?`<div>${r[is]}</div>`:''}</div>${r.map((c,n)=>[ia,is,ip,it].includes(n)?'':`<div class="scx-kv"><span>${h[n]}</span><div>${c}</div></div>`).join('')}${ia>=0?`<div class="scx-ra">${r[ia]}</div>`:''}</div>`).join('')}</div>`:'<p>Belum ada data.</p>'};
@@ -1912,8 +1917,9 @@ function views(b){
  const mons=Object.keys(b.report).filter(k=>k.length===7).sort().slice(-6).map(k=>[k.slice(5),rep(b,k).sales,rep(b,k).sales-rep(b,k).cogs+rep(b,k).svc-rep(b,k).part-rep(b,k).exp]);
  const V={};
  const tl=(ic,l,c,n)=>`<button class="tl" onclick="${c}"><span class="tli">${ni(ic)}${n?`<em>${n}</em>`:''}</span><span class="tlt">${l}</span></button>`,so=(st)=>`SX.pf='${st}';scGo('ord')`;
- V.home=()=>`<div class="card"><div class="ct"><b>Pesanan</b><a style="color:var(--blue);font-weight:600;cursor:pointer;font-size:13px" onclick="${so('')}">Lihat semua</a></div><div class="tls">${tl('notifikasi','Pesanan Baru',so('BARU'),cnt('BARU'))}${tl('qc','Diproses',so('DIKONFIRMASI'),cnt('DIKONFIRMASI'))}${tl('cart','Dikirim',so('DIKIRIM'),cnt('DIKIRIM'))}${tl('terjual','Selesai',so('SELESAI'))}${tl('logout','Dibatalkan',so('DIBATALKAN'))}</div></div>
- <div class="card"><b>Menu Toko</b><div class="tls">${tl('spesifikasi','Tambah Produk',"scGo('padd')")}${tl('stok','Produk',"scGo('prod')",low.length+out.length)}${tl('servis','Servis HP',"scGo('svc')")}${tl('keu','Keuangan',"scGo('fin')")}${tl('data','Pelanggan',"scGo('cus')")}${tl('lap','Laporan',"scGo('fin')")}${tl('tag','Bagikan Toko',"scShare()")}${tl('kat','Marketplace',"nav('intro')")}${tl('set','Pengaturan',"scGo('set')")}${tl('chat','Bantuan',"scGo('help')")}</div></div>
+ const SC=a=>(my.services||[]).filter(x=>a.includes(x.status)).length;
+ V.home=()=>`<div class="card"><div class="ct"><b>Pesanan & Servis</b><a style="color:var(--blue);font-weight:600;cursor:pointer;font-size:13px" onclick="${so('')}">Lihat semua</a></div><small style="color:var(--mut)">Pesanan toko</small><div class="tls">${tl('notifikasi','Pesanan Baru',so('BARU'),cnt('BARU'))}${tl('qc','Diproses',so('DIKONFIRMASI'),cnt('DIKONFIRMASI'))}${tl('cart','Dikirim',so('DIKIRIM'),cnt('DIKIRIM'))}${tl('terjual','Selesai',so('SELESAI'))}${tl('logout','Dibatalkan',so('DIBATALKAN'))}</div><small style="color:var(--mut);display:block;margin-top:10px">Servis HP</small><div class="tls">${tl('servis','Servis Masuk',"scGo('svc')",SC(['BOOKING','HP_DITERIMA','PEMERIKSAAN_AWAL']))}${tl('spesifikasi','Dikerjakan',"scGo('svc')",SC(['MENUNGGU_PERSETUJUAN_BIAYA','MENUNGGU_SPAREPART','SEDANG_DIPERBAIKI','PEMERIKSAAN_QC']))}${tl('qc','Siap Diambil',"scGo('svc')",SC(['SIAP_DIAMBIL']))}${tl('terjual','Selesai',"scGo('svc')")}</div></div>
+ <div class="card"><b>Menu Toko</b><div class="tls">${tl('spesifikasi','Tambah Produk',"scGo('padd')")}${tl('stok','Produk',"scGo('prod')",low.length+out.length)}${tl('keu','Keuangan',"scGo('fin')")}${tl('data','Pelanggan',"scGo('cus')")}${tl('lap','Laporan',"scGo('fin')")}${tl('tag','Bagikan Toko',"scShare()")}${tl('kat','Marketplace',"nav('intro')")}${tl('set','Pengaturan',"scGo('set')")}${tl('chat','Bantuan',"scGo('help')")}</div></div>
  <div class="scx-g"><div class="scx-k"><small>Penjualan hari ini</small><b>${u3rp(rep(b,today).sales)}</b></div><div class="scx-k"><small>Penjualan bulan ini</small><b>${u3rp(rep(b,mon).sales)}</b></div><div class="scx-k"><small>Pesanan baru</small><b>${cnt('BARU')}</b></div><div class="scx-k"><small>Sedang diproses</small><b>${cnt('DIKONFIRMASI')+cnt('DIKIRIM')}</b></div><div class="scx-k"><small>Pesanan selesai</small><b>${cnt('SELESAI')}</b></div><div class="scx-k"><small>Produk aktif</small><b>${act.length}</b></div><div class="scx-k"><small>Stok menipis / habis</small><b>${low.length} / ${out.length}</b></div><div class="scx-k"><small>Pendapatan servis (bln ini)</small><b>${u3rp(rep(b,mon).svc)}</b></div><div class="scx-k"><small>Estimasi keuntungan (bln ini)</small><b>${u3rp(lab(rep(b,mon)))}</b></div></div>
  <div class="scx-2"><div class="card"><b>Penjualan 14 hari terakhir</b>${area(days,'scA')}</div><div class="card"><b>Produk terlaris</b>${(b.top||[]).map(t=>`<p>${esc(t.name)} <small style="float:right">${t.qty} terjual</small></p>`).join('')||'<p>Belum ada penjualan selesai.</p>'}</div></div>
  <div class="scx-2" style="margin-top:12px"><div class="card"><b>Stok perlu perhatian</b>${low.concat(out).slice(0,6).map(p=>`<p>${esc(p.name)} <small style="float:right">stok ${p.stock}</small></p>`).join('')||'<p>Semua stok aman.</p>'}</div><div class="card"><b>Aktivitas terbaru</b>${O.slice(0,5).map(g=>`<p style="font-size:13px">${esc(g[0].order_id)} · ${esc(g[0].customer_name)} ${bd(g[0].status)}</p>`).join('')||'<p>Belum ada aktivitas.</p>'}</div></div>`;
@@ -1931,16 +1937,17 @@ function views(b){
  V.cus=()=>{const M={};O.forEach(g=>{const f=g[0],k=String(f.phone||f.customer_name);const c=M[k]||(M[k]={n:f.customer_name,p:f.phone,o:0,t:0,l:''});c.o++;if(f.status==='SELESAI')c.t+=tot(g);if(!c.l)c.l=String(f.created_at).slice(0,10)});(my.services||[]).forEach(s=>{const k=String(s.phone||s.customer_name),c=M[k]||(M[k]={n:s.customer_name,p:s.phone,o:0,t:0,l:''});c.sv=(c.sv||0)+1});const q=SX.q.toLowerCase();return `<div class="card"><b>Pelanggan toko ini</b>${tbl(['Nama','WhatsApp','Pesanan','Servis','Total belanja','Terakhir'],Object.values(M).filter(c=>!q||(c.n+c.p).toLowerCase().includes(q)).map(c=>[esc(c.n),`<a target="_blank" rel="noopener" href="${esc(u3wa(c.p,'Halo '+c.n+', terima kasih telah berbelanja di '+(st.store_name||'toko kami')+'.'))}">${esc(c.p)}</a>`,c.o,c.sv||0,u3rp(c.t),c.l||'-']),1)}</div>`};
  V.set=()=>{u3auto('my',u3myLoad);if(!U3.my)return u3wait('my');let h=oldPage(),i=h.indexOf(MK);if(i>=0)h=h.slice(0,i)+'</div>';h=h.replace(/<div class="card"><b>Bisnis toko<\/b>.*?<\/button><\/div>/s,'');return h.replace('<div class="pg">','<div class="pg" style="padding:0">')};
  V.help=()=>`<div class="card"><b>Panduan singkat</b><p>Pesanan baru masuk di menu Pesanan: konfirmasi, kirim, lalu tandai selesai. Pendapatan baru dihitung setelah pesanan SELESAI.</p><p>Produk dan stok diatur di Produk & Stok. Pengeluaran dan laporan ada di Keuangan.</p><p>Profil toko, metode pembayaran, dan tautan toko publik ada di Pengaturan Toko.</p></div><div class="card"><b>Informasi langganan</b><p>Status toko: <b>${esc(st.status||'-')}</b>${st.expires_at?' · berlaku sampai <b>'+esc(String(st.expires_at).slice(0,10))+'</b>':''}${my.days_left!==undefined?' ('+Math.max(0,my.days_left)+' hari)':''}</p><button class="btn g" onclick="scGo('set')">Perpanjang / kirim bukti pembayaran</button></div><div class="card"><b>Bantuan Admin NABLO</b><p>Hubungi admin NABLO untuk kendala akun, langganan, atau moderasi produk.</p><p style="font-size:12px;color:var(--mut)">Hubungi admin melalui kontak yang diberikan saat pendaftaran.</p></div>`;
+  const ob=V.ord,sv=V.svc;V.ord=()=>`<div class="seg"><button class="${SX.m!=='svc'?'on':''}" onclick="SX.m='ord';SX.pg=1;render()">Pesanan Toko (${O.length})</button><button class="${SX.m==='svc'?'on':''}" onclick="SX.m='svc';render()">Servis HP (${(my.services||[]).length})</button></div>`+(SX.m==='svc'?sv():ob());
   const h0=V.home;V.home=()=>h0()+V.stat();const f0=V.fin;V.fin=()=>f0()+V.exp();
  V.soon=()=>Object.keys(DEV).map(k=>`<div class="scx-dev" style="margin-bottom:12px"><b>${esc(T[k])}</b><p>${esc(DEV[k])}</p></div>`).join('');
  return V}
 window.scShare=()=>{const s=(U3.my&&U3.my.store&&U3.my.store.slug)||'',u=location.origin+location.pathname+'?toko='+s;if(navigator.share)navigator.share({title:'Toko saya',url:u}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(u).then(()=>toast('Tautan toko disalin'));else prompt('Tautan toko',u)};
 window.scDet=id=>{const g=grp(U3.biz).find(x=>x[0].order_id===id);if(!g)return;const f=g[0],s=(U3.my&&U3.my.store&&U3.my.store.store_name)||'toko';modal(`<h3>${esc(id)} ${bd(f.status)}</h3><p>${esc(f.customer_name)} · ${esc(f.phone)}<br>${esc(f.address)}</p><p>Pembayaran: ${esc(f.pay_method)}${f.note?'<br>Catatan: '+esc(f.note):''}</p>${g.map(x=>`<p>${esc(x.prod_name)} × ${x.qty} = ${u3rp(x.total)}</p>`).join('')}<p><b>Total ${u3rp(tot(g))}</b></p>${u3wo(g,s)}<button class="btn l" onclick="closeM()">Tutup</button>`)};
-const T={home:'Ringkasan Toko',ord:'Pesanan',prod:'Produk & Stok',padd:'Tambah / Edit Produk',svc:'Servis HP',fin:'Keuangan',cus:'Pelanggan',set:'Pengaturan Toko',help:'Pusat Bantuan',soon:'Segera Hadir',dev_stok:'Riwayat Stok',dev_promo:'Promosi Toko',dev_karyawan:'Karyawan & Hak Akses'};
+const T={home:'Ringkasan Toko',ord:'Pesanan & Servis',prod:'Produk & Stok',padd:'Tambah / Edit Produk',svc:'Servis HP',fin:'Keuangan',cus:'Pelanggan',set:'Pengaturan Toko',help:'Pusat Bantuan',soon:'Segera Hadir',dev_stok:'Riwayat Stok',dev_promo:'Promosi Toko',dev_karyawan:'Karyawan & Hak Akses'};
 const DEV={dev_stok:'Sedang dalam perbaikan dan segera tersedia.',dev_promo:'Sedang dalam perbaikan dan segera tersedia.',dev_karyawan:'Sedang dalam perbaikan dan segera tersedia.'};
 const page=key=>()=>{SX.t=key;if(SX.pk!==key){SX.pk=key;SX.q='';SX.pg=1;SX.f=SX.pf||'';SX.pf=''}const title=T[key]||'Seller Centre';
  u3auto('biz',u3bizLoad);const b=U3.biz;if(!b)return hd(title)+'<div class="pg">'+u3wait('biz')+'</div>';
- const base=key.split(':')[0],tb=['ord','prod','cus'].includes(base)?`<input id="scq" type="search" placeholder="Cari…" value="${esc(SX.q)}" oninput="scQ(this.value)" style="max-width:360px;margin-bottom:10px">`:'';
+ const base=key.split(':')[0],tb=(['ord','prod','cus'].includes(base)&&!(base==='ord'&&SX.m==='svc'))?`<input id="scq" type="search" placeholder="Cari…" value="${esc(SX.q)}" oninput="scQ(this.value)" style="max-width:360px;margin-bottom:10px">`:'';
  return hd(title,key==='padd'?'sc_prod':'')+`<div class="pg">${tb}${(views(b)[base]||views(b).home)()}</div>`};
 const oldMitra=P.mitra;
 Object.keys(T).filter(k=>!k.startsWith('dev_')).forEach(k=>{P[pid(k)]=page(k)});
@@ -1949,14 +1956,14 @@ P.mitra=P.sc_set;
 for(let i=MENU.length-1;i>=0;i--)if(MENU[i][0]==='mitra'||MENU[i][0]==='mitrabiz')MENU.splice(i,1);
 for(let i=MENUGRP.length-1;i>=0;i--)if((MENUGRP[i].k||[]).some(x=>x==='mitrabiz'||x==='mitra'))MENUGRP.splice(i,1);
 const R=['MITRA'],row=(k,ic,l,sh)=>[pid(k),ni(ic),l,R,sh];
-MENU.push(row('home','dash','Beranda'),row('ord','jual','Pesanan'),row('prod','stok','Produk & Stok','Produk'),row('svc','servis','Servis HP','Servis'),row('fin','keu','Keuangan'),row('cus','data','Pelanggan'),row('set','set','Pengaturan Toko'),row('help','chat','Pusat Bantuan'),row('soon','tag','Segera Hadir'),['intro',ni('kat'),'Marketplace',ALL.concat(R)]);
+MENU.push(row('home','dash','Beranda'),row('ord','jual','Pesanan & Servis','Pesanan'),row('prod','stok','Produk & Stok','Produk'),row('fin','keu','Keuangan'),row('cus','data','Pelanggan'),row('set','set','Pengaturan Toko'),row('help','chat','Pusat Bantuan'),row('soon','tag','Segera Hadir'),['intro',ni('kat'),'Marketplace',ALL.concat(R)]);
 /* urutan baku semua role: pekerjaan utama dulu, lalu pengaturan, marketplace, akun */
 MENUGRP.length=0;
 MENUGRP.push({k:['dash']},{k:['mitrabiz']},{id:'jual',n:'Penjualan',i:'jual',k:['jual','lap']},{id:'stok',n:'Produk & Stok',i:'stok',k:['stok','spesifikasi','kalk']},{id:'servis',n:'Layanan Servis',i:'servis',k:['servis','qc']},{k:['keu']},{k:['u3admin']},
- {k:['sc_ord']},{k:['sc_prod']},{k:['sc_svc']},{k:['sc_fin']},{k:['sc_cus']},
+ {k:['sc_ord']},{k:['sc_prod']},{k:['sc_fin']},{k:['sc_cus']},
  {h:'Lainnya',id:'data',n:'Data & Akun',i:'data',k:['data','notifikasi']},{k:['set']},{h:'Lainnya',k:['sc_set']},{k:['sc_help']},{k:['sc_soon']},
  {k:['intro']},{k:['profil']});
-PRIMARY.MITRA=['mitrabiz','sc_ord','sc_prod','sc_svc'];
+PRIMARY.MITRA=['mitrabiz','sc_ord','sc_prod','sc_fin'];
 })();
 </script>
 <script id="mp">
@@ -1971,7 +1978,7 @@ const mpCatGo=c=>{M.q='';M.cat=c;nav('mpsearch')};
 const mpAcc=()=>{if(!S.u){S.nextP='intro';return nav('login')}const r=ROLE(),t=r==='MITRA'?'mitrabiz':r==='SUPERADMIN'?'u3admin':r==='PEMBELI'?'akun':'dash';nav(P[t]?t:'intro')};
 const mpHead=()=>{const n=u3ck();return `<header class="mp-top"><div class="mp-lg" onclick="nav('intro')" aria-label="Beranda">${logo(34)}</div><div class="mp-sr"><span class="mp-si">${ni('search')}</span><input id="mp_q" type="search" value="${esc(M.q)}" placeholder="Cari produk atau toko" enterkeyhint="search" onkeydown="if(event.key==='Enter')mpGo(this.value)"></div><div class="mp-ic"><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button><button onclick="mpAcc()" aria-label="${S.u?'Akun saya':'Masuk'}">${ni('profil')}</button></div></header>`};
 const mpCard=p=>{M.reg[p.prod_id]=p;return `<div class="mp-c" onclick="mpOpen('${esc(p.prod_id)}')"><div class="mp-im">${p.photo_url?`<img loading="lazy" src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>Foto</span>'}</div><div class="mp-bd"><div class="mp-nm">${esc(p.name)}</div><b>${u3rp(p.price)}</b><small>${esc(p.store_name)}${p.location?' · '+esc(p.location):''}</small></div></div>`};
-const mpStore=s=>`<div class="mp-st" onclick="u3open('${esc(s.slug)}')"><div class="mp-sl">${s.logo_url||s.photo_url?`<img src="${esc(s.logo_url||s.photo_url)}" alt="" referrerpolicy="no-referrer">`:'Toko'}</div><div><b>${esc(s.store_name)}</b><small>${esc(s.location||s.address||'')}</small></div></div>`;
+const mpStore=s=>`<div class="mp-st" onclick="u3open('${esc(s.slug)}')"><div class="mp-sl">${s.logo_url||s.photo_url?`<img src="${esc(s.logo_url||s.photo_url)}" alt="" referrerpolicy="no-referrer">`:'Toko'}</div><div><b>${esc(s.store_name)}</b><small>${esc(s.location||s.address||'')}</small>${s.svc?'<span class="mp-tag">Servis HP</span>':''}</div></div>`;
 const mpSec=(t,more,body)=>`<section class="mp-s"><div class="mp-sh"><h2>${t}</h2>${more||''}</div>${body}</section>`;
 const mpGrid=L=>L.length?`<div class="mp-g">${L.map(mpCard).join('')}</div>`:'<p class="mp-em">Belum ada produk.</p>';
 P.intro=()=>{
@@ -2095,11 +2102,11 @@ P.intro=()=>{
  hpLoad();mpLoad('home',()=>api('mpHome'));mpLoadRes();
  const h=M.home,r=M.res,cats=(h&&h.cats)||(r&&r.cats)||[],stores=(h&&h.stores)||[];
  const seller=S.u&&ROLE()==='MITRA';
+ const tokoAll=(()=>{const m=new Map();stores.forEach(x=>m.set(x.slug,Object.assign({},x)));((h&&h.service)||[]).forEach(x=>{const e=m.get(x.slug);if(e)e.svc=1;else m.set(x.slug,Object.assign({},x,{svc:1}))});return[...m.values()]})();
  const promo=`<div class="mp-promo"><div><b>Belanja dari toko mitra</b><small>Harga dan stok diperiksa sistem saat checkout.</small></div><button class="btn l" onclick="${seller?"nav('mitrabiz')":"nav('mitrareg')"}">${seller?'Seller Centre':'Buka toko'}</button></div>`;
  return `<div class="intro mp">${mpHead()}${promo}${cats.length?mpChips(cats,'mpCatSet'):''}${mpSortBar()}
   <section class="mp-s">${hpGrid()}</section>
-  ${stores.length?mpSec('Toko mitra','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${stores.map(mpStore).join('')}</div>`):''}
-  ${h&&h.service&&h.service.length?mpSec('Servis HP','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${h.service.map(mpStore).join('')}</div>`):''}
+  ${tokoAll.length?mpSec('Toko Mitra & Servis HP','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${tokoAll.map(mpStore).join('')}</div>`):''}
   <div class="mp-lk"><button class="btn l" onclick="nav('mptrack')">Lacak pesanan</button><button class="btn l" onclick="nav('lacak')">Lacak servis</button><button class="btn l" onclick="nav('mpfav')">Favorit</button></div>${pubFoot()}</div>`};
 P.kat=()=>P.intro();
 P.mpsearch=()=>{
