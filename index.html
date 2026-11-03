@@ -608,6 +608,59 @@ table{border-collapse:collapse}th,td{padding:8px 10px;text-align:left;border-bot
  .mp-s{margin-top:14px}
 }
 </style>
+<style id="nablo-fit">
+/* Penyesuaian kenyamanan layar HP: jarak, ukuran ikon/tombol, form ringkas, tanpa elemen berdempet */
+img,svg,video{max-width:100%}
+.card,.scx-k,.scx-dev{overflow-wrap:anywhere}
+nav button,.buyer-nav button{min-width:0;line-height:1.15}
+nav button,.buyer-nav button{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+nav button i svg,.buyer-nav button i svg{width:21px;height:21px}
+.mi i svg{width:20px;height:20px}
+@media(max-width:700px){
+ body{font-size:14px}
+ .pg{padding:12px 12px 20px}
+ /* header */
+ .hd{gap:8px;padding-left:12px;padding-right:12px}
+ .hd .bk,.hd .ic{width:40px;height:40px;min-width:40px;min-height:40px;font-size:16px}
+ .hd b{font-size:15px}
+ /* navigasi bawah & drawer */
+ nav{padding:4px 4px calc(4px + env(safe-area-inset-bottom,0px))}
+ nav button,.buyer-nav button{min-height:52px;padding:6px 2px;font-size:10.5px;gap:3px;justify-content:center}
+ #drw>div{padding:14px 10px calc(18px + env(safe-area-inset-bottom,0px))}
+ .mi{min-height:44px;padding:10px 12px;gap:12px;font-size:14px}
+ .ms{margin-left:14px}.ms .mi{min-height:42px;font-size:13.5px}
+ .mg+.mg{margin-top:2px}
+ /* kartu & form ringkas */
+ .card{padding:12px;margin-bottom:10px;border-radius:12px}
+ .card>b:first-child{margin-bottom:8px;display:block}
+ .card label{margin:10px 0 4px;font-size:12.5px}
+ input,select,textarea{min-height:42px;padding:9px 11px;font-size:16px;border-radius:8px}
+ textarea{min-height:68px}
+ input[type=checkbox],input[type=radio]{width:20px;height:20px;min-height:0;padding:0;margin:0 8px 0 0;vertical-align:middle}
+ .up{gap:10px;margin:6px 0 10px}.up .ph,.up img{max-width:72px;max-height:72px}
+ /* tombol */
+ .btn{min-height:42px;padding:9px 14px;font-size:14px;margin:4px 6px 4px 0}
+ .card>.btn.g:last-child,.card>.btn.g+.btn.l{margin-top:10px}
+ .scx-qa{display:grid;grid-template-columns:1fr 1fr;gap:8px}.scx-qa .btn{width:100%;margin:0;padding:9px 8px;font-size:13px}
+ .scx-qa .btn:first-child{grid-column:1/-1}
+ /* kartu statistik: 2 kolom */
+ .scx-g{grid-template-columns:1fr 1fr;gap:10px}.scx-k{padding:12px}.scx-k b{font-size:17px}.scx-k small{font-size:11.5px}
+ /* filter status: bisa digeser, tidak menumpuk */
+ .sc-tabs{gap:6px;padding:2px 0 10px;margin:0 -12px 4px;padding-left:12px;padding-right:12px}
+ .sc-tabs .btn{min-height:36px;padding:6px 13px;font-size:13px}
+ /* tabel jadi kartu: tombol aksi rapi */
+ .scx-tw.rsp td{padding:4px 0}.scx-tw.rsp td .btn{margin:2px 6px 2px 0;min-height:38px;padding:7px 12px;font-size:13px}
+ .scx-tw.rsp tr{padding:8px 12px}
+ #ls{gap:10px}
+ /* modal & toast */
+ #mod>div{padding:16px 14px calc(16px + env(safe-area-inset-bottom,0px))}
+ #toast{max-width:92%}
+ /* ikon marketplace */
+ .mp-ic{gap:2px}.mp-ic button{width:40px;height:40px}.mp-ic svg{width:21px;height:21px}
+ .mp-top{gap:8px}
+}
+@media(max-width:380px){.scx-g{gap:8px}.scx-k b{font-size:16px}nav button,.buyer-nav button{font-size:10px}.btn{padding:9px 12px}}
+</style>
 </head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
 <div id="app"></div><div id="drw"></div><div id="mod"></div><div id="toast"></div>
@@ -1305,7 +1358,7 @@ render();
   }catch(e){const m=String(e&&e.message||e);if(m.indexOf('SESI_HABIS')>=0){try{localStorage.removeItem('sk_token');localStorage.removeItem('sk_token_exp')}catch(err){}}else toast('Koneksi bermasalah. Muat ulang halaman untuk melanjutkan sesi.');if(S.p==='boot'){S.p='login';render()}}
 })();
 /* Sinkronisasi lintas perangkat: ambil data terbaru berkala tanpa login ulang.
-   Apps Script tidak menyediakan push real-time, jadi perubahan muncul biasanya dalam 10–15 detik. */
+   Perubahan muncul biasanya dalam 10–15 detik. */
 let syncBusy=false, lastSyncSignature='';
 async function syncConnectedDevices(){
   if(!S.t || !S.u || document.hidden || syncBusy || busyN>0) return;
@@ -1828,7 +1881,6 @@ const u3photos=s=>{const L={photos:'Foto pelanggan',photo_before:'Sebelum',photo
 .scx-tw.rsp table,.scx-tw.rsp tbody,.scx-tw.rsp tr,.scx-tw.rsp td{display:block;white-space:normal}.scx-tw.rsp thead{display:none}.scx-tw.rsp tr{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;padding:6px 10px}.scx-tw.rsp td{border:0;padding:3px 0}.scx-tw.rsp td:before{content:attr(data-l)": ";color:var(--mut);font-size:12px}}
 </style>
 <script id="scx">
-/* Seller Centre v2: memakai API yang sudah ada (u3MyBiz, u3MyStore, u3ProdSave, u3ProdStatus, u3OrderUpdate, u3ExpAdd). Tanpa data contoh. */
 (function(){
 const lbl={BARU:'Baru',DIKONFIRMASI:'Diproses',DIKIRIM:'Dikirim',SELESAI:'Selesai',DIBATALKAN:'Batal',AKTIF:'Aktif',NONAKTIF:'Nonaktif',BLOKIR:'Diblokir'};
 const bd=s=>`<span class="sc-st">${esc(lbl[s]||s)}</span>`;
@@ -1860,20 +1912,21 @@ function views(b){
   return ch+`<div class="card"><b>Pesanan</b>${tbl(['ID','Pelanggan','Produk','Total','Bayar','Status','Aksi'],pg.map(g=>{const f=g[0];return [esc(f.order_id)+'<br><small>'+esc(String(f.created_at).slice(0,16))+'</small>',esc(f.customer_name)+'<br><small>'+esc(f.phone)+'</small>',g.map(x=>esc(x.prod_name)+' ×'+x.qty).join('<br>'),u3rp(tot(g)),esc(f.pay_method),bd(f.status),`<button class="btn l" style="margin:0 4px 4px 0" onclick="scDet('${esc(f.order_id)}')">Detail</button>`+(NX[f.status]||[]).map(s=>`<button class="btn ${s==='DIBATALKAN'?'l':'g'}" style="margin:0 4px 4px 0;min-height:36px;padding:6px 10px" onclick="if(confirm('Ubah status ke ${s}?'))u3bizDo('u3OrderUpdate','Status pesanan diubah','${esc(f.order_id)}','${s}')">${lbl[s]}</button>`).join('')]}),1)}${pager(L.length,per)}</div>`};
  V.prod=()=>{const f=SX.f||'',kp=`<div class="scx-g"><div class="scx-k"><small>Nilai persediaan (modal)</small><b>${u3rp(b.stock_value)}</b></div><div class="scx-k"><small>Total unit stok</small><b>${act.reduce((a,p)=>a+(+p.stock||0),0)}</b></div><div class="scx-k"><small>Stok menipis (≤3)</small><b>${low.length}</b></div><div class="scx-k"><small>Habis</small><b>${out.length}</b></div></div>`,ch=chips([['','Semua ('+P_.length+')'],['AKTIF','Aktif ('+act.length+')'],['NONAKTIF','Nonaktif'],['LOW','Menipis ('+low.length+')'],['OUT','Habis ('+out.length+')']],f),q=SX.q.toLowerCase(),L=P_.filter(p=>(!f||(f==='LOW'?p.status==='AKTIF'&&+p.stock>0&&+p.stock<=3:f==='OUT'?+p.stock<=0:p.status===f))&&(!q||(p.name+p.category).toLowerCase().includes(q))),per=10,pg=L.slice((SX.pg-1)*per,SX.pg*per);
   return kp+`<div class="scx-qa"><button class="btn g" onclick="U3.pe=null;U3.dr={};U3.imgs.pph=[];nav('sc_padd')">Tambah Produk</button></div>`+ch+`<div class="card"><b>Produk</b>${tbl(['Foto','Nama','Kategori','Harga','Modal','Stok','Status','Aksi'],pg.map(p=>{const i=P_.indexOf(p);return [p.photo_url?`<img src="${esc(p.photo_url)}" style="width:44px;height:44px;object-fit:cover;border-radius:6px" referrerpolicy="no-referrer" alt="">`:'-',esc(p.name),esc(p.category),u3rp(p.price),u3rp(p.cost),p.stock,bd(p.status),p.status==='BLOKIR'?'<small>Diblokir admin</small>':`<button class="btn l" style="margin:0 4px 4px 0" onclick="U3.pe=U3.biz.products[${i}];U3.dr={};U3.imgs.pph=[];nav('sc_padd')">Edit</button><button class="btn l" style="margin:0 4px 4px 0" onclick="u3bizDo('u3ProdStatus','Status diubah','${p.prod_id}','${p.status==='AKTIF'?'NONAKTIF':'AKTIF'}')">${p.status==='AKTIF'?'Nonaktifkan':'Aktifkan'}</button><button class="btn l" style="margin:0" onclick="if(confirm('Hapus produk ini?'))u3bizDo('u3ProdStatus','Produk dihapus','${p.prod_id}','DIHAPUS')">Hapus</button>`]}),1)}${pager(L.length,per)}</div>`};
- V.padd=()=>{const pe=U3.pe||{};return `<div class="card" style="max-width:640px"><b>${pe.prod_id?'Edit produk':'Tambah produk'}</b>${u3f('pn','Nama produk','text',pe.name)}<label>Kategori</label><select id="u3_pc">${['HP baru','HP bekas','Aksesoris','Sparepart','Lainnya'].map(c=>`<option ${(pe.category||(U3.dr&&U3.dr.pc))===c?'selected':''}>${c}</option>`).join('')}</select>${u3f('pp','Harga jual (Rp)','number',pe.price)}${u3f('pcs','Modal (Rp)','number',pe.cost)}${u3f('ps','Stok','number',pe.stock)}${u3ta('pd','Deskripsi',pe.description)}${pe.photo_url&&!(U3.imgs.pph||[]).length?`<img src="${esc(pe.photo_url)}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;display:block;margin-top:6px" referrerpolicy="no-referrer" alt="">`:''}${u3ph('pph','Foto produk',1)}<small style="color:var(--mut)">Backend saat ini menyimpan 1 foto per produk.</small><br><button class="btn g" onclick="u3psave();S.p='sc_prod'">Simpan</button><button class="btn l" onclick="u3pedit(-1);scGo('prod')">Batal</button></div>`};
- V.svc=()=>{const S_=(my.services||[]);return `<div class="card"><b>Servis HP</b>${my.live===false?'<p style="color:var(--bad)">Langganan tidak aktif; servis dibatasi.</p>':''}${tbl(['No','Pelanggan','HP','Keluhan','Status','Biaya'],S_.map(s=>[esc(s.svc_no),esc(s.customer_name)+'<br><small>'+esc(s.phone)+'</small>',esc(s.brand+' '+s.model),esc(s.complaint),esc(U3ST[s.status]||s.status),u3rp(s.estimate_cost)]),1)}<button class="btn g" onclick="scGo('set')">Ubah status, diagnosis, foto & garansi</button></div>`};
+ V.padd=()=>{const pe=U3.pe||{};return `<div class="card" style="max-width:640px"><b>${pe.prod_id?'Edit produk':'Tambah produk'}</b>${u3f('pn','Nama produk','text',pe.name)}<label>Kategori</label><select id="u3_pc">${['HP baru','HP bekas','Aksesoris','Sparepart','Lainnya'].map(c=>`<option ${(pe.category||(U3.dr&&U3.dr.pc))===c?'selected':''}>${c}</option>`).join('')}</select>${u3f('pp','Harga jual (Rp)','number',pe.price)}${u3f('pcs','Modal (Rp)','number',pe.cost)}${u3f('ps','Stok','number',pe.stock)}${u3ta('pd','Deskripsi',pe.description)}${pe.photo_url&&!(U3.imgs.pph||[]).length?`<img src="${esc(pe.photo_url)}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;display:block;margin-top:6px" referrerpolicy="no-referrer" alt="">`:''}${u3ph('pph','Foto produk',1)}<br><button class="btn g" onclick="u3psave();S.p='sc_prod'">Simpan</button><button class="btn l" onclick="u3pedit(-1);scGo('prod')">Batal</button></div>`};
+ const MK='<div class="sec">Servis masuk</div>',oldPage=()=>oldMitra().replace(/^<div class="hd">.*?<\/div>/s,'');
+ V.svc=()=>{u3auto('my',u3myLoad);if(!U3.my)return u3wait('my');const h=oldPage(),i=h.indexOf(MK);return '<div class="pg" style="padding:0">'+(i<0?h:h.slice(i+MK.length))};
  V.fin=()=>{const m=rep(b,mon),all=Object.keys(b.report).filter(k=>k.length===7).sort().reverse().slice(0,12),row=k=>{const r=rep(b,k);return [k,u3rp(r.sales),u3rp(r.svc),u3rp(r.cogs+r.part),u3rp(r.exp),'<b>'+u3rp(lab(r))+'</b>']};return `<div class="scx-g"><div class="scx-k"><small>Pemasukan (bln ini)</small><b>${u3rp(m.sales+m.svc)}</b></div><div class="scx-k"><small>Modal barang</small><b>${u3rp(m.cogs)}</b></div><div class="scx-k"><small>Biaya sparepart</small><b>${u3rp(m.part)}</b></div><div class="scx-k"><small>Pengeluaran</small><b>${u3rp(m.exp)}</b></div><div class="scx-k"><small>Keuntungan bersih</small><b>${u3rp(lab(m))}</b></div></div><div class="card"><b>Laporan bulanan</b>${tbl(['Periode','Penjualan','Servis','Modal+Sparepart','Biaya','Laba'],all.map(row),1)}<button class="btn l" onclick="window.print()">Cetak laporan</button><p style="font-size:12px;color:var(--mut)">Hanya pesanan SELESAI dan servis SUDAH DISERAHKAN dihitung sebagai pendapatan.</p></div>`};
  V.exp=()=>`<div class="card" style="max-width:520px"><b>Catat pengeluaran</b>${u3f('el','Keterangan')}${u3f('ea','Jumlah (Rp)','number')}${u3f('ed','Tanggal','date')}<button class="btn g" onclick="u3exp()">Simpan</button></div><div class="card"><b>Riwayat pengeluaran</b>${tbl(['Tanggal','Keterangan','Jumlah'],(b.expenses||[]).map(e=>[esc(String(e.date).slice(0,10)),esc(e.label),u3rp(e.amount)]),1)}</div>`;
  V.cus=()=>{const M={};O.forEach(g=>{const f=g[0],k=String(f.phone||f.customer_name);const c=M[k]||(M[k]={n:f.customer_name,p:f.phone,o:0,t:0,l:''});c.o++;if(f.status==='SELESAI')c.t+=tot(g);if(!c.l)c.l=String(f.created_at).slice(0,10)});(my.services||[]).forEach(s=>{const k=String(s.phone||s.customer_name),c=M[k]||(M[k]={n:s.customer_name,p:s.phone,o:0,t:0,l:''});c.sv=(c.sv||0)+1});const q=SX.q.toLowerCase();return `<div class="card"><b>Pelanggan toko ini</b>${tbl(['Nama','WhatsApp','Pesanan','Servis','Total belanja','Terakhir'],Object.values(M).filter(c=>!q||(c.n+c.p).toLowerCase().includes(q)).map(c=>[esc(c.n),`<a target="_blank" rel="noopener" href="${esc(u3wa(c.p,'Halo '+c.n+', terima kasih telah berbelanja di '+(st.store_name||'toko kami')+'.'))}">${esc(c.p)}</a>`,c.o,c.sv||0,u3rp(c.t),c.l||'-']),1)}</div>`};
- V.set=()=>{u3auto('my',u3myLoad);if(!U3.my)return u3wait('my');const V=views(b);let h=oldMitra();h=h.replace(/^<div class="hd">.*?<\/div>/s,'').replace(/<div class="card"><b>Bisnis toko<\/b>.*?<\/button><\/div>/s,'');return h.replace('<div class="pg">','<div class="pg" style="padding:0">')};
- V.help=()=>`<div class="card"><b>Panduan singkat</b><p>Pesanan baru masuk di menu Pesanan: konfirmasi, kirim, lalu tandai selesai. Pendapatan baru dihitung setelah pesanan SELESAI.</p><p>Produk dan stok diatur di Produk & Stok. Pengeluaran dan laporan ada di Keuangan.</p><p>Profil toko, metode pembayaran, dan tautan toko publik ada di Pengaturan Toko.</p></div><div class="card"><b>Informasi langganan</b><p>Status toko: <b>${esc(st.status||'-')}</b>${st.expires_at?' · berlaku sampai <b>'+esc(String(st.expires_at).slice(0,10))+'</b>':''}${my.days_left!==undefined?' ('+Math.max(0,my.days_left)+' hari)':''}</p><button class="btn g" onclick="scGo('set')">Perpanjang / kirim bukti pembayaran</button></div><div class="card"><b>Bantuan Admin NABLO</b><p>Hubungi admin NABLO untuk kendala akun, langganan, atau moderasi produk.</p><p style="font-size:12px;color:var(--mut)">Nomor WhatsApp admin belum tersimpan di data aplikasi, jadi tombol langsung belum disediakan. Gunakan nomor admin yang diberikan saat pendaftaran.</p></div>`;
+ V.set=()=>{u3auto('my',u3myLoad);if(!U3.my)return u3wait('my');let h=oldPage(),i=h.indexOf(MK);if(i>=0)h=h.slice(0,i)+'</div>';h=h.replace(/<div class="card"><b>Bisnis toko<\/b>.*?<\/button><\/div>/s,'');return h.replace('<div class="pg">','<div class="pg" style="padding:0">')};
+ V.help=()=>`<div class="card"><b>Panduan singkat</b><p>Pesanan baru masuk di menu Pesanan: konfirmasi, kirim, lalu tandai selesai. Pendapatan baru dihitung setelah pesanan SELESAI.</p><p>Produk dan stok diatur di Produk & Stok. Pengeluaran dan laporan ada di Keuangan.</p><p>Profil toko, metode pembayaran, dan tautan toko publik ada di Pengaturan Toko.</p></div><div class="card"><b>Informasi langganan</b><p>Status toko: <b>${esc(st.status||'-')}</b>${st.expires_at?' · berlaku sampai <b>'+esc(String(st.expires_at).slice(0,10))+'</b>':''}${my.days_left!==undefined?' ('+Math.max(0,my.days_left)+' hari)':''}</p><button class="btn g" onclick="scGo('set')">Perpanjang / kirim bukti pembayaran</button></div><div class="card"><b>Bantuan Admin NABLO</b><p>Hubungi admin NABLO untuk kendala akun, langganan, atau moderasi produk.</p><p style="font-size:12px;color:var(--mut)">Hubungi admin melalui kontak yang diberikan saat pendaftaran.</p></div>`;
   const h0=V.home;V.home=()=>h0()+V.stat();const f0=V.fin;V.fin=()=>f0()+V.exp();
- V.soon=()=>Object.keys(DEV).map(k=>`<div class="scx-dev" style="margin-bottom:12px"><b>${esc(T[k])}</b><p>Dalam pengembangan. ${esc(DEV[k])}</p></div>`).join('');
+ V.soon=()=>Object.keys(DEV).map(k=>`<div class="scx-dev" style="margin-bottom:12px"><b>${esc(T[k])}</b><p>${esc(DEV[k])}</p></div>`).join('');
  return V}
 window.scShare=()=>{const s=(U3.my&&U3.my.store&&U3.my.store.slug)||'',u=location.origin+location.pathname+'?toko='+s;if(navigator.share)navigator.share({title:'Toko saya',url:u}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(u).then(()=>toast('Tautan toko disalin'));else prompt('Tautan toko',u)};
 window.scDet=id=>{const g=grp(U3.biz).find(x=>x[0].order_id===id);if(!g)return;const f=g[0],s=(U3.my&&U3.my.store&&U3.my.store.store_name)||'toko';modal(`<h3>${esc(id)} ${bd(f.status)}</h3><p>${esc(f.customer_name)} · ${esc(f.phone)}<br>${esc(f.address)}</p><p>Pembayaran: ${esc(f.pay_method)}${f.note?'<br>Catatan: '+esc(f.note):''}</p>${g.map(x=>`<p>${esc(x.prod_name)} × ${x.qty} = ${u3rp(x.total)}</p>`).join('')}<p><b>Total ${u3rp(tot(g))}</b></p>${u3wo(g,s)}<button class="btn l" onclick="closeM()">Tutup</button>`)};
 const T={home:'Ringkasan Toko',ord:'Pesanan',prod:'Produk & Stok',padd:'Tambah / Edit Produk',svc:'Servis HP',fin:'Keuangan',cus:'Pelanggan',set:'Pengaturan Toko',help:'Pusat Bantuan',soon:'Segera Hadir',dev_stok:'Riwayat Stok',dev_promo:'Promosi Toko',dev_karyawan:'Karyawan & Hak Akses'};
-const DEV={dev_stok:'Backend belum menyimpan riwayat pergerakan stok (stok masuk, keluar, penyesuaian). Perlu tabel tambahan dan persetujuan Anda.',dev_promo:'Banner, diskon, dan voucher belum punya penyimpanan dan validasi di backend, jadi belum dibuat sebagai tombol.',dev_karyawan:'Akun karyawan dan hak akses wajib divalidasi di Apps Script (terikat ID mitra). Frontend saja tidak aman, jadi belum dibuat.'};
+const DEV={dev_stok:'Sedang dalam perbaikan dan segera tersedia.',dev_promo:'Sedang dalam perbaikan dan segera tersedia.',dev_karyawan:'Sedang dalam perbaikan dan segera tersedia.'};
 const page=key=>()=>{SX.t=key;if(SX.pk!==key){SX.pk=key;SX.q='';SX.pg=1;SX.f=''}const title=T[key]||'Seller Centre';
  u3auto('biz',u3bizLoad);const b=U3.biz;if(!b)return hd(title)+'<div class="pg">'+u3wait('biz')+'</div>';
  const base=key.split(':')[0],tb=['ord','prod','cus'].includes(base)?`<input id="scq" type="search" placeholder="Cari…" value="${esc(SX.q)}" oninput="scQ(this.value)" style="max-width:360px;margin-bottom:10px">`:'';
