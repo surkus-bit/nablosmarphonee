@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="id"><head><base target="_top"><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#142B45">
 <meta name="description" content="Katalog HP bekas berkualitas, lengkap dengan spesifikasi dan hasil QC.">
 <meta name="mobile-web-app-capable" content="yes">
@@ -444,6 +444,12 @@ nav button.on{color:var(--blue);background:var(--blue-l)}
 .pf-out{width:100%;margin-top:2px;background:#fff;color:var(--bad);border:1px solid #FECACA;border-radius:10px;padding:12px;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 .pf-out:hover{background:var(--bad-l)}.pf-out svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .pdp-bar.ro .b{background:var(--mut);cursor:default}
+
+/* cegah layar mengecil sendiri di HP: konten tidak boleh melebihi lebar layar */
+html,body{max-width:100%;overflow-x:clip}
+#app,.pg,.pf,.pdp,.intro{min-width:0;max-width:100%}
+img,svg,video,canvas{max-width:100%}
+.pdp-sl img,.pdp-th img,.detail-gallery img{max-width:none}
 </style>
 <style id="nablo-shopee">
 /* NABLO · perapian tata letak (tema navy/biru awal dipertahankan) */
