@@ -2,6 +2,7 @@
 <html lang="id"><head><base target="_top"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#142B45">
+<meta name="description" content="Katalog HP bekas berkualitas, lengkap dengan spesifikasi dan hasil QC.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -680,6 +681,55 @@ nav button i svg,.buyer-nav button i svg{width:21px;height:21px}
 .seg button{flex:1;border:0;background:transparent;color:var(--mut);font-weight:600;font-size:13.5px;min-height:40px;border-radius:9px;cursor:pointer}
 .seg button.on{background:#fff;color:var(--navy);box-shadow:0 1px 3px rgba(20,43,69,.15)}
 </style>
+<style id="nablo-extra">
+.scx-g{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:14px}
+.scx-k{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--sh)}.scx-k small{color:var(--mut);font-size:12px}.scx-k b{display:block;font-size:20px;color:var(--navy);margin-top:4px;overflow-wrap:anywhere}
+.scx-2{display:grid;gap:12px;grid-template-columns:2fr 1fr;margin-bottom:12px}.scx-2 .card{margin:0}
+.scx-qa{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.scx-qa .btn{margin:0}
+.scx-tw{overflow-x:auto}.scx-tw table{width:100%;font-size:13px}
+.scx-list{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.scx-row{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--sh);min-width:0}
+.scx-rh{display:flex;gap:10px;align-items:flex-start;margin-bottom:4px}.scx-rt{flex:1;min-width:0;font-weight:600;color:var(--navy)}.scx-rp img{display:block}
+.scx-kv{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:13px;border-top:1px dashed var(--line)}.scx-kv span{color:var(--mut);flex:none}.scx-kv div{text-align:right;min-width:0}
+.scx-ra{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid var(--line);padding-top:8px}.scx-ra .btn{margin:0!important}
+.scx-dev{border:1px dashed #94a3b8;background:#fff;border-radius:12px;padding:20px}
+@media(max-width:900px){.scx-2{grid-template-columns:1fr}
+.scx-tw.rsp table,.scx-tw.rsp tbody,.scx-tw.rsp tr,.scx-tw.rsp td{display:block;white-space:normal}.scx-tw.rsp thead{display:none}.scx-tw.rsp tr{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;padding:6px 10px}.scx-tw.rsp td{border:0;padding:3px 0}.scx-tw.rsp td:before{content:attr(data-l)": ";color:var(--mut);font-size:12px}}
+
+/* ===== NABLO · POLISH — lapisan akhir: perbaikan bug tampilan & penyatuan gaya ===== */
+/* ikon di header (gear/panah) sebelumnya terisi hitam */
+.ic svg,.bk svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* tombol berbentuk label (unggah foto) teksnya tidak terbaca */
+.card label.btn{display:inline-flex;margin:0;color:#fff}.card label.btn.l{color:var(--blue)}
+.card>.av{width:88px!important;height:88px!important;border-radius:50%!important;background:var(--navy)!important;color:#fff!important;font-size:28px!important;border:0}
+.upv:empty,.upv{color:var(--mut)}
+/* animasi masuk di setiap render menyebabkan kedip */
+.pg{animation:none}
+/* daftar & kontrol */
+.top{padding:0;margin:0}
+.sw input[type=checkbox],.sw input[type=radio]{width:20px;height:20px;min-height:0;flex:none}
+.pg:has(+.fab){padding-bottom:96px}
+.sec{margin-top:22px}
+@media(max-width:899px){
+ .stk-c{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-12px;padding:2px 12px 4px}
+ .stk-c::-webkit-scrollbar{display:none}.stk-c .chip{flex:none}
+}
+/* placeholder foto: ikon HP menggantikan teks "HP" */
+.mp-im span,.ph:not(:has(img))::before,.buyer-photo:not(:has(img))::before{content:"";display:block;width:40px;height:40px;opacity:.55;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7' y='2.5' width='10' height='19' rx='2'/%3E%3Cpath d='M11 18h2'/%3E%3C/svg%3E") center/contain no-repeat}
+.mp-im span,.ph,.buyer-photo{font-size:0!important}
+/* marketplace: header sticky berfungsi (overflow-x:hidden mematikan sticky) & selebar layar */
+.mp{overflow:visible}
+.mp-top{border-bottom:0;box-shadow:0 0 0 100vmax #fff;clip-path:inset(0 -100vmax)}
+.mp-top::after{content:"";position:absolute;left:-100vmax;right:-100vmax;bottom:0;height:1px;background:var(--line)}
+/* urutan dibedakan dari kategori */
+.mp-sort{align-items:center;padding-top:2px}
+.mp-sort::before{content:"Urutkan";flex:none;font-size:12px;color:var(--mut);margin-right:2px}
+.mp-sort button{border:0;background:transparent;color:var(--mut);padding:6px 10px;border-radius:8px;font-size:12.5px}
+.mp-sort button.on{background:var(--blue-l);color:var(--blue)}
+/* login */
+.lg .opt.alt{margin:14px 0 0;justify-content:center;gap:6px 22px}
+@media(min-width:900px){.mp-g{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
 </head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
 <div id="app"></div><div id="drw"></div><div id="mod"></div><div id="toast"></div>
@@ -732,7 +782,7 @@ const ST={HP_MASUK:['HP Masuk','b-gray'],DALAM_SERVIS:['Servis','b-or'],MENUNGGU
 const DOT={'b-gray':'#94A3B8','b-or':'#D97706','b-bl':'#245B86','b-red':'#DC2626','b-gr':'#16A34A','b-gold':'#142B45'};
 const SV={DALAM_SERVIS:['Diproses','b-or'],SELESAI:['Selesai','b-gr']};
 const badge=(s,m=ST)=>`<span class="bd ${(m[s]||[0,'b-gray'])[1]}">${(m[s]||[s])[0]}</span>`;
-const nav=(p,o={})=>{S.og={};for(const k in IMG)delete IMG[k];if(p==='stok'&&!('f' in o)){S.f='TERSEDIA';S.q=''}if(p==='stok'){S.sf='';S.st='';S.lim=60}if(p==='servis'){S.vf='';S.vt=''}if(p==='jual'){S.if='';S.it=''}if(p==='kat')S.cat=undefined;if(p==='terjual')S.sold=undefined;Object.assign(S,{p},o);closeMenu();closeNotif();render();scrollTo(0,0)};
+const nav=(p,o={})=>{S.pp=S.p;S.og={};for(const k in IMG)delete IMG[k];if(p==='stok'&&!('f' in o)){S.f='TERSEDIA';S.q=''}if(p==='stok'){S.sf='';S.st='';S.lim=60}if(p==='servis'){S.vf='';S.vt=''}if(p==='jual'){S.if='';S.it=''}if(p==='kat')S.cat=undefined;if(p==='terjual')S.sold=undefined;Object.assign(S,{p},o);closeMenu();closeNotif();render();scrollTo(0,0)};
 const hd=(t,b)=>`<div class="hd">${b?`<button class="bk" onclick="nav('${b}')">←</button>`:''}<b>${t}</b>${ROLE()==='SUPERADMIN'?`<button class="ic" onclick="nav('set')" aria-label="Pengaturan">${ni('set')}</button>`:''}</div>`;
 const dkey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const DN=['Min','Sen','Sel','Rab','Kam','Jum','Sab'],BN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
@@ -895,7 +945,7 @@ login:()=>`<div class="lg"><div class="lgl">${logo(90)}</div>
 <div class="inp"><svg viewBox="0 0 24 24"><path d="M6 10V8a6 6 0 0 1 12 0v2h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1zm2.2 0h7.6V8a3.8 3.8 0 0 0-7.6 0z"/></svg><input id="lp" type="password" placeholder="Kata Sandi" autocomplete="current-password" onkeydown="event.key=='Enter'&&doLogin()"><button class="eye" type="button" onclick="eye()" aria-label="Lihat sandi"><svg viewBox="0 0 24 24"><path d="M12 5C6.5 5 2.5 9 1 12c1.5 3 5.5 7 11 7s9.5-4 11-7c-1.5-3-5.5-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg></button></div>
 <div class="opt"><label class="rm"><input type="checkbox" id="lr" checked><span class="cb"></span>Ingat username</label><a onclick="nav('lupa',{fp:{step:1,id:($('#lu')||{value:''}).value.trim()}})">Lupa password?</a></div>
 <button class="mbtn" onclick="doLogin()"><svg viewBox="0 0 24 24"><path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5M3 12h12M11 8l4 4-4 4"/></svg>MASUK</button>
-<div class="opt" style="margin:14px 0 0;justify-content:center;gap:22px"><a onclick="nav('intro')">Halaman Awal</a><a onclick="nav('kat')">Lihat Katalog</a><a onclick="nav('daftar')">Buat Akun</a></div><div class="foot"><span>${esc(shopName())}</span><small>Manajemen Stok &amp; Penjualan</small></div></div>
+<div class="opt alt"><a onclick="nav('intro')">Lihat katalog</a><a onclick="nav('daftar')">Buat akun pembeli</a></div><div class="foot"><span>${esc(shopName())}</span><small>Manajemen Stok &amp; Penjualan</small></div></div>
 </div>`,
 
 dash:()=>{const d=S.d,role=ROLE(),ok=okSales(),cnt=s=>d.units.filter(u=>u.current_status==s).length,
@@ -920,7 +970,7 @@ dash:()=>{const d=S.d,role=ROLE(),ok=okSales(),cnt=s=>d.units.filter(u=>u.curren
 
 stok:()=>{const l=filt(),cn={ALL:0,TERSEDIA:0};S.d.units.forEach(u=>{cn.ALL++;if(u.current_status!=='TERJUAL')cn.TERSEDIA++;cn[u.current_status]=(cn[u.current_status]||0)+1});
  return hd('Stok HP','dash')+`<div class="pg"><div class="stk-f"><div class="stk-s"><input aria-label="Cari HP" placeholder="Cari merk / model / IMEI" value="${esc(S.q)}" oninput="S.q=this.value;stokDeb()"></div><div class="stk-c">${cn&&['TERSEDIA',...Object.keys(ST),'ALL'].map(s=>`<span class="chip ${S.f==s?'on':''}" onclick="S.f='${s}';S.lim=60;if(S.f!=='TERJUAL'){S.sf='';S.st=''}render()">${stokLabel(s)}<em>${cn[s]||0}</em></span>`).join('')}</div>${S.f==='TERJUAL'?`<div class="flt-d"><label>Terjual dari<input type="date" value="${esc(S.sf||'')}" onchange="S.sf=this.value;S.lim=60;render()"></label><label>Sampai<input type="date" value="${esc(S.st||'')}" onchange="S.st=this.value;S.lim=60;render()"></label><button class="btn l" onclick="S.sf='';S.st='';S.lim=60;render()">Reset</button></div>`:''}<div class="stk-n" id="sn">${l.length} unit · ${stokLabel(S.f)}</div></div><div id="ls">${stokList(l)}</div></div>
- <button class="btn g fab" onclick="nav('form',{edit:null})">＋ Tambah HP</button>`},
+ <button class="btn g fab" onclick="nav('form',{edit:null})">+ Tambah HP</button>`},
 
 form:()=>{const e=S.edit||{},sup=S.d.suppliers,pr=e.unit_id?PR(e.unit_id):{},ownerLock=ROLE()==='OWNER'&&!!e.unit_id,F=(i,l,t='text',v=e[i])=>`<label>${l}</label><input id="f_${i}" type="${t}" value="${esc(v)}" ${ownerLock&&['purchase_price','selling_price'].includes(i)?'readonly title="Harga hanya dapat dikoreksi SUPERADMIN"':''}>`;
  return `<div class="hd"><button class="bk" onclick="nav('stok')">←</button><b>${e.unit_id?'Edit HP':'Tambah HP'}</b></div><div class="pg"><div class="card">${F('brand','Merek')}${F('model','Model')}<div class="row"><div style="flex:1">${F('ram','RAM')}</div><div style="flex:1">${F('rom','ROM')}</div></div>${F('color','Warna')}
@@ -939,8 +989,8 @@ qc:()=>{const w=S.d.units.filter(u=>u.current_status=='MENUNGGU_QC');if(!w.some(
  <p style="margin:10px 0">Hasil QC: <span class="bd b-red" id="qr" style="float:none">BELUM DIPERIKSA</span></p><label>Catatan umum</label><input id="qn"><small>Semua fungsi normal = LULUS. Tepat satu fungsi tidak normal dengan alasan = LULUS DENGAN CATATAN. Dua atau lebih fungsi tidak normal = GAGAL.</small><button class="btn g w" onclick="saveQC()">SIMPAN HASIL QC</button></div>`:'<div class="card">Tidak ada HP menunggu QC. HP masuk antrian QC setelah servis selesai.</div><button class="btn w" onclick="nav(\'servis\')">KEMBALI KE SERVIS</button>'}</div>`},
 
 jual:()=>{const r=S.d.units.filter(u=>u.current_status=='READY'),ia=S.if||'',ib=S.it||'',hasI=!!(ia||ib),td=dkey(NOW()),s=[...S.d.sales].reverse().filter(x=>hasI?inRange(x.sale_date,ia,ib):(dOf(x.sale_date)===td||x.sale_status==='MENUNGGU_PEMBAYARAN'));
- return hd('Penjualan','dash')+`<div class="pg"><b>Stok Ready (${r.length})</b><br><br>${r.map(u=>`<div class="card item"><div class="ph">${photo(u)}</div><div class="in">${badge('READY')}<h4>${esc(u.brand)} ${esc(u.model)}</h4>${esc(u.ram)}/${esc(u.rom)} · ${esc(u.color)}<br>Harga: <b>${rp(PR(u.unit_id).final_price)}</b><br><button class="btn g" onclick="sellM('${u.unit_id}')">Jual</button></div></div>`).join('')||'<div class="card">Tidak ada stok READY. Selesaikan servis & QC terlebih dahulu.</div>'}
- <b>${hasI?'Invoice pada rentang tanggal':'Transaksi Hari Ini'}</b><div class="flt-d" style="margin-top:8px"><label>Dari<input type="date" value="${esc(ia)}" onchange="S.if=this.value;render()"></label><label>Sampai<input type="date" value="${esc(ib)}" onchange="S.it=this.value;render()"></label><button class="btn l" onclick="S.if='';S.it='';render()">Reset</button></div><small class="stk-n">${hasI?s.length+' invoice':'Invoice lama: pilih tanggal untuk mencari'}</small><div class="card" style="margin-top:8px">${s.map(x=>`<div class="sw" onclick="nav('inv',{inv:'${x.sale_id}'})"><span>${esc(x.invoice_number)}<br><small>${esc(U(x.unit_id).model)}</small>${onlTag(x.sale_id)}</span><b>${rp(x.final_total)}</b></div>`).join('')||(hasI?'Tidak ada invoice pada tanggal tersebut':'Belum ada transaksi hari ini')}</div></div>`},
+ return hd('Penjualan','dash')+`<div class="pg"><div class="sec" style="margin-top:0">Stok Ready (${r.length})</div>${r.map(u=>`<div class="card item"><div class="ph">${photo(u)}</div><div class="in">${badge('READY')}<h4>${esc(u.brand)} ${esc(u.model)}</h4>${esc(u.ram)}/${esc(u.rom)} · ${esc(u.color)}<br>Harga: <b>${rp(PR(u.unit_id).final_price)}</b><br><button class="btn g" onclick="sellM('${u.unit_id}')">Jual</button></div></div>`).join('')||'<div class="card">Tidak ada stok READY. Selesaikan servis & QC terlebih dahulu.</div>'}
+ <div class="sec">${hasI?'Invoice pada rentang tanggal':'Transaksi Hari Ini'}</div><div class="flt-d" style="margin-top:8px"><label>Dari<input type="date" value="${esc(ia)}" onchange="S.if=this.value;render()"></label><label>Sampai<input type="date" value="${esc(ib)}" onchange="S.it=this.value;render()"></label><button class="btn l" onclick="S.if='';S.it='';render()">Reset</button></div><small class="stk-n">${hasI?s.length+' invoice':'Invoice lama: pilih tanggal untuk mencari'}</small><div class="card" style="margin-top:8px">${s.map(x=>`<div class="sw" onclick="nav('inv',{inv:'${x.sale_id}'})"><span>${esc(x.invoice_number)}<br><small>${esc(U(x.unit_id).model)}</small>${onlTag(x.sale_id)}</span><b>${rp(x.final_total)}</b></div>`).join('')||(hasI?'Tidak ada invoice pada tanggal tersebut':'Belum ada transaksi hari ini')}</div></div>`},
 
 qris:()=>{const x=S.sale,img=S.d.settings.qris_image_url;
  if(!x||x.price==null)return '<div class="pg"><div class="card">Data transaksi hilang.</div><button class="btn w" onclick="nav(\'jual\')">KEMBALI</button></div>';
@@ -1346,8 +1396,8 @@ function render(){
   }
  }
  const prim=(lg||publicPage||role==='PEMBELI')?[]:(PRIMARY[role]||['dash']).map(k=>MENU.find(x=>x[0]===k)).filter(Boolean),
- inPrim=prim.some(x=>x[0]===S.p),
- n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='intro'?'on':''}" onclick="nav('intro')"><i>${ni('dash')}</i>Katalog</button><button class="${S.p==='keranjang'?'on':''}" onclick="nav('keranjang')"><i>${ni('cart')}</i>Keranjang</button><button class="${S.p==='mporders'?'on':''}" onclick="nav('mporders')"><i>${ni('jual')}</i>Pesanan</button><button class="${S.p==='mpfav'?'on':''}" onclick="nav('mpfav')"><i>${ni('heart')}</i>Favorit</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${S.p==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[4]||x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
+ inPrim=prim.some(x=>x[0]===(({form:'stok',inv:'jual',qris:'jual'})[S.p]||S.p)),
+ n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='intro'?'on':''}" onclick="nav('intro')"><i>${ni('dash')}</i>Katalog</button><button class="${S.p==='keranjang'?'on':''}" onclick="nav('keranjang')"><i>${ni('cart')}</i>Keranjang</button><button class="${S.p==='mporders'?'on':''}" onclick="nav('mporders')"><i>${ni('jual')}</i>Pesanan</button><button class="${S.p==='mpfav'?'on':''}" onclick="nav('mpfav')"><i>${ni('heart')}</i>Favorit</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${(({form:'stok',inv:'jual',qris:'jual'})[S.p]||S.p)==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[4]||x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
  $('#app').className=(lg||(S.p==='intro'&&!(role==='PEMBELI'&&S.u)))?'noav':'';$('#app').innerHTML=P[S.p]()+n;ntfSync();
  if(role==='SUB_OWNER'&&S.p!=='profil'){
    // Mode pemeriksaan: tombol navigasi/lihat tetap aktif, seluruh tombol aksi perubahan dinonaktifkan.
@@ -1411,6 +1461,9 @@ api('getPublicInfo').then(x=>{S.pub=x||{};if(['intro','login','kat','daftar','lu
 if(new URLSearchParams(window.location.search).get('v')==='katalog'&&!S.u)nav('kat')
 </script>
 <script id="responsive-js">
+function hpCartIds(){try{const a=JSON.parse(localStorage.getItem("nb_cart_"+(S.u?S.u.user_id:"tamu"))||"[]");return Array.isArray(a)?a.filter(x=>typeof x==="string"):[]}catch(e){return[]}}
+function hpCartN(){return hpCartIds().length}
+
 /* Sidebar desktop (>=900px): memakai menuHTML() yang sama dengan drawer HP. CSS menentukan kapan tampil. */
 (function(){
  'use strict';
@@ -1878,21 +1931,7 @@ const u3ph=(k,l,max)=>`<label>${l}</label><label class="btn l" style="display:in
 const u3view=(kind,id,n)=>run(async()=>{const d=await api('u3Img',S.t,kind,id,n);modal(`<img src="${d}" alt="" style="max-width:100%;border-radius:10px"><button class="btn l" onclick="closeM()">Tutup</button>`)},()=>{});
 const u3photos=s=>{const L={photos:'Foto pelanggan',photo_before:'Sebelum',photo_after:'Sesudah'};return ['photos','photo_before','photo_after'].map(c=>String(s[c]||'').split(',').filter(Boolean).map((_,i)=>`<button class="btn l" style="margin:4px 6px 0 0" onclick="u3view('svc','${s.svc_no}','${c}:${i}')">${L[c]} ${i+1}</button>`).join('')).join('')};
 </script>
-<style id="scx-css">
-.scx-g{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:14px}
-.scx-k{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--sh)}.scx-k small{color:var(--mut);font-size:12px}.scx-k b{display:block;font-size:20px;color:var(--navy);margin-top:4px;overflow-wrap:anywhere}
-.scx-2{display:grid;gap:12px;grid-template-columns:2fr 1fr;margin-bottom:12px}.scx-2 .card{margin:0}
-.scx-qa{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.scx-qa .btn{margin:0}
-.scx-tw{overflow-x:auto}.scx-tw table{width:100%;font-size:13px}
-.scx-list{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
-.scx-row{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--sh);min-width:0}
-.scx-rh{display:flex;gap:10px;align-items:flex-start;margin-bottom:4px}.scx-rt{flex:1;min-width:0;font-weight:600;color:var(--navy)}.scx-rp img{display:block}
-.scx-kv{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:13px;border-top:1px dashed var(--line)}.scx-kv span{color:var(--mut);flex:none}.scx-kv div{text-align:right;min-width:0}
-.scx-ra{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid var(--line);padding-top:8px}.scx-ra .btn{margin:0!important}
-.scx-dev{border:1px dashed #94a3b8;background:#fff;border-radius:12px;padding:20px}
-@media(max-width:900px){.scx-2{grid-template-columns:1fr}
-.scx-tw.rsp table,.scx-tw.rsp tbody,.scx-tw.rsp tr,.scx-tw.rsp td{display:block;white-space:normal}.scx-tw.rsp thead{display:none}.scx-tw.rsp tr{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;padding:6px 10px}.scx-tw.rsp td{border:0;padding:3px 0}.scx-tw.rsp td:before{content:attr(data-l)": ";color:var(--mut);font-size:12px}}
-</style>
+
 <script id="scx">
 (function(){
 const lbl={BARU:'Baru',DIKONFIRMASI:'Diproses',DIKIRIM:'Dikirim',SELESAI:'Selesai',DIBATALKAN:'Batal',AKTIF:'Aktif',NONAKTIF:'Nonaktif',BLOKIR:'Diblokir'};
@@ -1976,7 +2015,7 @@ const mpWait=(k,t)=>M['f'+k]?`<div class="card">Gagal memuat ${t}. <button class
 const mpGo=q=>{M.q=String(q||'').trim();M.cat='';nav('mpsearch')};
 const mpCatGo=c=>{M.q='';M.cat=c;nav('mpsearch')};
 const mpAcc=()=>{if(!S.u){S.nextP='intro';return nav('login')}const r=ROLE(),t=r==='MITRA'?'mitrabiz':r==='SUPERADMIN'?'u3admin':r==='PEMBELI'?'akun':'dash';nav(P[t]?t:'intro')};
-const mpHead=()=>{const n=u3ck();return `<header class="mp-top"><div class="mp-lg" onclick="nav('intro')" aria-label="Beranda">${logo(34)}</div><div class="mp-sr"><span class="mp-si">${ni('search')}</span><input id="mp_q" type="search" value="${esc(M.q)}" placeholder="Cari produk atau toko" enterkeyhint="search" onkeydown="if(event.key==='Enter')mpGo(this.value)"></div><div class="mp-ic"><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button><button onclick="mpAcc()" aria-label="${S.u?'Akun saya':'Masuk'}">${ni('profil')}</button></div></header>`};
+const mpHead=()=>{const n=u3ck();return `<header class="mp-top"><div class="mp-lg" onclick="nav('intro')" aria-label="Beranda">${logo(34)}</div><div class="mp-sr"><span class="mp-si">${ni('search')}</span><input id="mp_q" type="search" value="${esc(M.q)}" placeholder="Cari produk" enterkeyhint="search" onkeydown="if(event.key==='Enter')mpGo(this.value)"></div><div class="mp-ic"><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button><button onclick="mpAcc()" aria-label="${S.u?'Akun saya':'Masuk'}">${ni('profil')}</button></div></header>`};
 const mpCard=p=>{M.reg[p.prod_id]=p;return `<div class="mp-c" onclick="mpOpen('${esc(p.prod_id)}')"><div class="mp-im">${p.photo_url?`<img loading="lazy" src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>Foto</span>'}</div><div class="mp-bd"><div class="mp-nm">${esc(p.name)}</div><b>${u3rp(p.price)}</b><small>${esc(p.store_name)}${p.location?' · '+esc(p.location):''}</small></div></div>`};
 const mpStore=s=>`<div class="mp-st" onclick="u3open('${esc(s.slug)}')"><div class="mp-sl">${s.logo_url||s.photo_url?`<img src="${esc(s.logo_url||s.photo_url)}" alt="" referrerpolicy="no-referrer">`:'Toko'}</div><div><b>${esc(s.store_name)}</b><small>${esc(s.location||s.address||'')}</small>${s.svc?'<span class="mp-tag">Servis HP</span>':''}</div></div>`;
 const mpSec=(t,more,body)=>`<section class="mp-s"><div class="mp-sh"><h2>${t}</h2>${more||''}</div>${body}</section>`;
@@ -2121,7 +2160,7 @@ P.mpprod=()=>{
  const p=M.det;if(!p)return `<div class="intro mp">${mpHead()}<div class="card">Produk tidak ditemukan.</div></div>`;M.reg[p.prod_id]=p;
  const vs=p.variants||[],v=mpCurV(p),price=v?v.price:p.price,stock=v?v.stock:p.stock,fav=mpIsFav(p.prod_id),buyerNav=S.u&&ROLE()==='PEMBELI';
  const vhtml=vs.length?`<div class="mp-var"><small>${esc(vs[0].option_name||'Variasi')}</small><div>${vs.map(x=>`<button class="${v&&v.variant_id===x.variant_id?'on':''}" ${x.stock>0?'':'disabled'} onclick="mpVar('${esc(p.prod_id)}','${esc(x.variant_id)}')">${esc(x.option_value)}</button>`).join('')}</div></div>`:'';
- return `<div class="intro mp">${mpHead()}<button class="mp-back" onclick="history.length>1&&S.p!=='intro'?nav('mpsearch'):nav('intro')">← Kembali</button>
+ return `<div class="intro mp">${mpHead()}<button class="mp-back" onclick="nav(S.pp&&!/^(mpprod|login|daftar|lupa|boot)$/.test(S.pp)?S.pp:'intro')">← Kembali</button>
  <div class="mp-dt"><div class="mp-im big">${p.photo_url?`<img src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>Foto</span>'}</div>
  <div class="mp-info"><div class="mp-pr">${u3rp(price)}</div><h1>${esc(p.name)}</h1><small>${esc(p.category)} · Stok ${stock}</small>${vhtml}
  <div class="mp-store" onclick="u3open('${esc(p.slug)}')"><div class="mp-sl">Toko</div><div><b>${esc(p.store_name)}</b><small>${esc(p.location||'Lihat profil toko')}</small></div><span>›</span></div>
