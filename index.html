@@ -2322,21 +2322,46 @@ P.keranjang=()=>{hpLoad();const o=_mpKer(),ids=hpCartIds();if(!ids.length)return
 P.mporders=()=>{
   mpLoadOrders();
   if(S.u&&ROLE()==='PEMBELI'&&S.orders===undefined)ordLoad();
-  const mpL=M.ordList||[], hpL=Array.isArray(S.orders)?S.orders:[], loading=!M.ordList||S.orders===undefined;
-  const hpBody=hpL.length?hpL.map(o=>{
+  const mpReady=Array.isArray(M.ordList), hpReady=Array.isArray(S.orders);
+  const mpL=mpReady?M.ordList:[], hpL=hpReady?S.orders:[];
+  const bothPending=!mpReady&&!hpReady;
+  const totalN=mpL.length+hpL.length;
+  const lastOk=S.last&&typeof lastHTML==='function'?lastHTML(S.last):'';
+
+  const hpBody=hpL.map(o=>{
     const st=typeof ordSt==='function'?ordSt(o):[esc(o.sale_status||'-'),'b-or'];
     const pend=o.sale_status==='MENUNGGU_PEMBAYARAN';
-    return `<div class="card item"><div class="ph">${typeof photo==='function'?photo(o):''}</div><div class="in"><span class="bd ${st[1]}">${st[0]}</span><h4>${esc(o.brand)} ${esc(o.model)}</h4>${esc(o.ram||'-')}/${esc(o.rom||'-')}${o.color?' · '+esc(o.color):''}<br><small>${esc(o.invoice_number)} · ${esc(typeof fmtDT==='function'?fmtDT(o.sale_date):o.sale_date)}</small><br><b>${rp(o.total)}</b> · ${esc(o.method)}${typeof steps==='function'?steps(o):''}
-    ${pend?`${o.qris_url?`<button class="btn l" onclick="viewPhoto('${esc(o.qris_url)}')">Lihat QRIS</button>`:''}<button class="btn r" onclick="ordCancel('${esc(o.sale_id)}')">Batalkan</button>`:''}<span class="bd b-bl" style="float:none;margin-left:6px">HP unit</span></div></div>`;
-  }).join(''):'';
-  const mpBody=mpL.length?mpL.map(o=>`<div class="card"><div class="ct"><b>${esc(o.store_name||'Toko mitra')}</b><span class="bd ${o.status==='SELESAI'?'b-gr':o.status==='DIBATALKAN'?'b-red':'b-or'}">${esc(MP_ST[o.status]||o.status)}</span></div><small>${esc(o.order_id)} · ${esc(o.created_at)}</small>${(o.lines||[]).map(x=>`<div class="fin-row"><span>${esc(x.name)}<small>${x.qty} × ${u3rp(x.unit_price)}</small></span><b>${u3rp(x.total)}</b></div>`).join('')}<div class="fin-row tot"><span>Total</span><b>${u3rp(o.total)}</b></div><small>Metode: ${esc(o.pay_method)} · <span class="bd b-bl" style="float:none">Marketplace</span></small><div class="row" style="margin-top:10px"><button class="btn l" onclick="mpTrk('${esc(o.order_id)}','${esc(o.phone)}')">Detail / lacak</button><a class="btn l" style="display:inline-flex;text-decoration:none" target="_blank" rel="noopener" href="${esc(u3wa(o.store_phone,'Halo '+o.store_name+', saya ingin menanyakan pesanan '+o.order_id+'.'))}">Hubungi toko</a></div></div>`).join(''):'';
-  const totalN=(M.ordList?mpL.length:0)+(S.orders?hpL.length:0);
-  const lastOk=S.last&&typeof lastHTML==='function'?lastHTML(S.last):'';
+    return `<div class="card item"><div class="ph">${typeof photo==='function'?photo(o):'HP'}</div><div class="in"><span class="bd ${st[1]}">${st[0]}</span><h4>${esc(o.brand)} ${esc(o.model)}</h4>${esc(o.ram||'-')}/${esc(o.rom||'-')}${o.color?' · '+esc(o.color):''}<br><small>${esc(o.invoice_number)} · ${esc(typeof fmtDT==='function'?fmtDT(o.sale_date):o.sale_date)}</small><br><b>${rp(o.total)}</b> · ${esc(o.method)} <span class="bd b-bl" style="float:none;margin-left:4px">HP unit</span>${typeof steps==='function'?steps(o):''}${pend?`<div class="row" style="margin-top:8px">${o.qris_url?`<button class="btn l" onclick="viewPhoto('${esc(o.qris_url)}')">Lihat QRIS</button>`:''}<button class="btn r" onclick="ordCancel('${esc(o.sale_id)}')">Batalkan</button></div>`:''}</div></div>`;
+  }).join('');
+
+  const mpBody=mpL.map(o=>{
+    const lines=o.lines||[], first=lines[0]||{};
+    const stCls=o.status==='SELESAI'?'b-gr':o.status==='DIBATALKAN'?'b-red':'b-or';
+    const phUrl=first.photo_url||o.photo_url||'';
+    const ph=phUrl?`<img src="${esc(phUrl)}" loading="lazy" onclick="viewPhoto(this.src)" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'HP'}))" referrerpolicy="no-referrer">`:'HP';
+    const title=lines.length<=1?esc(first.name||'Produk'):`${esc(first.name||'Produk')} <small style="font-weight:500;color:var(--mut)">+${lines.length-1}</small>`;
+    const sub=lines.length<=1
+      ? `${first.qty||1} × ${u3rp(first.unit_price||0)}`
+      : lines.map(x=>`${esc(x.name)} ×${x.qty}`).join(' · ');
+    return `<div class="card item"><div class="ph">${ph}</div><div class="in"><span class="bd ${stCls}">${esc(MP_ST[o.status]||o.status)}</span><h4>${title}</h4>${esc(o.store_name||'Toko mitra')}<br><small>${esc(o.order_id)} · ${esc(o.created_at)}</small><br><b>${u3rp(o.total)}</b> · ${esc(o.pay_method)} <span class="bd b-bl" style="float:none;margin-left:4px">Marketplace</span><br><small style="display:block;margin-top:2px">${sub}</small><div class="row" style="margin-top:8px"><button class="btn l" onclick="mpTrk('${esc(o.order_id)}','${esc(o.phone)}')">Detail / lacak</button><a class="btn l" style="display:inline-flex;text-decoration:none" target="_blank" rel="noopener" href="${esc(u3wa(o.store_phone,'Halo '+o.store_name+', saya ingin menanyakan pesanan '+o.order_id+'.'))}">Hubungi toko</a></div></div></div>`;
+  }).join('');
+
+  let listHtml='';
+  if(bothPending){
+    listHtml='<div class="card" style="text-align:center;color:var(--mut);padding:22px 14px">Memuat pesanan…</div>';
+  }else if(!totalN&&mpReady&&hpReady){
+    listHtml='<div class="buyer-empty"><b>Belum ada pesanan</b>Pesanan HP unit dan toko mitra akan muncul di sini setelah checkout.</div>';
+  }else{
+    listHtml=hpBody+mpBody;
+    if(!hpReady) listHtml+='<div class="card" style="text-align:center;color:var(--mut);font-size:12.5px;padding:12px">Memuat pesanan HP unit…</div>';
+    else if(!mpReady) listHtml+='<div class="card" style="text-align:center;color:var(--mut);font-size:12.5px;padding:12px">Memuat pesanan toko mitra…</div>';
+  }
+
   return `<div class="intro mp">${mpHead()}<div class="pg" style="padding:0">
     ${lastOk}
-    <div class="buyer-section"><div><h3>Pesanan Saya</h3><p>Semua pesanan HP unit & toko mitra dalam satu tempat</p></div><div><span class="buyer-count">${loading?'…':totalN} pesanan</span> <button class="btn l" onclick="mpLoadOrders(true);S.orders=undefined;ordLoad(true);render()">↻</button></div></div>
-    ${M.ordErr?`<div class="card">Sebagian riwayat gagal dimuat. <button class="btn l" onclick="mpLoadOrders(true)">Coba lagi</button></div>`:''}
-    ${loading?`<div class="card">Memuat semua pesanan…</div>`:(totalN?hpBody+mpBody:`<div class="buyer-empty"><b>Belum ada pesanan</b>Pesanan HP unit dan toko mitra akan muncul di sini setelah checkout.</div>`)}
+    <div class="buyer-section"><div><h3>Pesanan Saya</h3><p>Semua pesanan HP unit & toko mitra dalam satu tempat</p></div><div style="display:flex;align-items:center;gap:8px"><span class="buyer-count">${mpReady||hpReady?totalN+(bothPending||!mpReady||!hpReady?'+':'')+' pesanan':'…'}</span><button class="btn l" onclick="mpLoadOrders(true);S.orders=undefined;ordLoad(true);render()" title="Muat ulang">↻</button></div></div>
+    ${M.ordErr?`<div class="card" style="border-color:#FECACA;background:var(--bad-l);color:#B91C1C;font-size:13px">Sebagian riwayat gagal dimuat. <button class="btn l" style="margin:0 0 0 6px" onclick="mpLoadOrders(true)">Coba lagi</button></div>`:''}
+    ${listHtml}
   </div></div>`;
 };
 /* Arahkan halaman pesanan lama ke tampilan gabungan */
