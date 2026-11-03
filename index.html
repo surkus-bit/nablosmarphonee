@@ -1041,19 +1041,34 @@ const profilHome=()=>{const r=ROLE();return r==='PEMBELI'?'intro':r==='MITRA'?'m
 const profilLinks=()=>{
  const r=ROLE(),L=[];
  if(r==='PEMBELI'){
-  L.push(['mporders','jual','Pesanan Marketplace Saya','Pantau status pesanan Anda'],['keranjang','cart','Keranjang','HP yang siap di-checkout'],['mpfav','heart','Favorit','Produk yang Anda simpan'],['tokos','servis','Buat Permintaan Servis HP','Ajukan servis ke toko mitra'],['lacak','qc','Lacak Servis','Cek progres servis HP'],['intro','kat','Lihat Katalog Marketplace','Jelajahi semua produk']);
+  L.push(
+   ['mporders','jual','Pesanan Saya','Semua pesanan HP & toko mitra'],
+   ['keranjang','cart','Keranjang','Siap checkout'],
+   ['mpfav','heart','Favorit','Produk tersimpan'],
+   ['tokos','servis','Buka Toko & Servis','Lihat toko mitra dan ajukan servis'],
+   ['lacak','qc','Lacak Servis','Cek progres servis'],
+   ['intro','kat','Katalog','Jelajahi semua produk']
+  );
  }else if(r==='MITRA'){
-  L.push(['mitrabiz','dash','Seller Centre','Kelola toko dan pesanan'],['sc_set','set','Pengaturan Toko','Profil toko dan pembayaran'],['intro','kat','Lihat Katalog & Detail Produk','Jelajahi marketplace']);
+  L.push(
+   ['mitrabiz','dash','Seller Centre','Kelola toko dan pesanan'],
+   ['sc_set','set','Pengaturan Toko','Profil & pembayaran'],
+   ['__share','tag','Buka / Bagikan Toko','Salin tautan halaman publik toko'],
+   ['intro','kat','Marketplace','Jelajahi katalog']
+  );
  }else{
   MENU.filter(x=>Array.isArray(x[3])&&x[3].includes(r)&&!['dash','profil','intro'].includes(x[0])&&P[x[0]]).slice(0,5).forEach(x=>L.push([x[0],null,x[2],'',x[1]]));
-  L.push(['intro','kat','Lihat Katalog & Detail Produk','Semua role dapat melihat detail produk']);
+  L.push(['tokos','servis','Buka Toko & Servis','Lihat toko mitra publik'],['intro','kat','Lihat Katalog','Semua role dapat melihat detail produk']);
  }
  return L;
 };
 const profilPage=()=>{
  const u=S.u||{},f=S.pf||{},V=k=>esc(f[k]!==undefined?f[k]:(u[k]||'')),r=ROLE(),rl=ROLE_LABEL[r]||r,
  cam='<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
- links=profilLinks().map(([k,ic,l,s,raw])=>`<button type="button" class="pf-li" onclick="nav('${k}')"><i>${raw||ni(ic)}</i><span>${esc(l)}${s?`<small>${esc(s)}</small>`:''}</span><em>›</em></button>`).join('');
+ links=profilLinks().map(([k,ic,l,s,raw])=>{
+  const act=k==='__share'?"(typeof scShare==='function'?scShare():toast('Buka Seller Centre dulu'))":`nav('${k}')`;
+  return `<button type="button" class="pf-li" onclick="${act}"><i>${raw||ni(ic)}</i><span>${esc(l)}${s?`<small>${esc(s)}</small>`:''}</span><em>›</em></button>`;
+ }).join('');
  return `<div class="hd"><button class="bk" onclick="nav('${profilHome()}')" aria-label="Kembali">←</button><b>${r==='PEMBELI'?'Akun Saya':'Profil Saya'}</b></div>
 <div class="pg acc">
  <section class="pf-hero"><div class="pf-av"><div class="av">${avHTML()}</div><label class="pf-cam" title="${u.photo_url?'Ganti foto':'Unggah foto'}"><input type="file" accept="image/*" hidden onchange="pickProfilePhoto(this)">${cam}</label></div>
@@ -1069,8 +1084,8 @@ const profilPage=()=>{
    <div class="card"><b class="pf-t">Pintasan</b>${links}</div>
   </div>
   <div class="pf-col">
-   <div class="card"><b class="pf-t">Ubah data diri</b><label>Nama lengkap</label><input id="pf_n" value="${V('full_name')}" autocomplete="name"><label>No. WhatsApp</label><input id="pf_h" type="tel" value="${V('phone')}"><label>Email (untuk reset password)</label><input id="pf_e" type="email" value="${V('email')}" autocapitalize="off" autocomplete="email"><label>Password saat ini (wajib bila mengganti email)</label><input id="pf_c" type="password" autocomplete="current-password"><button class="btn g pf-save" onclick="saveProfile()">SIMPAN PROFIL</button></div>
-   <div class="card"><b class="pf-t">Ubah password</b><label>Password saat ini</label><input id="pw_o" type="password" autocomplete="current-password"><label>Password baru (minimal 8 karakter)</label><input id="pw_n" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="pw_k" type="password" autocomplete="new-password"><button class="btn g pf-save" onclick="doChangePw()">UBAH PASSWORD</button><small>Setelah diubah, perangkat lain harus masuk ulang.</small></div>
+   <div class="card"><details class="pdp-d"><summary class="pf-t" style="margin:0">Ubah data diri</summary><div style="margin-top:12px"><label>Nama lengkap</label><input id="pf_n" value="${V('full_name')}" autocomplete="name"><label>No. WhatsApp</label><input id="pf_h" type="tel" value="${V('phone')}"><label>Email (untuk reset password)</label><input id="pf_e" type="email" value="${V('email')}" autocapitalize="off" autocomplete="email"><label>Password saat ini (wajib bila mengganti email)</label><input id="pf_c" type="password" autocomplete="current-password"><button class="btn g pf-save" onclick="saveProfile()">SIMPAN PROFIL</button></div></details></div>
+   <div class="card"><details class="pdp-d"><summary class="pf-t" style="margin:0">Ubah password</summary><div style="margin-top:12px"><label>Password saat ini</label><input id="pw_o" type="password" autocomplete="current-password"><label>Password baru (minimal 8 karakter)</label><input id="pw_n" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="pw_k" type="password" autocomplete="new-password"><button class="btn g pf-save" onclick="doChangePw()">UBAH PASSWORD</button><small>Setelah diubah, perangkat lain harus masuk ulang.</small></div></details></div>
   </div>
  </div>
  <button type="button" class="pf-out" style="margin-top:14px" onclick="doLogout()">${ni('logout')}Keluar dari Akun</button>
@@ -1704,7 +1719,7 @@ function hpCartN(){return hpCartIds().length}
   idx=(i+s.length)%s.length;
   s.forEach(function(e,j){e.classList.toggle('on',j===idx)});d.forEach(function(e,j){e.classList.toggle('on',j===idx)});
  };
- function startAuto(){clearInterval(timer);idx=0;timer=setInterval(function(){if(!document.hidden&&document.getElementById('nbBn'))nbGo(idx+1)},5500)}
+ function startAuto(){clearInterval(timer);idx=0;timer=setInterval(function(){if(!document.hidden&&document.getElementById('nbBn'))nbGo(idx+1)},4500)}
  function injectBanner(){
   if(typeof S==='undefined'||!['beranda','kat','intro'].includes(S.p))return;
   var pg=document.querySelector('#app .pg')||document.querySelector('#app .intro.mp')||document.querySelector('#app .intro');
@@ -1825,7 +1840,7 @@ function hpCartN(){return hpCartIds().length}
  window.openCart=()=>{if(!isBuyer()){toast('Masuk sebagai pembeli untuk memakai keranjang');return nav('login')}S.cf=false;S.cfErr=false;nav('keranjang')};
  window.cartAdd=id=>{
   if(S.u&&!isBuyer()){toast('Akun '+(ROLE_LABEL[ROLE()]||ROLE())+' hanya dapat melihat produk. Pembelian memakai akun pembeli.');return}
-  if(!isBuyer()){modal(`<h3>Masuk untuk memesan</h3><p style="margin:10px 0">Silakan masuk atau buat akun pembeli terlebih dahulu untuk memakai keranjang.</p><button class="btn g w" onclick="closeM();nav('login')">Masuk</button><button class="btn l w" onclick="closeM();nav('daftar')">Buat Akun</button><button class="btn l w" onclick="closeM()">Nanti</button>`);return}
+  if(!isBuyer()){modal(`<h3>Masuk untuk memesan</h3><p style="margin:10px 0">Untuk memesan, silakan masuk atau buat akun pembeli terlebih dahulu.</p><button class="btn g w" onclick="closeM();nav('login')">Masuk</button><button class="btn l w" onclick="closeM();nav('daftar')">Buat Akun</button><button class="btn l w" onclick="closeM()">Nanti</button>`);return}
   id=String(id);const a=CART();
   if(a.includes(id))return toast('HP ini sudah ada di keranjang');
   if(a.length>=5)return toast('Maksimal 5 HP dalam satu pesanan');
@@ -1865,7 +1880,7 @@ function hpCartN(){return hpCartIds().length}
   const ids=okItems().map(i=>i.id);if(!ids.length)return toast('Tidak ada HP yang bisa dipesan');
   const o={name:$('#co_n').value,phone:$('#co_p').value,address:$('#co_a').value,note:$('#co_t').value},m=$('#co_m').value;
   S.co=Object.assign({},o,{m});let r=null;
-  run(async()=>{r=await api('placeOrder',S.t,ids,m,o)},()=>{SAVE(CART().filter(x=>!ids.includes(x)));S.co=null;S.last=r;S.orders=undefined;S.cat=undefined;nav('pesanan')});
+  run(async()=>{r=await api('placeOrder',S.t,ids,m,o)},()=>{SAVE(CART().filter(x=>!ids.includes(x)));S.co=null;S.last=r;S.orders=undefined;S.cat=undefined;nav('mporders')});
  };
 
  const ordSt=o=>o.sale_status==='SELESAI'&&o.payment_status==='LUNAS'?['Selesai · Lunas','b-gr']:o.sale_status==='BATAL'?['Dibatalkan','b-red']:o.sale_status==='REFUND'?['Direfund','b-gray']:['Menunggu pembayaran','b-or'];
@@ -1876,7 +1891,7 @@ function hpCartN(){return hpCartIds().length}
   return `<div class="card ord-ok"><b>Pesanan berhasil dibuat</b>${L.orders.map(o=>`<div class="sw"><span>${esc(o.invoice_number)}<br><small>${esc(o.brand)} ${esc(o.model)}</small></span><b>${rp(o.total)}</b></div>`).join('')}<div class="sw"><span><b>Total</b></span><b>${rp(L.total)}</b></div>
   <p class="co-hint">${esc(HINT[L.method]||'')}</p>${L.method==='QRIS'&&L.qris_url?`<div style="text-align:center"><img src="${esc(L.qris_url)}" alt="QRIS" style="width:100%;max-width:260px;border-radius:12px" onerror="this.style.display='none'"><p style="margin:8px 0">Nominal: <b>${rp(L.total)}</b></p></div>`:''}${wa}<button class="btn l" onclick="S.last=null;render()">Tutup</button></div>`};
  let ordBusy=false;
- window.ordLoad=force=>{if(ordBusy)return;ordBusy=true;if(force)S.orders=undefined;api('getMyOrders',S.t).then(x=>{S.orders=Array.isArray(x)?x:[];ordBusy=false;if(S.p==='pesanan')render()}).catch(e=>{S.orders=[];ordBusy=false;if(S.p==='pesanan')render();toast(String(e&&e.message||e))})};
+ window.ordLoad=force=>{if(ordBusy)return;ordBusy=true;if(force)S.orders=undefined;api('getMyOrders',S.t).then(x=>{S.orders=Array.isArray(x)?x:[];ordBusy=false;if(S.p==='pesanan'||S.p==='mporders')render()}).catch(e=>{S.orders=[];ordBusy=false;if(S.p==='pesanan'||S.p==='mporders')render();toast(String(e&&e.message||e))})};
  window.ordCancel=id=>{if(!confirm('Batalkan pesanan ini?'))return;run(async()=>{await api('cancelMyOrder',S.t,id)},()=>{S.orders=undefined;S.cat=undefined;toast('Pesanan dibatalkan');render()})};
  P.pesanan=()=>{
   const L=S.last,list=S.orders;
@@ -1901,7 +1916,7 @@ function hpCartN(){return hpCartIds().length}
    if(isBuyer()){
     injectCartBtn();
     if(['keranjang','checkout'].includes(S.p)&&!S.cf&&!S.catBusy){S.cf=true;catFetch()}
-    if(S.p==='pesanan'&&S.orders===undefined)ordLoad();
+    if((S.p==='pesanan'||S.p==='mporders')&&S.orders===undefined)ordLoad();
    }
   }catch(e){console.warn('update2:',e)}
  };
@@ -2303,7 +2318,29 @@ P.keranjang=()=>{hpLoad();const o=_mpKer(),ids=hpCartIds();if(!ids.length)return
  const cat=Array.isArray(S.cat)?S.cat:null,rows=ids.map(id=>({id,x:cat?cat.find(c=>String(c.id)===id):null})),ok=rows.filter(r=>r.x&&!r.x.reserved),tot=ok.reduce((a,r)=>a+(+r.x.price||0),0);
  const card=`<div class="card"><b>${esc(shopName())} · HP unit</b>${rows.map(r=>`<p>${r.x?esc(r.x.brand)+' '+esc(r.x.model)+' · '+rp(r.x.price)+(r.x.reserved?' <small>(sedang dipesan)</small>':''):(cat?'<small>Unit sudah tidak tersedia</small>':'<small>Memuat…</small>')} <button class="btn l" onclick="cartDel('${esc(r.id)}')">Hapus</button></p>`).join('')}<p>Subtotal: <b>${rp(tot)}</b></p>${ok.length?`<button class="btn g" onclick="S.cf=false;nav('checkout')">Checkout HP unit</button>`:''}<p style="font-size:11px;color:var(--mut)">HP unit dibayar lewat petugas toko (tunai/transfer/QRIS) dan dicek terpisah dari produk toko mitra.</p></div>`;
  return o.replace('<div class="pg" style="padding:0">','<div class="pg" style="padding:0">'+card).replace('Keranjang kosong. <button','Belum ada produk toko mitra. <button')};
-P.mporders=()=>{const o=_mpOrd();return o.replace('<div class="buyer-section">','<div class="card"><b>Pesanan HP unit</b><p>Pembelian HP dari '+esc(shopName())+' dilacak di halaman ini juga.</p><button class="btn l" onclick="nav(\'pesanan\')">Lihat pesanan HP unit</button></div><div class="buyer-section">')};
+/* Satu halaman Pesanan Saya: gabung HP unit NABLO + pesanan toko mitra */
+P.mporders=()=>{
+  mpLoadOrders();
+  if(S.u&&ROLE()==='PEMBELI'&&S.orders===undefined)ordLoad();
+  const mpL=M.ordList||[], hpL=Array.isArray(S.orders)?S.orders:[], loading=!M.ordList||S.orders===undefined;
+  const hpBody=hpL.length?hpL.map(o=>{
+    const st=typeof ordSt==='function'?ordSt(o):[esc(o.sale_status||'-'),'b-or'];
+    const pend=o.sale_status==='MENUNGGU_PEMBAYARAN';
+    return `<div class="card item"><div class="ph">${typeof photo==='function'?photo(o):''}</div><div class="in"><span class="bd ${st[1]}">${st[0]}</span><h4>${esc(o.brand)} ${esc(o.model)}</h4>${esc(o.ram||'-')}/${esc(o.rom||'-')}${o.color?' · '+esc(o.color):''}<br><small>${esc(o.invoice_number)} · ${esc(typeof fmtDT==='function'?fmtDT(o.sale_date):o.sale_date)}</small><br><b>${rp(o.total)}</b> · ${esc(o.method)}${typeof steps==='function'?steps(o):''}
+    ${pend?`${o.qris_url?`<button class="btn l" onclick="viewPhoto('${esc(o.qris_url)}')">Lihat QRIS</button>`:''}<button class="btn r" onclick="ordCancel('${esc(o.sale_id)}')">Batalkan</button>`:''}<span class="bd b-bl" style="float:none;margin-left:6px">HP unit</span></div></div>`;
+  }).join(''):'';
+  const mpBody=mpL.length?mpL.map(o=>`<div class="card"><div class="ct"><b>${esc(o.store_name||'Toko mitra')}</b><span class="bd ${o.status==='SELESAI'?'b-gr':o.status==='DIBATALKAN'?'b-red':'b-or'}">${esc(MP_ST[o.status]||o.status)}</span></div><small>${esc(o.order_id)} · ${esc(o.created_at)}</small>${(o.lines||[]).map(x=>`<div class="fin-row"><span>${esc(x.name)}<small>${x.qty} × ${u3rp(x.unit_price)}</small></span><b>${u3rp(x.total)}</b></div>`).join('')}<div class="fin-row tot"><span>Total</span><b>${u3rp(o.total)}</b></div><small>Metode: ${esc(o.pay_method)} · <span class="bd b-bl" style="float:none">Marketplace</span></small><div class="row" style="margin-top:10px"><button class="btn l" onclick="mpTrk('${esc(o.order_id)}','${esc(o.phone)}')">Detail / lacak</button><a class="btn l" style="display:inline-flex;text-decoration:none" target="_blank" rel="noopener" href="${esc(u3wa(o.store_phone,'Halo '+o.store_name+', saya ingin menanyakan pesanan '+o.order_id+'.'))}">Hubungi toko</a></div></div>`).join(''):'';
+  const totalN=(M.ordList?mpL.length:0)+(S.orders?hpL.length:0);
+  const lastOk=S.last&&typeof lastHTML==='function'?lastHTML(S.last):'';
+  return `<div class="intro mp">${mpHead()}<div class="pg" style="padding:0">
+    ${lastOk}
+    <div class="buyer-section"><div><h3>Pesanan Saya</h3><p>Semua pesanan HP unit & toko mitra dalam satu tempat</p></div><div><span class="buyer-count">${loading?'…':totalN} pesanan</span> <button class="btn l" onclick="mpLoadOrders(true);S.orders=undefined;ordLoad(true);render()">↻</button></div></div>
+    ${M.ordErr?`<div class="card">Sebagian riwayat gagal dimuat. <button class="btn l" onclick="mpLoadOrders(true)">Coba lagi</button></div>`:''}
+    ${loading?`<div class="card">Memuat semua pesanan…</div>`:(totalN?hpBody+mpBody:`<div class="buyer-empty"><b>Belum ada pesanan</b>Pesanan HP unit dan toko mitra akan muncul di sini setelah checkout.</div>`)}
+  </div></div>`;
+};
+/* Arahkan halaman pesanan lama ke tampilan gabungan */
+P.pesanan=()=>{nav('mporders');return ''};
 </script>
 
 <script id="mp2">
@@ -2317,9 +2354,9 @@ P.intro=()=>{
  const h=M.home,r=M.res,cats=(h&&h.cats)||(r&&r.cats)||[],stores=(h&&h.stores)||[];
  const seller=S.u&&ROLE()==='MITRA';
  const tokoAll=(()=>{const m=new Map();stores.forEach(x=>m.set(x.slug,Object.assign({},x)));((h&&h.service)||[]).forEach(x=>{const e=m.get(x.slug);if(e)e.svc=1;else m.set(x.slug,Object.assign({},x,{svc:1}))});return[...m.values()]})();
- const hero=`<section class="in-hero mp-ban"><div class="buyer-eyebrow">NABLO SMARTPHONE</div><h1>HP berkualitas, transparan, dan siap jual</h1><p>Jelajahi unit NABLO dan produk toko mitra dalam satu tempat. Bandingkan spesifikasi, cek hasil QC, lalu pesan dengan mudah.</p><div class="in-cta"><button class="btn g" onclick="nav('kat')">Lihat Katalog</button><button class="btn l" onclick="nav('tokos')">Toko & Servis</button>${seller?'<button class="btn l" onclick="nav(\'mitrabiz\')">Seller Centre</button>':''}</div></section>`;
  const high=hpGrid();
- return `<div class="intro mp">${mpHead()}${hero}
+ /* Banner otomatis disisipkan oleh injectBanner; tanpa teks hero agar tidak bentrok */
+ return `<div class="intro mp">${mpHead()}
   ${cats.length?mpSec('Kategori','',`<div class="mp-cats">${cats.map(c=>`<button onclick="mpCatGo('${esc(c).replace(/'/g,'&#39;')}')">${esc(c)}</button>`).join('')}</div>`):''}
   ${mpSec('Rekomendasi produk','<a onclick="nav(\'kat\')">Lihat semua</a>',high)}
   ${tokoAll.length?mpSec('Toko Mitra & Servis HP','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${tokoAll.map(mpStore).join('')}</div>`):''}
@@ -2394,8 +2431,8 @@ P.mpprod=()=>{
 
 /* ---- HP unit (katalog toko) ---- */
 const katDetail=id=>{
- if(!S.u){S.pendingDetail=id;modal(`<h3>Masuk untuk melihat detail</h3><p style="margin:10px 0">Buat akun pembeli atau masuk terlebih dahulu untuk melihat spesifikasi lengkap, kondisi, dan hasil QC HP.</p><button class="btn g w" onclick="closeM();nav('login')">Masuk</button><button class="btn l w" onclick="closeM();nav('daftar')">Buat akun</button><button class="btn l w" onclick="closeM()">Nanti</button>`);return}
- run(async()=>{const d=await api('getDetail',id,S.t);d.id=id;S.hdet=d},()=>nav('hpdet'))};
+ /* Detail HP unit terbuka untuk umum; login hanya diminta saat pesan / keranjang */
+ run(async()=>{const d=await api('getDetail',id,S.t||'');d.id=id;S.hdet=d},()=>nav('hpdet'))};
 P.hpdet=()=>{
  const d=S.hdet;if(!d)return `<div class="pdp">${pdpTop()}<div class="pdp-s">Detail HP tidak tersedia.<br><button class="btn g" style="margin-top:12px" onclick="nav('intro')">Kembali ke katalog</button></div></div>`;
  const sp=d.specification||{},id=esc(d.id),price=Number(d.price)>0?rp(d.price):'Hubungi penjual',
