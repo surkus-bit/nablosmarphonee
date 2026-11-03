@@ -652,6 +652,17 @@ table{border-collapse:collapse}th,td{padding:8px 10px;text-align:left;border-bot
  .mp-bar{margin:20px -16px 0;padding-left:16px;padding-right:16px}
  .mp-s{margin-top:14px}
 }
+
+/* Polish beranda vs katalog + seller welcome */
+.mp-ban.in-hero{margin:12px 0 8px;padding:24px 18px;border-radius:14px;background:linear-gradient(135deg,var(--navy),#1f4468);color:#fff}
+.mp-ban.in-hero .buyer-eyebrow{color:#9DB8CF}
+.mp-ban.in-hero h1{color:#fff;margin:0 0 8px}
+.mp-ban.in-hero p{color:#CBD5E1;margin:0 0 14px}
+.mp-ban.in-hero .btn.g{background:#fff;color:var(--navy);border-color:#fff}
+.mp-ban.in-hero .btn.l{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.sc-welcome .btn:hover{opacity:.92}
+.buyer-section h3{margin:0}
+.mp-promo{box-shadow:var(--sh)}
 </style>
 <style id="nablo-fit">
 /* Penyesuaian kenyamanan layar HP: jarak, ukuran ikon/tombol, form ringkas, tanpa elemen berdempet */
@@ -1066,7 +1077,7 @@ const profilPage=()=>{
 </div>`};
 const P={
 intro:()=>`<div class="intro"><header class="in-top">${logo(36)}<b>${esc(shopName())}</b><button class="btn l" style="margin:0" onclick="nav('login')">Masuk</button></header>
-<section class="in-hero"><h1>Temukan HP dengan informasi yang jelas dan transparan</h1><p>${esc(shopName())} adalah toko HP yang menampilkan unit siap jual lengkap dengan spesifikasi, kondisi, dan hasil pemeriksaan (QC). Lihat katalog, bandingkan beberapa HP, lalu tanyakan langsung kepada penjual lewat WhatsApp.</p><div class="in-cta"><button class="btn g" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn l" onclick="nav('daftar')">Buat Akun Pembeli</button></div><div class="in-cta"><button class="btn g" onclick="nav('tokos')">Cari Toko & Servis HP</button><button class="btn l" onclick="nav('lacak')">Lacak Servis</button><button class="btn l" onclick="nav('mitrareg')">BUKA TOKO DI SINI</button></div></section>
+<section class="in-hero"><h1>Temukan HP dengan informasi yang jelas dan transparan</h1><p>${esc(shopName())} adalah toko HP yang menampilkan unit siap jual lengkap dengan spesifikasi, kondisi, dan hasil pemeriksaan (QC). Lihat katalog, bandingkan beberapa HP, lalu tanyakan langsung kepada penjual lewat WhatsApp.</p><div class="in-cta"><button class="btn g" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn l" onclick="nav('daftar')">Buat Akun Pembeli</button></div><div class="in-cta"><button class="btn g" onclick="nav('tokos')">Cari Toko & Servis HP</button><button class="btn l" onclick="nav('lacak')">Lacak Servis</button></div></section>
 <section class="in-sec"><h2>Yang bisa Anda lakukan</h2><div class="in-grid">
 <div class="in-it"><span class="stat-icon">${ni('kat')}</span><b>Telusuri katalog</b><p>Cari HP berdasarkan merek, model, atau warna. Harga tampil jelas pada setiap unit.</p></div>
 <div class="in-it"><span class="stat-icon">${ni('qc')}</span><b>Cek spesifikasi dan QC</b><p>Lihat detail, kondisi, dan hasil pemeriksaan unit sebelum memutuskan. Perlu akun pembeli.</p></div>
@@ -1695,9 +1706,13 @@ function hpCartN(){return hpCartIds().length}
  };
  function startAuto(){clearInterval(timer);idx=0;timer=setInterval(function(){if(!document.hidden&&document.getElementById('nbBn'))nbGo(idx+1)},5500)}
  function injectBanner(){
-  if(typeof S==='undefined'||!['beranda','kat'].includes(S.p))return;
-  var pg=document.querySelector('#app .pg');if(!pg||pg.querySelector('#nbBn'))return;
-  pg.insertAdjacentHTML('afterbegin',bannerHTML());startAuto();
+  if(typeof S==='undefined'||!['beranda','kat','intro'].includes(S.p))return;
+  var pg=document.querySelector('#app .pg')||document.querySelector('#app .intro.mp')||document.querySelector('#app .intro');
+  if(!pg||pg.querySelector('#nbBn'))return;
+  var anchor=pg.querySelector('.mp-top');
+  if(anchor)anchor.insertAdjacentHTML('afterend',bannerHTML());
+  else pg.insertAdjacentHTML('afterbegin',bannerHTML());
+  startAuto();
  }
 
  /* ----- tombol unduh APK ----- */
@@ -2016,7 +2031,7 @@ Object.assign(P,{
 tokos:()=>{u3auto('list',u3load);
  return u3hd('Toko Mitra & Servis HP')+`<div class="pg"><div class="card"><input id="u3_q" placeholder="Cari toko, layanan, atau lokasi" value="${esc(U3.q)}" onkeydown="if(event.key==='Enter'){U3.q=this.value.trim();U3.list=null;U3.flist=0;render()}"><button class="btn g" onclick="U3.q=u3v('q');U3.list=null;U3.flist=0;render()">Cari</button> <button class="btn l" onclick="nav('lacak')">Lacak Servis</button></div>
  ${(U3.list||[]).map(m=>`<div class="card">${m.logo_url?`<img src="${esc(m.logo_url)}" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:cover;float:right" referrerpolicy="no-referrer">`:''}<b>${esc(m.store_name)}</b><p style="color:var(--mut);font-size:13px">${esc(m.location)} · ${esc(m.services||'Servis HP')}</p><button class="btn g" onclick="u3open('${esc(m.slug)}')">Lihat Toko & Servis</button></div>`).join('')||(U3.list?'<div class="card">Belum ada toko yang cocok.</div>':(U3.flist?u3wait('list'):'<div class="card">Memuat…</div>'))}
- <div class="card"><b>Punya toko HP?</b><p>Gratis ${U3.plan.trial} hari, lalu ${u3rp(U3.plan.price)} per ${U3.plan.days} hari. Tanpa komisi.</p><button class="btn g" onclick="nav('mitrareg')">BUKA TOKO DI SINI</button></div></div>`},
+</div>`},
 tokod:()=>{const m=U3.store;if(!m)return u3hd('Toko','tokos')+'<div class="pg"><div class="card">Toko tidak dipilih.</div></div>';
  return u3hd(esc(m.store_name),'tokos')+`<div class="pg"><div class="card">${m.photo_url?`<img src="${esc(m.photo_url)}" alt="" style="width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin-bottom:8px" referrerpolicy="no-referrer">`:''}<p>${esc(m.description||'')}</p><p style="font-size:13px;color:var(--mut)">${esc(m.address)}<br>Jam: ${esc(m.hours||'-')}<br>Layanan: ${esc(m.services||'-')}</p><a class="btn g" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none" href="${esc(u3wa(m.phone,'Halo '+m.store_name+', saya ingin bertanya.'))}">Chat WhatsApp Toko</a></div>${u3bookRes()}
  <div class="card"><b>Ajukan Servis HP (tanpa akun)</b>${u3f('bn','Nama Anda')}${u3f('bp','Nomor WhatsApp','tel','','08xxxxxxxxxx')}${u3f('bb','Merek HP')}${u3f('bm','Model HP')}${u3ta('bc','Keluhan')}${u3f('bk','Kondisi fisik (opsional)')}${u3f('ba','Kelengkapan yang diserahkan (opsional)')}${u3f('bi','IMEI (opsional, 15 digit)','tel')}${u3f('bs','Tanggal kedatangan','date')}
@@ -2117,11 +2132,11 @@ function views(b){
  const V={};
  const tl=(ic,l,c,n)=>`<button class="tl" onclick="${c}"><span class="tli">${ni(ic)}${n?`<em>${n}</em>`:''}</span><span class="tlt">${l}</span></button>`,so=(st)=>`SX.pf='${st}';scGo('ord')`;
  const SC=a=>(my.services||[]).filter(x=>a.includes(x.status)).length;
- V.home=()=>`<div class="card"><div class="ct"><b>Pesanan & Servis</b><a style="color:var(--blue);font-weight:600;cursor:pointer;font-size:13px" onclick="${so('')}">Lihat semua</a></div><small style="color:var(--mut)">Pesanan toko</small><div class="tls">${tl('notifikasi','Pesanan Baru',so('BARU'),cnt('BARU'))}${tl('qc','Diproses',so('DIKONFIRMASI'),cnt('DIKONFIRMASI'))}${tl('cart','Dikirim',so('DIKIRIM'),cnt('DIKIRIM'))}${tl('terjual','Selesai',so('SELESAI'))}${tl('logout','Dibatalkan',so('DIBATALKAN'))}</div><small style="color:var(--mut);display:block;margin-top:10px">Servis HP</small><div class="tls">${tl('servis','Servis Masuk',"scGo('svc')",SC(['BOOKING','HP_DITERIMA','PEMERIKSAAN_AWAL']))}${tl('spesifikasi','Dikerjakan',"scGo('svc')",SC(['MENUNGGU_PERSETUJUAN_BIAYA','MENUNGGU_SPAREPART','SEDANG_DIPERBAIKI','PEMERIKSAAN_QC']))}${tl('qc','Siap Diambil',"scGo('svc')",SC(['SIAP_DIAMBIL']))}${tl('terjual','Selesai',"scGo('svc')")}</div></div>
+ V.home=()=>{const st=(U3.my&&U3.my.store)||{};return `<div class="sc-welcome"><div><small>SELLER CENTRE</small><h2>${esc(st.store_name||'Toko Saya')}</h2><p>Kelola pesanan, produk, servis, dan keuangan toko Anda.</p></div><button class="btn l" style="background:#fff;color:var(--navy);border-color:#fff;margin:0" onclick="scShare()">Bagikan toko</button></div><div class="card"><div class="ct"><b>Pesanan & Servis</b><a style="color:var(--blue);font-weight:600;cursor:pointer;font-size:13px" onclick="${so('')}">Lihat semua</a></div><small style="color:var(--mut)">Pesanan toko</small><div class="tls">${tl('notifikasi','Pesanan Baru',so('BARU'),cnt('BARU'))}${tl('qc','Diproses',so('DIKONFIRMASI'),cnt('DIKONFIRMASI'))}${tl('cart','Dikirim',so('DIKIRIM'),cnt('DIKIRIM'))}${tl('terjual','Selesai',so('SELESAI'))}${tl('logout','Dibatalkan',so('DIBATALKAN'))}</div><small style="color:var(--mut);display:block;margin-top:10px">Servis HP</small><div class="tls">${tl('servis','Servis Masuk',"scGo('svc')",SC(['BOOKING','HP_DITERIMA','PEMERIKSAAN_AWAL']))}${tl('spesifikasi','Dikerjakan',"scGo('svc')",SC(['MENUNGGU_PERSETUJUAN_BIAYA','MENUNGGU_SPAREPART','SEDANG_DIPERBAIKI','PEMERIKSAAN_QC']))}${tl('qc','Siap Diambil',"scGo('svc')",SC(['SIAP_DIAMBIL']))}${tl('terjual','Selesai',"scGo('svc')")}</div></div>
  <div class="card"><b>Menu Toko</b><div class="tls">${tl('spesifikasi','Tambah Produk',"scGo('padd')")}${tl('stok','Produk',"scGo('prod')",low.length+out.length)}${tl('keu','Keuangan',"scGo('fin')")}${tl('data','Pelanggan',"scGo('cus')")}${tl('lap','Laporan',"scGo('fin')")}${tl('tag','Bagikan Toko',"scShare()")}${tl('kat','Marketplace',"nav('intro')")}${tl('set','Pengaturan',"scGo('set')")}${tl('chat','Bantuan',"scGo('help')")}</div></div>
  <div class="scx-g"><div class="scx-k"><small>Penjualan hari ini</small><b>${u3rp(rep(b,today).sales)}</b></div><div class="scx-k"><small>Penjualan bulan ini</small><b>${u3rp(rep(b,mon).sales)}</b></div><div class="scx-k"><small>Pesanan baru</small><b>${cnt('BARU')}</b></div><div class="scx-k"><small>Sedang diproses</small><b>${cnt('DIKONFIRMASI')+cnt('DIKIRIM')}</b></div><div class="scx-k"><small>Pesanan selesai</small><b>${cnt('SELESAI')}</b></div><div class="scx-k"><small>Produk aktif</small><b>${act.length}</b></div><div class="scx-k"><small>Stok menipis / habis</small><b>${low.length} / ${out.length}</b></div><div class="scx-k"><small>Pendapatan servis (bln ini)</small><b>${u3rp(rep(b,mon).svc)}</b></div><div class="scx-k"><small>Estimasi keuntungan (bln ini)</small><b>${u3rp(lab(rep(b,mon)))}</b></div></div>
  <div class="scx-2"><div class="card"><b>Penjualan 14 hari terakhir</b>${area(days,'scA')}</div><div class="card"><b>Produk terlaris</b>${(b.top||[]).map(t=>`<p>${esc(t.name)} <small style="float:right">${t.qty} terjual</small></p>`).join('')||'<p>Belum ada penjualan selesai.</p>'}</div></div>
- <div class="scx-2" style="margin-top:12px"><div class="card"><b>Stok perlu perhatian</b>${low.concat(out).slice(0,6).map(p=>`<p>${esc(p.name)} <small style="float:right">stok ${p.stock}</small></p>`).join('')||'<p>Semua stok aman.</p>'}</div><div class="card"><b>Aktivitas terbaru</b>${O.slice(0,5).map(g=>`<p style="font-size:13px">${esc(g[0].order_id)} · ${esc(g[0].customer_name)} ${bd(g[0].status)}</p>`).join('')||'<p>Belum ada aktivitas.</p>'}</div></div>`;
+ <div class="scx-2" style="margin-top:12px"><div class="card"><b>Stok perlu perhatian</b>${low.concat(out).slice(0,6).map(p=>`<p>${esc(p.name)} <small style="float:right">stok ${p.stock}</small></p>`).join('')||'<p>Semua stok aman.</p>'}</div><div class="card"><b>Aktivitas terbaru</b>${O.slice(0,5).map(g=>`<p style="font-size:13px">${esc(g[0].order_id)} · ${esc(g[0].customer_name)} ${bd(g[0].status)}</p>`).join('')||'<p>Belum ada aktivitas.</p>'}</div></div>`};
  V.stat=()=>`<div class="card"><b>Penjualan & laba bulanan</b>${mons.length?bars(mons,[['#7BA7C7','#245B86'],['#86EFAC','#15803D']],'scC'):'<p>Belum ada transaksi selesai.</p>'}<small style="color:var(--mut)">Biru: penjualan · Hijau: laba. Hanya pesanan SELESAI dan servis SUDAH DISERAHKAN dihitung.</small></div>`;
  const oq=SX.f||'';
  V.ord=()=>{const ch=chips([['','Semua ('+O.length+')'],['BARU','Baru ('+cnt('BARU')+')'],['DIKONFIRMASI','Diproses ('+cnt('DIKONFIRMASI')+')'],['DIKIRIM','Dikirim ('+cnt('DIKIRIM')+')'],['SELESAI','Selesai ('+cnt('SELESAI')+')'],['DIBATALKAN','Batal ('+cnt('DIBATALKAN')+')']],oq);const q=SX.q.toLowerCase(),L=O.filter(g=>(!oq||g[0].status===oq)&&(!q||(g[0].order_id+g[0].customer_name+g[0].phone).toLowerCase().includes(q))),per=10,pg=L.slice((SX.pg-1)*per,SX.pg*per);
@@ -2184,7 +2199,7 @@ P.intro=()=>{
   mpLoad('home',()=>api('mpHome'));
   mpLoadRes();
   const h=M.home, r=M.res;
-  const ban=`<section class="in-hero mp-ban"><div class="buyer-eyebrow">NABLO MARKETPLACE</div><h1>Temukan produk dari banyak toko mitra</h1><p>Jelajahi katalog dalam satu aplikasi, bandingkan pilihan, lalu pesan dari toko yang Anda inginkan.</p><div class="in-cta"><button class="btn g" onclick="mpGo('')">Lihat semua produk</button><button class="btn l" onclick="nav('tokos')">Cari toko mitra</button>${S.u&&ROLE()==='MITRA'?'<button class="btn l" onclick="nav(\'mitrabiz\')">Seller Centre</button>':'<button class="btn l" onclick="nav(\'mitrareg\')">Buka toko</button>'}</div></section>`;
+  const ban=`<section class="in-hero mp-ban"><div class="buyer-eyebrow">NABLO MARKETPLACE</div><h1>Temukan produk dari banyak toko mitra</h1><p>Jelajahi katalog dalam satu aplikasi, bandingkan pilihan, lalu pesan dari toko yang Anda inginkan.</p><div class="in-cta"><button class="btn g" onclick="mpGo('')">Lihat semua produk</button><button class="btn l" onclick="nav('tokos')">Cari toko mitra</button>${S.u&&ROLE()==='MITRA'?'<button class="btn l" onclick="nav(\'mitrabiz\')">Seller Centre</button>':''}</div></section>`;
   const cats=h&&h.cats?h.cats:(r&&r.cats?r.cats:[]);
   const stores=h&&h.stores?h.stores:[];
   const products=r&&r.items?r.items:[];
@@ -2302,12 +2317,24 @@ P.intro=()=>{
  const h=M.home,r=M.res,cats=(h&&h.cats)||(r&&r.cats)||[],stores=(h&&h.stores)||[];
  const seller=S.u&&ROLE()==='MITRA';
  const tokoAll=(()=>{const m=new Map();stores.forEach(x=>m.set(x.slug,Object.assign({},x)));((h&&h.service)||[]).forEach(x=>{const e=m.get(x.slug);if(e)e.svc=1;else m.set(x.slug,Object.assign({},x,{svc:1}))});return[...m.values()]})();
- const promo=`<div class="mp-promo"><div><b>Belanja dari toko mitra</b><small>Harga dan stok diperiksa sistem saat checkout.</small></div><button class="btn l" onclick="${seller?"nav('mitrabiz')":"nav('mitrareg')"}">${seller?'Seller Centre':'Buka toko'}</button></div>`;
- return `<div class="intro mp">${mpHead()}${promo}${cats.length?mpChips(cats,'mpCatSet'):''}${mpSortBar()}
-  <section class="mp-s">${hpGrid()}</section>
+ const hero=`<section class="in-hero mp-ban"><div class="buyer-eyebrow">NABLO SMARTPHONE</div><h1>HP berkualitas, transparan, dan siap jual</h1><p>Jelajahi unit NABLO dan produk toko mitra dalam satu tempat. Bandingkan spesifikasi, cek hasil QC, lalu pesan dengan mudah.</p><div class="in-cta"><button class="btn g" onclick="nav('kat')">Lihat Katalog</button><button class="btn l" onclick="nav('tokos')">Toko & Servis</button>${seller?'<button class="btn l" onclick="nav(\'mitrabiz\')">Seller Centre</button>':''}</div></section>`;
+ const high=hpGrid();
+ return `<div class="intro mp">${mpHead()}${hero}
+  ${cats.length?mpSec('Kategori','',`<div class="mp-cats">${cats.map(c=>`<button onclick="mpCatGo('${esc(c).replace(/'/g,'&#39;')}')">${esc(c)}</button>`).join('')}</div>`):''}
+  ${mpSec('Rekomendasi produk','<a onclick="nav(\'kat\')">Lihat semua</a>',high)}
   ${tokoAll.length?mpSec('Toko Mitra & Servis HP','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${tokoAll.map(mpStore).join('')}</div>`):''}
   <div class="mp-lk"><button class="btn l" onclick="nav('mptrack')">Lacak pesanan</button><button class="btn l" onclick="nav('lacak')">Lacak servis</button><button class="btn l" onclick="nav('mpfav')">Favorit</button></div>${pubFoot()}</div>`};
-P.kat=()=>P.intro();
+P.kat=()=>{
+ hpLoad();mpLoad('home',()=>api('mpHome'));mpLoadRes();
+ const r=M.res,cats=(r&&r.cats)||(M.home&&M.home.cats)||[];
+ const n=((r&&r.total)||0)+hpList().filter(hpInRange).length;
+ return `<div class="intro mp">${mpHead()}
+  <div class="buyer-section" style="margin-top:8px"><div><h3>Katalog</h3><p>Produk NABLO dan seluruh toko mitra</p></div><span class="buyer-count">${n||'…'} produk</span></div>
+  ${cats.length?mpChips(cats,'mpCatSet'):''}
+  <div class="mp-bar2">${mpSortBar()}<button class="mp-fb ${M.min||M.max||M.loc?'on':''}" onclick="M.fo=!M.fo;render()">Filter</button></div>
+  ${M.fo?`<div class="card mp-f"><input id="mpf_a" type="number" min="0" placeholder="Harga min" value="${esc(M.min)}"><input id="mpf_b" type="number" min="0" placeholder="Harga maks" value="${esc(M.max)}"><input id="mpf_l" placeholder="Lokasi" value="${esc(M.loc)}"><select id="mpf_c" hidden><option value="${esc(M.cat)}"></option></select><select id="mpf_s" hidden><option value="${esc(M.sort||'new')}"></option></select><button class="btn g" onclick="mpApply();M.fo=false;render()">Terapkan</button></div>`:''}
+  <section class="mp-s" style="margin-top:12px">${hpGrid()}</section>${pubFoot()}</div>`};
+
 P.mpsearch=()=>{
  hpLoad();mpLoadRes();const r=M.res,cats=(r&&r.cats)||[];
  const f=M.fo?`<div class="card mp-f"><input id="mpf_a" type="number" min="0" placeholder="Harga min" value="${esc(M.min)}"><input id="mpf_b" type="number" min="0" placeholder="Harga maks" value="${esc(M.max)}"><input id="mpf_l" placeholder="Lokasi" value="${esc(M.loc)}"><select id="mpf_c" hidden><option value="${esc(M.cat)}"></option></select><select id="mpf_s" hidden><option value="${esc(M.sort||'new')}"></option></select><button class="btn g" onclick="mpApply();M.fo=false;render()">Terapkan</button></div>`:'';
