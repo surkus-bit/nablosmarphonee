@@ -415,7 +415,7 @@ nav button.on{color:var(--blue);background:var(--blue-l)}
 .mp .pg{max-width:none}
 
 /* ===== Halaman profil / akun (satu tampilan untuk semua role) ===== */
-.pf{max-width:980px}
+.acc{max-width:980px}
 .pf-hero{background:linear-gradient(135deg,var(--navy),#1f4468);color:#fff;border-radius:16px;padding:22px 20px;margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .pf-av{position:relative;flex:none}
 .pf-av .av{width:76px;height:76px;font-size:26px;border-width:2px}
@@ -440,14 +440,14 @@ nav button.on{color:var(--blue);background:var(--blue-l)}
 .pf-li i svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .pf-li span{flex:1;min-width:0;font-weight:600;font-size:13.5px}.pf-li small{display:block;color:var(--mut);font-weight:400;font-size:12px;margin-top:1px}
 .pf-li em{font-style:normal;color:var(--mut);font-size:20px;line-height:1}
-.pf .pf-save{margin:12px 0 0;width:100%}
+.acc .pf-save{margin:12px 0 0;width:100%}
 .pf-out{width:100%;margin-top:2px;background:#fff;color:var(--bad);border:1px solid #FECACA;border-radius:10px;padding:12px;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 .pf-out:hover{background:var(--bad-l)}.pf-out svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.pdp-bar.ro .b{background:var(--mut);cursor:default}
+.pdp-bar.ro{background:#fff;box-shadow:0 -2px 10px rgba(20,43,69,.08)}.pdp-bar.ro .b{background:#fff;color:var(--navy);cursor:default;align-items:flex-start;padding:8px 16px;font-size:16px}.pdp-bar.ro .b small{color:var(--mut);opacity:1;font-size:11.5px}.pdp-bar.ro .c{flex:0 0 64px}
 
 /* cegah layar mengecil sendiri di HP: konten tidak boleh melebihi lebar layar */
 html,body{max-width:100%;overflow-x:clip}
-#app,.pg,.pf,.pdp,.intro{min-width:0;max-width:100%}
+#app,.pg,.acc,.pdp,.intro{min-width:0;max-width:100%}
 img,svg,video,canvas{max-width:100%}
 .pdp-sl img,.pdp-th img,.detail-gallery img{max-width:none}
 
@@ -456,6 +456,7 @@ img,svg,video,canvas{max-width:100%}
  html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
  input,select,textarea{font-size:16px!important}
 }
+@media(min-width:900px){.pdp-bar.ro{display:none}}
 </style>
 <style id="nablo-shopee">
 /* NABLO · perapian tata letak (tema navy/biru awal dipertahankan) */
@@ -1043,7 +1044,7 @@ const profilPage=()=>{
  cam='<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
  links=profilLinks().map(([k,ic,l,s,raw])=>`<button type="button" class="pf-li" onclick="nav('${k}')"><i>${raw||ni(ic)}</i><span>${esc(l)}${s?`<small>${esc(s)}</small>`:''}</span><em>›</em></button>`).join('');
  return `<div class="hd"><button class="bk" onclick="nav('${profilHome()}')" aria-label="Kembali">←</button><b>${r==='PEMBELI'?'Akun Saya':'Profil Saya'}</b></div>
-<div class="pg pf">
+<div class="pg acc">
  <section class="pf-hero"><div class="pf-av"><div class="av">${avHTML()}</div><label class="pf-cam" title="${u.photo_url?'Ganti foto':'Unggah foto'}"><input type="file" accept="image/*" hidden onchange="pickProfilePhoto(this)">${cam}</label></div>
   <div class="pf-id"><small>Akun ${esc(shopName())}</small><h2>${esc(u.full_name||'-')}</h2><div class="u">@${esc(u.username||'')}</div><span class="pf-role">${esc(rl)}</span>${u.photo_url?'<button type="button" class="pf-rm" onclick="delProfilePhoto()">Hapus foto</button>':''}</div></section>
  <div class="pf-grid">
@@ -2343,7 +2344,7 @@ const pdpGo=(b,i)=>{const sl=b.closest('.pdp-gal').querySelector('.pdp-sl');sl.s
 const pdpMore=b=>{const d=b.previousElementSibling;const o=d.classList.toggle('cl');b.textContent=o?'Lihat selengkapnya':'Sembunyikan'};
 const pdpGal=ph=>{ph=[...new Set((ph||[]).filter(u=>/^https?:\/\//i.test(String(u||''))))];
  return `<div class="pdp-gal"><div class="pdp-sl" onscroll="pdpScroll(this)">${ph.length?ph.map(u=>`<div><img src="${esc(u)}" alt="" referrerpolicy="no-referrer" onclick="viewPhoto(this.src)" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph0'}))"></div>`).join(''):'<div><span class="ph0"></span></div>'}</div>${ph.length?`<span class="pdp-ct">1/${ph.length}</span>`:''}${ph.length>1?`<div class="pdp-th">${ph.map((u,i)=>`<button type="button" class="${i?'':'on'}" onclick="pdpGo(this,${i})" aria-label="Foto ${i+1}"><img src="${esc(u)}" alt="" referrerpolicy="no-referrer"></button>`).join('')}</div>`:''}</div>`};
-const pdpTop=()=>{const n=(typeof u3ck==='function')?u3ck():0;return `<div class="pdp-top"><div><button onclick="pdpBack()" aria-label="Kembali">${PDPI.back}</button><div class="r"><button onclick="nav('intro')" aria-label="Beranda">${ni('dash')}</button><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button></div></div></div><div class="pdp-dsk">${mpHead()}</div>`};
+const pdpTop=()=>{const n=(typeof u3ck==='function')?u3ck():0;return `<div class="pdp-top"><div><button onclick="pdpBack()" aria-label="Kembali">${PDPI.back}</button><div class="r"><button onclick="nav('intro')" aria-label="Beranda">${ni('dash')}</button>${(!S.u||ROLE()==='PEMBELI')?`<button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button>`:''}</div></div></div><div class="pdp-dsk">${mpHead()}</div>`};
 const pdpBar=(o)=>{const nv=S.u&&ROLE()==='PEMBELI';if(S.u&&!nv)return `<div class="pdp-bar ro">${o.wa?`<a class="c" target="_blank" rel="noopener" href="${esc(o.wa)}" aria-label="Chat penjual">${ni('chat')}</a>`:''}<div class="b">${o.price}<small>Mode lihat saja · beli memakai akun pembeli</small></div></div>`;return `<div class="pdp-bar${nv?' nv':''}">${o.wa?`<a class="c" target="_blank" rel="noopener" href="${esc(o.wa)}" aria-label="Chat penjual">${ni('chat')}</a>`:`<button class="c" onclick="toast('Nomor penjual belum tersedia')" aria-label="Chat penjual">${ni('chat')}</button>`}<button class="k" ${o.dis?'disabled':''} onclick="${o.add}" aria-label="Tambah ke keranjang">${ni('cart')}</button><button class="b" ${o.dis?'disabled':''} onclick="${o.buy}">${o.dis?'Stok habis':'Beli sekarang'}<small>${o.price}</small></button></div>`};
 const pdpDesc=t=>{const x=String(t||'').trim();if(!x)return '<p class="mp-em">Penjual belum menulis deskripsi.</p>';const long=x.length>260||x.split('\n').length>6;return `<div class="pdp-dt${long?' cl':''}">${esc(x)}</div>${long?'<button type="button" class="pdp-more" onclick="pdpMore(this)">Lihat selengkapnya</button>':''}`};
 
