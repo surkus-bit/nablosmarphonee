@@ -1586,7 +1586,7 @@ render();
   }catch(e){const m=String(e&&e.message||e);if(m.indexOf('SESI_HABIS')>=0){try{localStorage.removeItem('sk_token');localStorage.removeItem('sk_token_exp')}catch(err){}}else toast('Koneksi bermasalah. Muat ulang halaman untuk melanjutkan sesi.');if(S.p==='boot'){S.p='login';render()}}
 })();
 /* Sinkronisasi lintas perangkat: ambil data terbaru berkala tanpa login ulang.
-   Perubahan muncul biasanya dalam 10–15 detik. */
+   Apps Script tidak menyediakan push real-time, jadi perubahan muncul biasanya dalam 10–15 detik. */
 let syncBusy=false, lastSyncSignature='';
 async function syncConnectedDevices(){
   if(!S.t || !S.u || document.hidden || syncBusy || busyN>0) return;
@@ -2176,7 +2176,8 @@ const mpGo=q=>{M.q=String(q||'').trim();M.cat='';nav('mpsearch')};
 const mpCatGo=c=>{M.q='';M.cat=c;nav('mpsearch')};
 const mpAcc=()=>{if(!S.u){S.nextP='intro';return nav('login')}const r=ROLE(),t=r==='MITRA'?'mitrabiz':r==='SUPERADMIN'?'u3admin':r==='PEMBELI'?'akun':'dash';nav(P[t]?t:'intro')};
 const mpHead=()=>{const n=u3ck();return `<header class="mp-top"><div class="mp-lg" onclick="nav('intro')" aria-label="Beranda">${logo(34)}</div><div class="mp-sr"><span class="mp-si">${ni('search')}</span><input id="mp_q" type="search" value="${esc(M.q)}" placeholder="Cari produk" enterkeyhint="search" onkeydown="if(event.key==='Enter')mpGo(this.value)"></div><div class="mp-ic"><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button><button onclick="mpAcc()" aria-label="${S.u?'Akun saya':'Masuk'}">${ni('profil')}</button></div></header>`};
-const mpCard=p=>{M.reg[p.prod_id]=p;return `<div class="mp-c" onclick="mpOpen('${esc(p.prod_id)}')"><div class="mp-im">${p.photo_url?`<img loading="lazy" src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>Foto</span>'}</div><div class="mp-bd"><div class="mp-nm">${esc(p.name)}</div><b>${u3rp(p.price)}</b><small>${esc(p.store_name)}${p.location?' · '+esc(p.location):''}</small></div></div>`};
+const mpPhotoList=p=>{const raw=Array.isArray(p.photos)?p.photos:Array.isArray(p.photo_urls)?p.photo_urls:[];const urls=raw.map(x=>typeof x==='string'?x:(x&&(x.url||x.photo_url||x.image_url))||'').filter(Boolean);if(p.photo_url&&!urls.includes(p.photo_url))urls.unshift(p.photo_url);return urls};
+const mpCard=p=>{M.reg[p.prod_id]=p;const cover=mpPhotoList(p)[0]||p.photo_url;return `<div class="mp-c" onclick="mpOpen('${esc(p.prod_id)}')"><div class="mp-im">${cover?`<img loading="lazy" src="${esc(cover)}" alt="" referrerpolicy="no-referrer">`:'<span>Foto</span>'}</div><div class="mp-bd"><div class="mp-nm">${esc(p.name)}</div><b>${u3rp(p.price)}</b><small>${esc(p.store_name)}${p.location?' · '+esc(p.location):''}</small></div></div>`};
 const mpStore=s=>`<div class="mp-st" onclick="u3open('${esc(s.slug)}')"><div class="mp-sl">${s.logo_url||s.photo_url?`<img src="${esc(s.logo_url||s.photo_url)}" alt="" referrerpolicy="no-referrer">`:'Toko'}</div><div><b>${esc(s.store_name)}</b><small>${esc(s.location||s.address||'')}</small>${s.svc?'<span class="mp-tag">Servis HP</span>':''}</div></div>`;
 const mpSec=(t,more,body)=>`<section class="mp-s"><div class="mp-sh"><h2>${t}</h2>${more||''}</div>${body}</section>`;
 const mpGrid=L=>L.length?`<div class="mp-g">${L.map(mpCard).join('')}</div>`:'<p class="mp-em">Belum ada produk.</p>';
@@ -2353,7 +2354,7 @@ P.mpprod=()=>{
  const p=M.det;if(!p)return `<div class="pdp">${pdpTop()}<div class="pdp-s">Produk tidak ditemukan.<br><button class="btn g" style="margin-top:12px" onclick="nav('intro')">Kembali ke beranda</button></div></div>`;
  M.reg[p.prod_id]=p;
  const vs=p.variants||[],v=mpCurV(p),price=v?v.price:p.price,stock=v?v.stock:p.stock,fav=mpIsFav(p.prod_id),id=esc(p.prod_id),
- photos=[p.photo_url].concat(Array.isArray(p.photos)?p.photos:[]),
+ photos=mpPhotoList(p),
  vhtml=vs.length?`<div class="pdp-s"><div class="pdp-lb">${esc((vs[0].option_name||'Pilihan').toUpperCase())}</div><div class="pdp-v">${vs.map(x=>`<button class="${v&&v.variant_id===x.variant_id?'on':''}" ${x.stock>0?'':'disabled'} onclick="mpVar('${id}','${esc(x.variant_id)}')">${esc(x.option_value)}</button>`).join('')}</div></div>`:'';
  return `<div class="pdp">${pdpTop()}<div class="pdp-main">${pdpGal(photos)}<div class="pdp-info">
   <div class="pdp-s"><div class="pdp-pr"><b>${u3rp(price)}</b><button type="button" class="${fav?'on':''}" onclick="mpFav('${id}')" aria-label="${fav?'Hapus dari favorit':'Simpan ke favorit'}">${ni('heart')}</button></div>
