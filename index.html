@@ -729,6 +729,81 @@ nav button i svg,.buyer-nav button i svg{width:21px;height:21px}
 /* login */
 .lg .opt.alt{margin:14px 0 0;justify-content:center;gap:6px 22px}
 @media(min-width:900px){.mp-g{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ===== Halaman detail produk (gaya marketplace) ===== */
+.pdp{max-width:1100px;margin:0 auto;padding-bottom:96px;background:#fff}
+.pdp-top{position:sticky;top:0;z-index:20;height:0;pointer-events:none}
+.pdp-top>div{display:flex;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 0}
+.pdp-top button{pointer-events:auto;position:relative;width:38px;height:38px;border:0;border-radius:50%;background:rgba(20,43,69,.55);color:#fff;display:flex;align-items:center;justify-content:center;margin:0;cursor:pointer;backdrop-filter:blur(6px)}
+.pdp-top svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pdp-top i{position:absolute;top:-3px;right:-3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--bad);color:#fff;font:700 10px/17px var(--font);font-style:normal;text-align:center}
+.pdp-top .r{display:flex;gap:8px}
+.pdp-dsk{display:none}
+.pdp-gal{position:relative;background:#EEF2F6}
+.pdp-sl{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;aspect-ratio:1/1;max-height:560px}
+.pdp-sl::-webkit-scrollbar{display:none}
+.pdp-sl>div{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;background:#fff}
+.pdp-sl img{width:100%;height:100%;object-fit:contain;cursor:zoom-in}
+.pdp-sl .ph0{width:64px;height:64px;opacity:.5;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7' y='2.5' width='10' height='19' rx='2'/%3E%3Cpath d='M11 18h2'/%3E%3C/svg%3E") center/contain no-repeat}
+.pdp-ct{position:absolute;right:12px;bottom:12px;background:rgba(20,43,69,.65);color:#fff;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px}
+.pdp-th{display:flex;gap:8px;overflow-x:auto;padding:10px 16px 0;scrollbar-width:none}
+.pdp-th button{flex:none;width:56px;height:56px;padding:0;margin:0;border:2px solid transparent;border-radius:8px;overflow:hidden;background:#fff;cursor:pointer}
+.pdp-th button.on{border-color:var(--blue)}.pdp-th img{width:100%;height:100%;object-fit:cover;display:block}
+.pdp-badge{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;background:var(--navy);color:#fff;font-size:13px;font-weight:600}
+.pdp-badge small{color:#CBD5E1;font-weight:500;font-size:12px}
+.pdp-s{padding:14px 16px;border-top:8px solid var(--bg)}
+.pdp-s:first-of-type{border-top:0}
+.pdp-pr{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pdp-pr b{font-size:26px;line-height:1.1;color:var(--blue);letter-spacing:-.4px;overflow-wrap:anywhere}
+.pdp-pr button{flex:none;width:40px;height:40px;margin:0;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--mut);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.pdp-pr button.on{color:var(--bad);border-color:#FECACA;background:var(--bad-l)}.pdp-pr button.on svg{fill:currentColor}
+.pdp-pr svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pdp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pdp-tags span{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:6px;background:var(--blue-l);color:var(--blue)}
+.pdp-tags span.ok{background:var(--ok-l);color:var(--ok)}.pdp-tags span.wn{background:var(--warn-l);color:var(--warn)}
+.pdp h1{font-size:16px;font-weight:500;line-height:1.45;color:var(--t);margin:12px 0 0}
+.pdp-lb{font-size:12px;font-weight:700;color:var(--mut);letter-spacing:.3px;margin-bottom:10px}
+.pdp-v{display:flex;flex-wrap:wrap;gap:8px}
+.pdp-v button{margin:0;padding:9px 16px;min-height:40px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:13px;font-weight:600;color:var(--t);cursor:pointer}
+.pdp-v button.on{border-color:var(--blue);background:var(--blue-l);color:var(--blue)}
+.pdp-v button:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.pdp-row{display:flex;align-items:center;gap:12px;width:100%;padding:13px 16px;border:0;border-top:1px solid var(--line);background:#fff;text-align:left;margin:0;font-size:13.5px;color:var(--t)}
+.pdp-row:first-child{border-top:0}
+.pdp-row svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--blue);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pdp-row span{flex:1;min-width:0}.pdp-row small{display:block;color:var(--mut);font-size:12px;margin-top:1px}
+button.pdp-row{cursor:pointer}button.pdp-row:after{content:"›";color:var(--mut);font-size:22px;line-height:1}
+.pdp-rows{padding:0;border-top:8px solid var(--bg)}
+.pdp-d>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:700;color:var(--navy);font-size:15px}
+.pdp-d>summary::-webkit-details-marker{display:none}
+.pdp-d>summary:after{content:"";width:8px;height:8px;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);transform:rotate(45deg);transition:transform .2s}
+.pdp-d[open]>summary:after{transform:rotate(-135deg)}
+.pdp-d>div{margin-top:12px}
+.pdp-dt{white-space:pre-wrap;line-height:1.65;font-size:13.5px;color:var(--t);overflow-wrap:anywhere}
+.pdp-dt.cl{max-height:9em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 65%,transparent);mask-image:linear-gradient(#000 65%,transparent)}
+.pdp-more{margin:6px 0 0;padding:6px 0;border:0;background:none;color:var(--blue);font-weight:700;font-size:13px;cursor:pointer}
+.pdp-kv{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid var(--line);font-size:13px}
+.pdp-kv:first-child{border-top:0}.pdp-kv span{color:var(--mut);flex:none;max-width:45%}.pdp-kv b{text-align:right;font-weight:600;overflow-wrap:anywhere}
+.pdp-note{background:var(--warn-l);color:#92400E;border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.55;margin-bottom:10px}
+.pdp-st{display:flex;align-items:center;gap:12px;cursor:pointer}
+.pdp-st>div:nth-child(2){flex:1;min-width:0}.pdp-st b{display:block;color:var(--navy);font-size:14px}.pdp-st small{color:var(--mut);font-size:12px}
+.pdp-bar{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.pdp-bar.nv{bottom:calc(62px + env(safe-area-inset-bottom,0px));padding-bottom:0}
+.pdp-bar>*{margin:0;border:0;border-radius:0;min-height:56px;display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;text-decoration:none;cursor:pointer;font-size:14px;font-weight:700}
+.pdp-bar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pdp-bar .c{flex:0 0 22%;background:var(--blue)}.pdp-bar .k{flex:0 0 22%;background:var(--blue-d);border-left:1px solid rgba(255,255,255,.2)}
+.pdp-bar .b{flex:1;background:var(--navy);flex-direction:column;gap:0;line-height:1.25}.pdp-bar .b small{font-size:12px;font-weight:500;opacity:.85}
+.pdp-bar :disabled{opacity:.5;cursor:not-allowed}
+@media(min-width:900px){
+ body.has-sb .pdp-bar{left:var(--sbw)}
+ .pdp-bar.nv{bottom:0}
+ .pdp-bar{justify-content:center;padding-inline:max(0px,calc((100% - 1100px)/2))}
+ .pdp-top{display:none}.pdp-dsk{display:block}
+ .pdp{background:transparent;padding:0 18px 96px}
+ .pdp-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:16px}
+ .pdp-gal{position:sticky;top:76px;border-radius:12px;overflow:hidden}
+ .pdp-info{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+ .pdp-badge{display:none}
+}
 </style>
 </head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
@@ -887,8 +962,8 @@ const ni=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${NI[k]||''}</svg>`;
 const MENU=[['dash',ni('dash'),'Beranda',ALL],['stok',ni('stok'),'Stok HP',['SUPERADMIN','OWNER','SUB_OWNER','GUDANG']],['servis',ni('servis'),'Servis',['SUPERADMIN','OWNER','SUB_OWNER','TEKNISI']],['qc',ni('qc'),'QC',['SUPERADMIN','OWNER','SUB_OWNER','QC','TEKNISI']],['jual',ni('jual'),'Penjualan',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['lap',ni('lap'),'Laporan',['SUPERADMIN','OWNER','SUB_OWNER','KASIR']],['keu',ni('keu'),'Keuangan',['SUPERADMIN','OWNER','SUB_OWNER']],['kalk',ni('kalk'),'Kalkulator',['SUPERADMIN','OWNER','GUDANG']],['data',ni('data'),'Data & Akun',['SUPERADMIN','OWNER','SUB_OWNER','GUDANG']],['set',ni('set'),'Pengaturan',['SUPERADMIN']],['spesifikasi',ni('spesifikasi'),'Spesifikasi',['SUPERADMIN','SPESIFIKASI']],['notifikasi',ni('notifikasi'),'Pengumuman',['SUPERADMIN','OWNER']],['profil',ni('profil'),'Profil Saya',ALL]];
 /* Pengelompokan menu (hanya tampilan; hak akses tetap dari daftar peran di atas) */
 const MENUGRP=[{k:['dash']},{id:'jual',n:'Penjualan',i:'jual',k:['jual','lap']},{id:'stok',n:'Produk & Stok',i:'stok',k:['stok','spesifikasi','kalk']},{id:'servis',n:'Layanan Servis',i:'servis',k:['servis','qc']},{k:['keu']},{id:'data',n:'Data & Akun',i:'data',k:['data','notifikasi']},{k:['set']},{k:['profil']}];
-const BUYERMENU=[['intro',ni('kat'),'Beranda / Katalog'],['keranjang',ni('cart'),'Keranjang'],['mporders',ni('jual'),'Pesanan Saya'],['mpfav',ni('heart'),'Favorit'],['akun',ni('profil'),'Akun Saya']];
-const BUYERGRP=[{k:['intro']},{id:'belanja',n:'Belanja',i:'kat',k:['keranjang','mporders','mpfav']},{k:['akun']}];
+const BUYERMENU=[['intro',ni('kat'),'Beranda / Katalog'],['keranjang',ni('cart'),'Keranjang'],['mporders',ni('jual'),'Pesanan Saya'],['mpfav',ni('heart'),'Favorit'],['tokos',ni('servis'),'Servis HP'],['lacak',ni('qc'),'Lacak Servis'],['akun',ni('profil'),'Akun Saya']];
+const BUYERGRP=[{k:['intro']},{id:'belanja',n:'Belanja',i:'kat',k:['keranjang','mporders','mpfav','tokos','lacak']},{k:['akun']}];
 const menuHTML=()=>{const r=ROLE(),buyer=r==='PEMBELI',src=buyer?BUYERMENU:MENU,grp=buyer?BUYERGRP:MENUGRP,
  map={form:'stok',inv:'jual',qris:'jual',profil:buyer?'akun':'profil'},c=map[S.p]||S.p,
  vis=k=>src.find(x=>x[0]===k&&(buyer||x[3].includes(r))),
@@ -937,7 +1012,7 @@ lupa:()=>{const f=S.fp||{step:1,id:''};const s2=f.step===2;return `<div class="h
 notifikasi:()=>`<div class="hd"><b>Notifikasi</b><button class="btn l" onclick="loadNotifications()">Muat ulang</button></div><div class="pg"><div id="notifList"><div class="card">Memuat notifikasi…</div></div>${['SUPERADMIN','OWNER'].includes(ROLE())?`<div class="card"><b>Kirim pengumuman</b><label>Judul</label><input id="nt_title" maxlength="100" placeholder="Contoh: Stok baru tersedia"><label>Pesan</label><textarea id="nt_message" rows="4" maxlength="1500" placeholder="Tulis informasi untuk penerima…"></textarea><label>Penerima</label><select id="nt_audience"><option value="ALL">Semua pengguna</option><option value="PEMBELI">Pembeli</option><option value="STAFF">Semua staf</option><option value="GUDANG">Gudang</option><option value="KASIR">Kasir</option><option value="TEKNISI">Teknisi</option><option value="QC">QC</option><option value="SPESIFIKASI">Petugas spesifikasi</option><option value="OWNER">Owner</option><option value="SUB_OWNER">Sub Owner</option></select><label style="display:flex;align-items:center;gap:8px"><input id="nt_email" type="checkbox" style="width:auto"> Kirim juga melalui email</label><button class="btn g w" onclick="sendNotifUI()">KIRIM PENGUMUMAN</button><small>Email dikirim ke alamat yang terdaftar dan sesuai penerima. Aktifkan izin MailApp terlebih dahulu.</small></div>`:''}</div>`,
 profil:()=>{const u=S.u||{},f=S.pf||{},V=k=>esc(f[k]!==undefined?f[k]:(u[k]||'')),back=ROLE()==='PEMBELI'?'akun':'dash';return `<div class="hd"><button class="bk" onclick="nav('${back}')">←</button><b>Profil Saya</b></div><div class="pg"><div class="card" style="text-align:center"><div class="av" style="width:96px;height:96px;border-radius:30px;margin:0 auto 10px;font-size:30px;color:inherit">${avHTML()}</div><b>${esc(u.full_name||'')}</b><br><small>@${esc(u.username||'')} · ${esc(ROLE())}</small><div class="row" style="justify-content:center;margin-top:10px;gap:8px"><label class="btn g"><input type="file" accept="image/*" hidden onchange="pickProfilePhoto(this)">${u.photo_url?'Ganti Foto':'Unggah Foto'}</label>${u.photo_url?`<button class="btn l" onclick="delProfilePhoto()">Hapus Foto</button>`:''}</div></div><div class="card"><b>Data diri</b><label>Nama lengkap</label><input id="pf_n" value="${V('full_name')}" autocomplete="name"><label>No. WhatsApp</label><input id="pf_h" type="tel" value="${V('phone')}"><label>Email (untuk reset password)</label><input id="pf_e" type="email" value="${V('email')}" autocapitalize="off" autocomplete="email"><label>Password saat ini (wajib bila mengganti email)</label><input id="pf_c" type="password" autocomplete="current-password"><button class="btn g w" onclick="saveProfile()">SIMPAN PROFIL</button></div><div class="card"><b>Ubah password</b><label>Password saat ini</label><input id="pw_o" type="password" autocomplete="current-password"><label>Password baru (minimal 8 karakter)</label><input id="pw_n" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="pw_k" type="password" autocomplete="new-password"><button class="btn g w" onclick="doChangePw()">UBAH PASSWORD</button><small>Setelah diubah, perangkat lain harus masuk ulang.</small></div><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`},
 boot:()=>`<div class="lg"><div class="lgl">${logo(90)}</div><p class="sub" style="text-align:center">Memuat…</p></div>`,
-akun:()=>`<div class="hd"><button class="bk" onclick="nav('intro')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN NABLO SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('mporders')">Pesanan Marketplace Saya</button><button class="btn l w" onclick="nav('keranjang')">Keranjang</button><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('intro')">Lihat Katalog Marketplace</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
+akun:()=>`<div class="hd"><button class="bk" onclick="nav('intro')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN NABLO SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('mporders')">Pesanan Marketplace Saya</button><button class="btn l w" onclick="nav('keranjang')">Keranjang</button><button class="btn l w" onclick="nav('mpfav')">Favorit</button><button class="btn g w" onclick="nav('tokos')">Buat Permintaan Servis HP</button><button class="btn l w" onclick="nav('lacak')">Lacak Servis</button><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('intro')">Lihat Katalog Marketplace</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
 login:()=>`<div class="lg"><div class="lgl">${logo(90)}</div>
 <h1>Masuk</h1><p class="sub">Masuk ke akun Anda untuk melanjutkan</p>
 <div class="box">
@@ -1241,7 +1316,7 @@ const doDaftar=()=>{
 };
 
 /* Detail katalog publik: minta data terbatas dari endpoint getDetail */
-const katDetail=id=>{
+const katDetail_lama=id=>{
  if(!S.u||ROLE()!=='PEMBELI'){S.pendingDetail=id;modal(`<h3>Masuk untuk melihat detail</h3><p style="margin:10px 0">Silakan buat akun pembeli atau masuk terlebih dahulu untuk melihat spesifikasi lengkap, kondisi, dan hasil QC HP.</p><button class="btn g w" onclick="closeM();nav('login')">Masuk</button><button class="btn l w" onclick="closeM();nav('daftar')">Buat Akun</button><button class="btn l w" onclick="closeM()">Nanti</button>`);return;}
  let d=null;
  run(async()=>{d=await api('getDetail',id,S.t)},()=>{
@@ -1386,18 +1461,18 @@ async function sendNotifUI(){const title=($('#nt_title')||{}).value||'',message=
   toast(r.emailError?'Pengumuman tersimpan, tetapi '+r.emailError:r.emailSent?'Pengumuman disimpan dan email dikirim ke '+r.emailCount+' penerima'+(r.emailFailed?' ('+r.emailFailed+' gagal)':''):'Pengumuman berhasil disimpan')},
   ()=>{if($('#nt_title'))$('#nt_title').value='';if($('#nt_message'))$('#nt_message').value='';pollNotifs(true)})}
 function render(){
- if(!S.u&&!['intro','login','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav'].includes(S.p))S.p='intro';
+ if(!S.u&&!['intro','login','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','hpdet','mptrack','mpfav'].includes(S.p))S.p='intro';
  if(S.u&&ROLE()==='MITRA'&&!/^sc_/.test(S.p)&&!['mitra','mitrabiz','intro','mpsearch','mpprod','mpfav','tokos','tokod','lacak','mptrack','keranjang'].includes(S.p))S.p='mitrabiz';
- if(S.u&&ROLE()==='PEMBELI'&&!['intro','mpsearch','mpprod','mpfav','mporders','akun','profil','notifikasi','keranjang','mptrack','beranda','kat','terjual','bandingkan','pesanan','checkout'].includes(S.p))S.p='intro';
+ if(S.u&&ROLE()==='PEMBELI'&&!['intro','mpsearch','mpprod','hpdet','mpfav','mporders','akun','profil','notifikasi','keranjang','mptrack','tokos','tokod','lacak','mitrareg','beranda','kat','terjual','bandingkan','pesanan','checkout'].includes(S.p))S.p='intro';
  if(S.u&&!P[S.p])S.p='dash';
- const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav','mporders'].includes(S.p), role=ROLE();
- if(S.u&&!['inv','qris','form','beranda','kat','terjual','bandingkan','akun','profil'].includes(S.p)){
+ const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav','mporders','hpdet'].includes(S.p), role=ROLE();
+ if(S.u&&!['inv','intro','qris','form','beranda','kat','terjual','bandingkan','akun','profil'].includes(S.p)){
   if(role==='PEMBELI'&&['terjual','bandingkan','akun'].includes(S.p)){}else{const m=MENU.find(x=>x[0]===S.p);if(m&&!m[3].includes(role))S.p='dash'
   }
  }
  const prim=(lg||publicPage||role==='PEMBELI')?[]:(PRIMARY[role]||['dash']).map(k=>MENU.find(x=>x[0]===k)).filter(Boolean),
  inPrim=prim.some(x=>x[0]===(({form:'stok',inv:'jual',qris:'jual'})[S.p]||S.p)),
- n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='intro'?'on':''}" onclick="nav('intro')"><i>${ni('dash')}</i>Katalog</button><button class="${S.p==='keranjang'?'on':''}" onclick="nav('keranjang')"><i>${ni('cart')}</i>Keranjang</button><button class="${S.p==='mporders'?'on':''}" onclick="nav('mporders')"><i>${ni('jual')}</i>Pesanan</button><button class="${S.p==='mpfav'?'on':''}" onclick="nav('mpfav')"><i>${ni('heart')}</i>Favorit</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${(({form:'stok',inv:'jual',qris:'jual'})[S.p]||S.p)==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[4]||x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
+ n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='intro'?'on':''}" onclick="nav('intro')"><i>${ni('dash')}</i>Katalog</button><button class="${S.p==='keranjang'?'on':''}" onclick="nav('keranjang')"><i>${ni('cart')}</i>Keranjang</button><button class="${S.p==='mporders'?'on':''}" onclick="nav('mporders')"><i>${ni('jual')}</i>Pesanan</button><button class="${['tokos','tokod','lacak'].includes(S.p)?'on':''}" onclick="nav('tokos')"><i>${ni('servis')}</i>Servis</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${(({form:'stok',inv:'jual',qris:'jual'})[S.p]||S.p)==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[4]||x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
  $('#app').className=(lg||(S.p==='intro'&&!(role==='PEMBELI'&&S.u)))?'noav':'';$('#app').innerHTML=P[S.p]()+n;ntfSync();
  if(role==='SUB_OWNER'&&S.p!=='profil'){
    // Mode pemeriksaan: tombol navigasi/lihat tetap aktif, seluruh tombol aksi perubahan dinonaktifkan.
@@ -2167,5 +2242,63 @@ P.mpprod=()=>{
  <h3 class="mp-h3">Deskripsi</h3><p style="white-space:pre-wrap;color:var(--t)">${esc(p.description||'Tidak ada deskripsi.')}</p></div></div>
  <div class="mp-bar" style="bottom:${buyerNav?'calc(64px + env(safe-area-inset-bottom,0px))':'0'}"><button class="btn l" onclick="mpFav('${esc(p.prod_id)}')" aria-label="Favorit">${fav?'Tersimpan':'Simpan'}</button><a class="btn l" target="_blank" rel="noopener" href="${esc(u3wa(p.phone,'Halo '+p.store_name+', saya tertarik dengan '+p.name+' di NABLO.'))}">Chat</a><button class="btn l" ${stock>0?'':'disabled'} onclick="mpAdd('${esc(p.prod_id)}')">+ Keranjang</button><button class="btn g" ${stock>0?'':'disabled'} onclick="mpAdd('${esc(p.prod_id)}',1)">Beli</button></div>${pubFoot()}</div>`};
 P.mpfav=()=>`<div class="intro mp">${mpHead()}${mpSec('Favorit saya','',M.fav.length?mpGrid(M.fav):'<div class="mp-empty"><b>Belum ada favorit</b><p>Tekan Simpan pada halaman produk. Favorit tersimpan di perangkat ini; harga dan stok dicek ulang saat checkout.</p><button class="btn g" onclick="nav(\'intro\')">Mulai belanja</button></div>')}${pubFoot()}</div>`;
+</script>
+
+<script id="pdp">
+/* Detail produk bergaya marketplace: dipakai untuk produk toko mitra (mpprod) dan HP unit (hpdet) */
+const PDPI={
+ back:'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>',
+ pin:'<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+ box:'<svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg>',
+ shield:'<svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+ tag:'<svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1"/></svg>'
+};
+const pdpBack=()=>nav(S.pp&&!/^(hpdet|mpprod|login|daftar|lupa|boot)$/.test(S.pp)?S.pp:'intro');
+const pdpScroll=el=>{const i=Math.round(el.scrollLeft/Math.max(el.clientWidth,1)),c=el.parentNode.querySelector('.pdp-ct');if(c)c.textContent=(i+1)+'/'+el.children.length;el.parentNode.querySelectorAll('.pdp-th button').forEach((b,j)=>b.classList.toggle('on',j===i))};
+const pdpGo=(b,i)=>{const sl=b.closest('.pdp-gal').querySelector('.pdp-sl');sl.scrollTo({left:i*sl.clientWidth,behavior:'smooth'})};
+const pdpMore=b=>{const d=b.previousElementSibling;const o=d.classList.toggle('cl');b.textContent=o?'Lihat selengkapnya':'Sembunyikan'};
+const pdpGal=ph=>{ph=[...new Set((ph||[]).filter(u=>/^https?:\/\//i.test(String(u||''))))];
+ return `<div class="pdp-gal"><div class="pdp-sl" onscroll="pdpScroll(this)">${ph.length?ph.map(u=>`<div><img src="${esc(u)}" alt="" referrerpolicy="no-referrer" onclick="viewPhoto(this.src)" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph0'}))"></div>`).join(''):'<div><span class="ph0"></span></div>'}</div>${ph.length?`<span class="pdp-ct">1/${ph.length}</span>`:''}${ph.length>1?`<div class="pdp-th">${ph.map((u,i)=>`<button type="button" class="${i?'':'on'}" onclick="pdpGo(this,${i})" aria-label="Foto ${i+1}"><img src="${esc(u)}" alt="" referrerpolicy="no-referrer"></button>`).join('')}</div>`:''}</div>`};
+const pdpTop=()=>{const n=(typeof u3ck==='function')?u3ck():0;return `<div class="pdp-top"><div><button onclick="pdpBack()" aria-label="Kembali">${PDPI.back}</button><div class="r"><button onclick="nav('intro')" aria-label="Beranda">${ni('dash')}</button><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button></div></div></div><div class="pdp-dsk">${mpHead()}</div>`};
+const pdpBar=(o)=>{const nv=S.u&&ROLE()==='PEMBELI';return `<div class="pdp-bar${nv?' nv':''}">${o.wa?`<a class="c" target="_blank" rel="noopener" href="${esc(o.wa)}" aria-label="Chat penjual">${ni('chat')}</a>`:`<button class="c" onclick="toast('Nomor penjual belum tersedia')" aria-label="Chat penjual">${ni('chat')}</button>`}<button class="k" ${o.dis?'disabled':''} onclick="${o.add}" aria-label="Tambah ke keranjang">${ni('cart')}</button><button class="b" ${o.dis?'disabled':''} onclick="${o.buy}">${o.dis?'Stok habis':'Beli sekarang'}<small>${o.price}</small></button></div>`};
+const pdpDesc=t=>{const x=String(t||'').trim();if(!x)return '<p class="mp-em">Penjual belum menulis deskripsi.</p>';const long=x.length>260||x.split('\n').length>6;return `<div class="pdp-dt${long?' cl':''}">${esc(x)}</div>${long?'<button type="button" class="pdp-more" onclick="pdpMore(this)">Lihat selengkapnya</button>':''}`};
+
+/* ---- produk toko mitra ---- */
+P.mpprod=()=>{
+ const p=M.det;if(!p)return `<div class="pdp">${pdpTop()}<div class="pdp-s">Produk tidak ditemukan.<br><button class="btn g" style="margin-top:12px" onclick="nav('intro')">Kembali ke beranda</button></div></div>`;
+ M.reg[p.prod_id]=p;
+ const vs=p.variants||[],v=mpCurV(p),price=v?v.price:p.price,stock=v?v.stock:p.stock,fav=mpIsFav(p.prod_id),id=esc(p.prod_id),
+ photos=[p.photo_url].concat(Array.isArray(p.photos)?p.photos:[]),
+ vhtml=vs.length?`<div class="pdp-s"><div class="pdp-lb">${esc((vs[0].option_name||'Pilihan').toUpperCase())}</div><div class="pdp-v">${vs.map(x=>`<button class="${v&&v.variant_id===x.variant_id?'on':''}" ${x.stock>0?'':'disabled'} onclick="mpVar('${id}','${esc(x.variant_id)}')">${esc(x.option_value)}</button>`).join('')}</div></div>`:'';
+ return `<div class="pdp">${pdpTop()}<div class="pdp-main">${pdpGal(photos)}<div class="pdp-info">
+  <div class="pdp-s"><div class="pdp-pr"><b>${u3rp(price)}</b><button type="button" class="${fav?'on':''}" onclick="mpFav('${id}')" aria-label="${fav?'Hapus dari favorit':'Simpan ke favorit'}">${ni('heart')}</button></div>
+  <h1>${esc(p.name)}</h1><div class="pdp-tags">${p.category?`<span>${esc(p.category)}</span>`:''}<span class="${stock>0?'ok':'wn'}">${stock>0?'Stok '+stock:'Stok habis'}</span></div></div>
+  ${vhtml}
+  <div class="pdp-rows"><div class="pdp-row">${PDPI.box}<span>Ketersediaan<small>${stock>0?'Tersedia '+stock+' unit. Stok dicek ulang saat checkout.':'Sedang tidak tersedia'}</small></span></div>${p.location?`<div class="pdp-row">${PDPI.pin}<span>Lokasi toko<small>${esc(p.location)}</small></span></div>`:''}</div>
+  <div class="pdp-s pdp-st" onclick="u3open('${esc(p.slug)}')"><div class="mp-sl">${p.store_logo?`<img src="${esc(p.store_logo)}" alt="" referrerpolicy="no-referrer">`:'Toko'}</div><div><b>${esc(p.store_name)}</b><small>${esc(p.location||'Lihat profil toko')}</small></div><span style="color:var(--mut);font-size:22px">›</span></div>
+  <div class="pdp-s"><details class="pdp-d" open><summary>Deskripsi produk</summary><div>${pdpDesc(p.description)}</div></details></div>
+  ${pubFoot()}</div></div>
+  ${pdpBar({wa:p.phone?u3wa(p.phone,'Halo '+p.store_name+', saya tertarik dengan '+p.name+' di NABLO.'):'',add:`mpAdd('${id}')`,buy:`mpAdd('${id}',1)`,dis:!(stock>0),price:u3rp(price)})}</div>`};
+
+/* ---- HP unit (katalog toko) ---- */
+const katDetail=id=>{
+ if(!S.u){S.pendingDetail=id;modal(`<h3>Masuk untuk melihat detail</h3><p style="margin:10px 0">Buat akun pembeli atau masuk terlebih dahulu untuk melihat spesifikasi lengkap, kondisi, dan hasil QC HP.</p><button class="btn g w" onclick="closeM();nav('login')">Masuk</button><button class="btn l w" onclick="closeM();nav('daftar')">Buat akun</button><button class="btn l w" onclick="closeM()">Nanti</button>`);return}
+ run(async()=>{const d=await api('getDetail',id,S.t);d.id=id;S.hdet=d},()=>nav('hpdet'))};
+P.hpdet=()=>{
+ const d=S.hdet;if(!d)return `<div class="pdp">${pdpTop()}<div class="pdp-s">Detail HP tidak tersedia.<br><button class="btn g" style="margin-top:12px" onclick="nav('intro')">Kembali ke katalog</button></div></div>`;
+ const sp=d.specification||{},id=esc(d.id),price=Number(d.price)>0?rp(d.price):'Hubungi penjual',
+ extra=String(sp.photo_urls||'').split(/[\n,]/).map(u=>u.trim()),qc=d.qc||[],
+ lulus=/LULUS/i.test(d.qc_status||''),catatan=/CATATAN/i.test(d.qc_status||''),
+ L=[['Jaringan','network'],['Layar (inci)','screen_size'],['Resolusi','screen_resolution'],['Panel','screen_type'],['Chipset','chipset'],['CPU / GPU','cpu_gpu'],['Sistem operasi','os_version'],['Kamera belakang','rear_camera'],['Kamera depan','front_camera'],['Baterai (mAh)','battery_capacity'],['Pengisian daya (W)','charging_watt'],['Konektivitas','connectivity'],['Port dan sensor','ports_sensors'],['Kondisi fisik','physical_condition'],['Kelengkapan','accessories'],['Garansi toko (hari)','warranty_days']].filter(([l,k])=>sp[k]&&sp[k]!=='0'),
+ ph=inf().store_phone,wa=ph?u3wa(String(ph).replace(/^0/,'62'),'Halo '+shopName()+', saya tertarik dengan '+d.brand+' '+d.model+'.'):'';
+ return `<div class="pdp">${pdpTop()}<div class="pdp-main">${pdpGal([d.photo_url].concat(extra))}<div class="pdp-info">
+  <div class="pdp-s"><div class="pdp-pr"><b>${price}</b></div><h1>${esc(d.brand)} ${esc(d.model)}</h1>
+  <div class="pdp-tags"><span>${esc(d.ram||'-')} RAM</span><span>${esc(d.rom||'-')} memori</span>${d.color?`<span>${esc(d.color)}</span>`:''}${lulus?`<span class="${catatan?'wn':'ok'}">${catatan?'Lulus QC dengan catatan':'Lulus QC'}</span>`:''}</div></div>
+  <div class="pdp-rows"><div class="pdp-row">${PDPI.shield}<span>Hasil QC<small>${qc.length?qc.length+' fungsi diperiksa lulus'+(d.qc_date?' · '+esc(fmtDT(d.qc_date)):''):'Belum ada data QC'}</small></span></div>${sp.warranty_days&&sp.warranty_days!=='0'?`<div class="pdp-row">${PDPI.tag}<span>Garansi toko<small>${esc(sp.warranty_days)} hari</small></span></div>`:''}<div class="pdp-row">${PDPI.pin}<span>${esc(shopName())}<small>${esc(inf().store_address||'Hubungi toko untuk lokasi')}</small></span></div></div>
+  ${sp.fault_description||catatan?`<div class="pdp-s"><div class="pdp-note"><b>Catatan kondisi unit</b><br>${esc(sp.fault_description||(d.faults||[]).join(', '))}${(sp.fault_reason||d.fault_reason)?'<br>'+esc(sp.fault_reason||d.fault_reason):''}</div></div>`:''}
+  <div class="pdp-s"><details class="pdp-d" open><summary>Spesifikasi</summary><div>${L.length?L.map(([l,k])=>`<div class="pdp-kv"><span>${l}</span><b>${esc(sp[k])}</b></div>`).join(''):'<p class="mp-em">Spesifikasi belum dicatat.</p>'}${sp.description?`<div style="margin-top:10px">${pdpDesc(sp.description)}</div>`:''}</div></details></div>
+  <div class="pdp-s"><details class="pdp-d"><summary>Daftar pemeriksaan QC</summary><div>${qc.length?qc.map(k=>`<div class="pdp-kv"><span>${esc(k)}</span><b style="color:var(--ok)">Lulus</b></div>`).join(''):'<p class="mp-em">Belum ada data QC.</p>'}</div></details></div>
+  ${pubFoot()}</div></div>
+  ${pdpBar({wa:wa,add:`cartAdd('${id}')`,buy:`cartAdd('${id}');nav('keranjang')`,dis:false,price:price})}</div>`};
 </script>
 </body></html>
