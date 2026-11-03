@@ -413,6 +413,37 @@ nav button.on{color:var(--blue);background:var(--blue-l)}
  @media(max-width:480px){.sc-welcome{align-items:flex-start;flex-direction:column}.sc-welcome .btn{width:100%}}
 
 .mp .pg{max-width:none}
+
+/* ===== Halaman profil / akun (satu tampilan untuk semua role) ===== */
+.pf{max-width:980px}
+.pf-hero{background:linear-gradient(135deg,var(--navy),#1f4468);color:#fff;border-radius:16px;padding:22px 20px;margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pf-av{position:relative;flex:none}
+.pf-av .av{width:76px;height:76px;font-size:26px;border-width:2px}
+.pf-cam{position:absolute;right:-4px;bottom:-4px;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--blue);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.pf-cam svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pf-id{min-width:0;flex:1}
+.pf-id small{display:block;opacity:.7;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+.pf-id h2{margin:2px 0;font-size:19px;line-height:1.25;word-break:break-word}
+.pf-id .u{opacity:.8;font-size:13px}
+.pf-role{display:inline-block;margin-top:8px;padding:3px 11px;border-radius:999px;background:rgba(255,255,255,.16);font-size:11.5px;font-weight:700}
+.pf-rm{background:none;border:0;color:#fff;opacity:.75;font-size:12px;text-decoration:underline;cursor:pointer;margin-left:8px;padding:0}
+.pf-grid{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
+@media(min-width:900px){.pf-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.pf-col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.pf-col .card{margin:0}
+.pf-t{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;display:block}
+.pf-kv{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.pf-kv:last-child{border:0}.pf-kv span{color:var(--mut);flex:none}.pf-kv b{text-align:right;word-break:break-word;min-width:0}
+.pf-li{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 2px;text-align:left;cursor:pointer;color:var(--t);font:inherit}
+.pf-li:last-child{border:0}.pf-li:hover{background:#F8FAFC}
+.pf-li i{flex:none;width:36px;height:36px;border-radius:10px;background:var(--blue-l);color:var(--blue);display:flex;align-items:center;justify-content:center}
+.pf-li i svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pf-li span{flex:1;min-width:0;font-weight:600;font-size:13.5px}.pf-li small{display:block;color:var(--mut);font-weight:400;font-size:12px;margin-top:1px}
+.pf-li em{font-style:normal;color:var(--mut);font-size:20px;line-height:1}
+.pf .pf-save{margin:12px 0 0;width:100%}
+.pf-out{width:100%;margin-top:2px;background:#fff;color:var(--bad);border:1px solid #FECACA;border-radius:10px;padding:12px;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.pf-out:hover{background:var(--bad-l)}.pf-out svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pdp-bar.ro .b{background:var(--mut);cursor:default}
 </style>
 <style id="nablo-shopee">
 /* NABLO · perapian tata letak (tema navy/biru awal dipertahankan) */
@@ -980,6 +1011,46 @@ const openMenu=()=>{const r=ROLE();
 $('#drw').onclick=closeMenu;
 
 /* ---------- Halaman ---------- */
+
+const ROLE_LABEL={SUPERADMIN:'Super Admin',OWNER:'Owner',SUB_OWNER:'Sub Owner',GUDANG:'Gudang',KASIR:'Kasir',TEKNISI:'Teknisi',QC:'QC',SPESIFIKASI:'Petugas Spesifikasi',PEMBELI:'Pembeli',MITRA:'Mitra Toko'};
+const profilHome=()=>{const r=ROLE();return r==='PEMBELI'?'intro':r==='MITRA'?'mitrabiz':'dash'};
+const profilLinks=()=>{
+ const r=ROLE(),L=[];
+ if(r==='PEMBELI'){
+  L.push(['mporders','jual','Pesanan Marketplace Saya','Pantau status pesanan Anda'],['keranjang','cart','Keranjang','HP yang siap di-checkout'],['mpfav','heart','Favorit','Produk yang Anda simpan'],['tokos','servis','Buat Permintaan Servis HP','Ajukan servis ke toko mitra'],['lacak','qc','Lacak Servis','Cek progres servis HP'],['intro','kat','Lihat Katalog Marketplace','Jelajahi semua produk']);
+ }else if(r==='MITRA'){
+  L.push(['mitrabiz','dash','Seller Centre','Kelola toko dan pesanan'],['sc_set','set','Pengaturan Toko','Profil toko dan pembayaran'],['intro','kat','Lihat Katalog & Detail Produk','Jelajahi marketplace']);
+ }else{
+  MENU.filter(x=>Array.isArray(x[3])&&x[3].includes(r)&&!['dash','profil','intro'].includes(x[0])&&P[x[0]]).slice(0,5).forEach(x=>L.push([x[0],null,x[2],'',x[1]]));
+  L.push(['intro','kat','Lihat Katalog & Detail Produk','Semua role dapat melihat detail produk']);
+ }
+ return L;
+};
+const profilPage=()=>{
+ const u=S.u||{},f=S.pf||{},V=k=>esc(f[k]!==undefined?f[k]:(u[k]||'')),r=ROLE(),rl=ROLE_LABEL[r]||r,
+ cam='<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+ links=profilLinks().map(([k,ic,l,s,raw])=>`<button type="button" class="pf-li" onclick="nav('${k}')"><i>${raw||ni(ic)}</i><span>${esc(l)}${s?`<small>${esc(s)}</small>`:''}</span><em>›</em></button>`).join('');
+ return `<div class="hd"><button class="bk" onclick="nav('${profilHome()}')" aria-label="Kembali">←</button><b>${r==='PEMBELI'?'Akun Saya':'Profil Saya'}</b></div>
+<div class="pg pf">
+ <section class="pf-hero"><div class="pf-av"><div class="av">${avHTML()}</div><label class="pf-cam" title="${u.photo_url?'Ganti foto':'Unggah foto'}"><input type="file" accept="image/*" hidden onchange="pickProfilePhoto(this)">${cam}</label></div>
+  <div class="pf-id"><small>Akun ${esc(shopName())}</small><h2>${esc(u.full_name||'-')}</h2><div class="u">@${esc(u.username||'')}</div><span class="pf-role">${esc(rl)}</span>${u.photo_url?'<button type="button" class="pf-rm" onclick="delProfilePhoto()">Hapus foto</button>':''}</div></section>
+ <div class="pf-grid">
+  <div class="pf-col">
+   <div class="card"><b class="pf-t">Informasi akun</b>
+    <div class="pf-kv"><span>Nama lengkap</span><b>${esc(u.full_name||'-')}</b></div>
+    <div class="pf-kv"><span>Username</span><b>${esc(u.username||'-')}</b></div>
+    <div class="pf-kv"><span>No. WhatsApp</span><b>${esc(u.phone||'-')}</b></div>
+    <div class="pf-kv"><span>Email</span><b>${esc(u.email||'-')}</b></div>
+    <div class="pf-kv"><span>Jenis akun</span><b>${esc(rl)}</b></div></div>
+   <div class="card"><b class="pf-t">Pintasan</b>${links}</div>
+  </div>
+  <div class="pf-col">
+   <div class="card"><b class="pf-t">Ubah data diri</b><label>Nama lengkap</label><input id="pf_n" value="${V('full_name')}" autocomplete="name"><label>No. WhatsApp</label><input id="pf_h" type="tel" value="${V('phone')}"><label>Email (untuk reset password)</label><input id="pf_e" type="email" value="${V('email')}" autocapitalize="off" autocomplete="email"><label>Password saat ini (wajib bila mengganti email)</label><input id="pf_c" type="password" autocomplete="current-password"><button class="btn g pf-save" onclick="saveProfile()">SIMPAN PROFIL</button></div>
+   <div class="card"><b class="pf-t">Ubah password</b><label>Password saat ini</label><input id="pw_o" type="password" autocomplete="current-password"><label>Password baru (minimal 8 karakter)</label><input id="pw_n" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="pw_k" type="password" autocomplete="new-password"><button class="btn g pf-save" onclick="doChangePw()">UBAH PASSWORD</button><small>Setelah diubah, perangkat lain harus masuk ulang.</small></div>
+  </div>
+ </div>
+ <button type="button" class="pf-out" style="margin-top:14px" onclick="doLogout()">${ni('logout')}Keluar dari Akun</button>
+</div>`};
 const P={
 intro:()=>`<div class="intro"><header class="in-top">${logo(36)}<b>${esc(shopName())}</b><button class="btn l" style="margin:0" onclick="nav('login')">Masuk</button></header>
 <section class="in-hero"><h1>Temukan HP dengan informasi yang jelas dan transparan</h1><p>${esc(shopName())} adalah toko HP yang menampilkan unit siap jual lengkap dengan spesifikasi, kondisi, dan hasil pemeriksaan (QC). Lihat katalog, bandingkan beberapa HP, lalu tanyakan langsung kepada penjual lewat WhatsApp.</p><div class="in-cta"><button class="btn g" onclick="nav('kat')">Lihat Katalog HP</button><button class="btn l" onclick="nav('daftar')">Buat Akun Pembeli</button></div><div class="in-cta"><button class="btn g" onclick="nav('tokos')">Cari Toko & Servis HP</button><button class="btn l" onclick="nav('lacak')">Lacak Servis</button><button class="btn l" onclick="nav('mitrareg')">BUKA TOKO DI SINI</button></div></section>
@@ -1010,9 +1081,9 @@ terjual:()=>{const sales=Array.isArray(S.sold)?S.sold:[];return `<div class="hd"
 bandingkan:()=>{const cat=S.cat||[],ids=S.compareIds||[],selected=ids.map(id=>S.compareDetails[String(id)]||cat.find(x=>String(x.id)===String(id))).filter(Boolean);const fields=[['Harga',x=>Number(x.price)>0?rp(x.price):'Hubungi toko'],['RAM',x=>x.ram||'-'],['Memori internal',x=>x.rom||'-'],['Warna',x=>x.color||'-'],['Jaringan',x=>(x.specification||{}).network||'-'],['Ukuran layar',x=>(x.specification||{}).screen_size?String(x.specification.screen_size)+' inci':'-'],['Resolusi layar',x=>(x.specification||{}).screen_resolution||'-'],['Jenis panel',x=>(x.specification||{}).screen_type||'-'],['Chipset',x=>(x.specification||{}).chipset||'-'],['CPU / GPU',x=>(x.specification||{}).cpu_gpu||'-'],['Sistem operasi',x=>(x.specification||{}).os_version||'-'],['Kamera belakang',x=>(x.specification||{}).rear_camera||'-'],['Kamera depan',x=>(x.specification||{}).front_camera||'-'],['Baterai',x=>(x.specification||{}).battery_capacity?String(x.specification.battery_capacity)+' mAh':'-'],['Pengisian daya',x=>(x.specification||{}).charging_watt?String(x.specification.charging_watt)+' W':'-'],['Konektivitas',x=>(x.specification||{}).connectivity||'-'],['Port dan sensor',x=>(x.specification||{}).ports_sensors||'-'],['Kondisi fisik',x=>(x.specification||{}).physical_condition||'-'],['Catatan fungsi',x=>(x.specification||{}).fault_description||'Tidak dicatat'],['Kelengkapan',x=>(x.specification||{}).accessories||'-'],['Garansi toko',x=>(x.specification||{}).warranty_days!==undefined&&String((x.specification||{}).warranty_days)!=='0'?String(x.specification.warranty_days)+' hari':'Tidak ada'],['Status QC',x=>x.qc_status||'Belum ada data QC'],['Fungsi lulus QC',x=>(x.qc||[]).join(', ')||'-'],['Catatan hasil QC',x=>[(x.faults||[]).join(', '),(x.fault_reason||'')].filter(Boolean).join(' — ')||'-']];return `<div class="hd"><b>Bandingkan HP</b><button class="ic" title="Akun saya" onclick="nav('akun')" aria-label="Akun">${ni('profil')}</button></div><div class="pg"><div class="buyer-section"><div><h3>Bandingkan spesifikasi</h3><p>Pilih maksimal 3 HP · data diambil dari detail publik tiap unit</p></div></div><div class="card"><label>Pilih HP</label><select id="comparePick"><option value="">Pilih produk...</option>${cat.map(x=>`<option value="${esc(x.id)}" ${ids.some(id=>String(id)===String(x.id))?'disabled':''}>${esc((x.brand||'')+' '+(x.model||'')+' · '+(x.ram||'-')+'/'+(x.rom||'-'))}</option>`).join('')}</select><button class="btn g w" onclick="addCompare()">Tambahkan untuk dibandingkan</button><small>Spesifikasi yang belum dicatat akan ditampilkan sebagai tanda strip.</small></div>${selected.length?`<div class="card"><div class="buyer-section"><div><h3>Hasil perbandingan</h3></div><button class="btn l" onclick="S.compareIds=[];S.compareDetails={};render()">Hapus pilihan</button></div><div style="overflow-x:auto"><div>${fields.map(([label,get])=>`<div class="cmp-f"><b>${label}</b><div class="cmp-g" style="grid-template-columns:repeat(${selected.length},minmax(0,1fr))">${selected.map(x=>`<div><small>${esc(x.brand||'')} ${esc(x.model||'')}</small>${esc(get(x))}</div>`).join('')}</div></div>`).join('')}</div></div></div>`:'<div class="buyer-empty"><b>Belum ada HP dipilih</b>Pilih produk di atas untuk membandingkan harga, spesifikasi, kondisi, dan hasil QC.</div>'}</div>`},
 lupa:()=>{const f=S.fp||{step:1,id:''};const s2=f.step===2;return `<div class="hd"><button class="bk" onclick="nav('login')">←</button><b>Lupa Password</b></div><div class="pg"><div class="card"><label>Username atau email akun</label><input id="fpi" value="${esc(f.id||'')}" autocapitalize="off" autocomplete="username">${s2?`${f.msg?`<p style="margin:10px 0;font-size:12px;opacity:.85">${esc(f.msg)}</p>`:''}<label>Kode verifikasi (6 digit dari email)</label><input id="fpc" inputmode="numeric" maxlength="6" value="${esc(f.code||'')}" autocomplete="one-time-code"><label>Password baru (minimal 8 karakter)</label><input id="fpn" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="fpk" type="password" autocomplete="new-password"><button class="btn g w" onclick="lupaReset()">UBAH PASSWORD</button><button class="btn l w" onclick="lupaKirim()">Kirim ulang kode</button>`:`<p style="margin:10px 0;font-size:12px;opacity:.85">Kode verifikasi 6 digit akan dikirim ke email yang terdaftar pada akun Anda.</p><button class="btn g w" onclick="lupaKirim()">KIRIM KODE</button><button class="btn l w" onclick="S.fp={step:2,id:($('#fpi').value||'').trim()};render()">Saya sudah punya kode</button>`}<button class="btn l w" onclick="nav('login')">Kembali ke Masuk</button></div></div>`},
 notifikasi:()=>`<div class="hd"><b>Notifikasi</b><button class="btn l" onclick="loadNotifications()">Muat ulang</button></div><div class="pg"><div id="notifList"><div class="card">Memuat notifikasi…</div></div>${['SUPERADMIN','OWNER'].includes(ROLE())?`<div class="card"><b>Kirim pengumuman</b><label>Judul</label><input id="nt_title" maxlength="100" placeholder="Contoh: Stok baru tersedia"><label>Pesan</label><textarea id="nt_message" rows="4" maxlength="1500" placeholder="Tulis informasi untuk penerima…"></textarea><label>Penerima</label><select id="nt_audience"><option value="ALL">Semua pengguna</option><option value="PEMBELI">Pembeli</option><option value="STAFF">Semua staf</option><option value="GUDANG">Gudang</option><option value="KASIR">Kasir</option><option value="TEKNISI">Teknisi</option><option value="QC">QC</option><option value="SPESIFIKASI">Petugas spesifikasi</option><option value="OWNER">Owner</option><option value="SUB_OWNER">Sub Owner</option></select><label style="display:flex;align-items:center;gap:8px"><input id="nt_email" type="checkbox" style="width:auto"> Kirim juga melalui email</label><button class="btn g w" onclick="sendNotifUI()">KIRIM PENGUMUMAN</button><small>Email dikirim ke alamat yang terdaftar dan sesuai penerima. Aktifkan izin MailApp terlebih dahulu.</small></div>`:''}</div>`,
-profil:()=>{const u=S.u||{},f=S.pf||{},V=k=>esc(f[k]!==undefined?f[k]:(u[k]||'')),back=ROLE()==='PEMBELI'?'akun':'dash';return `<div class="hd"><button class="bk" onclick="nav('${back}')">←</button><b>Profil Saya</b></div><div class="pg"><div class="card" style="text-align:center"><div class="av" style="width:96px;height:96px;border-radius:30px;margin:0 auto 10px;font-size:30px;color:inherit">${avHTML()}</div><b>${esc(u.full_name||'')}</b><br><small>@${esc(u.username||'')} · ${esc(ROLE())}</small><div class="row" style="justify-content:center;margin-top:10px;gap:8px"><label class="btn g"><input type="file" accept="image/*" hidden onchange="pickProfilePhoto(this)">${u.photo_url?'Ganti Foto':'Unggah Foto'}</label>${u.photo_url?`<button class="btn l" onclick="delProfilePhoto()">Hapus Foto</button>`:''}</div></div><div class="card"><b>Data diri</b><label>Nama lengkap</label><input id="pf_n" value="${V('full_name')}" autocomplete="name"><label>No. WhatsApp</label><input id="pf_h" type="tel" value="${V('phone')}"><label>Email (untuk reset password)</label><input id="pf_e" type="email" value="${V('email')}" autocapitalize="off" autocomplete="email"><label>Password saat ini (wajib bila mengganti email)</label><input id="pf_c" type="password" autocomplete="current-password"><button class="btn g w" onclick="saveProfile()">SIMPAN PROFIL</button></div><div class="card"><b>Ubah password</b><label>Password saat ini</label><input id="pw_o" type="password" autocomplete="current-password"><label>Password baru (minimal 8 karakter)</label><input id="pw_n" type="password" autocomplete="new-password"><label>Ulangi password baru</label><input id="pw_k" type="password" autocomplete="new-password"><button class="btn g w" onclick="doChangePw()">UBAH PASSWORD</button><small>Setelah diubah, perangkat lain harus masuk ulang.</small></div><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`},
+profil:()=>profilPage(),
 boot:()=>`<div class="lg"><div class="lgl">${logo(90)}</div><p class="sub" style="text-align:center">Memuat…</p></div>`,
-akun:()=>`<div class="hd"><button class="bk" onclick="nav('intro')">←</button><b>Akun Pembeli</b></div><div class="pg"><div class="hero"><div class="who"><div class="av">${avHTML()}</div><div><small>AKUN NABLO SMARTPHONE</small><b>${esc(S.u&&S.u.full_name||'Pembeli')}</b><small>@${esc(S.u&&S.u.username||'')}</small></div></div></div><div class="card"><b>Informasi akun</b><div class="sw"><span>Nama lengkap</span><b>${esc(S.u&&S.u.full_name||'-')}</b></div><div class="sw"><span>Username</span><b>${esc(S.u&&S.u.username||'-')}</b></div><div class="sw"><span>No. WhatsApp</span><b>${esc(S.u&&S.u.phone||'-')}</b></div><div class="sw"><span>Jenis akun</span><b>Pembeli</b></div></div><button class="btn g w" onclick="nav('mporders')">Pesanan Marketplace Saya</button><button class="btn l w" onclick="nav('keranjang')">Keranjang</button><button class="btn l w" onclick="nav('mpfav')">Favorit</button><button class="btn g w" onclick="nav('tokos')">Buat Permintaan Servis HP</button><button class="btn l w" onclick="nav('lacak')">Lacak Servis</button><button class="btn g w" onclick="nav('profil')">Kelola Profil, Foto &amp; Password</button><button class="btn l w" onclick="nav('intro')">Lihat Katalog Marketplace</button><button class="btn r w" onclick="doLogout()">Keluar dari Akun</button></div>`,
+akun:()=>profilPage(),
 login:()=>`<div class="lg"><div class="lgl">${logo(90)}</div>
 <h1>Masuk</h1><p class="sub">Masuk ke akun Anda untuk melanjutkan</p>
 <div class="box">
@@ -1462,7 +1533,7 @@ async function sendNotifUI(){const title=($('#nt_title')||{}).value||'',message=
   ()=>{if($('#nt_title'))$('#nt_title').value='';if($('#nt_message'))$('#nt_message').value='';pollNotifs(true)})}
 function render(){
  if(!S.u&&!['intro','login','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','hpdet','mptrack','mpfav'].includes(S.p))S.p='intro';
- if(S.u&&ROLE()==='MITRA'&&!/^sc_/.test(S.p)&&!['mitra','mitrabiz','intro','mpsearch','mpprod','mpfav','tokos','tokod','lacak','mptrack','keranjang'].includes(S.p))S.p='mitrabiz';
+ if(S.u&&ROLE()==='MITRA'&&!/^sc_/.test(S.p)&&!['mitra','mitrabiz','intro','kat','hpdet','profil','akun','mpsearch','mpprod','mpfav','tokos','tokod','lacak','mptrack','keranjang'].includes(S.p))S.p='mitrabiz';
  if(S.u&&ROLE()==='PEMBELI'&&!['intro','mpsearch','mpprod','hpdet','mpfav','mporders','akun','profil','notifikasi','keranjang','mptrack','tokos','tokod','lacak','mitrareg','beranda','kat','terjual','bandingkan','pesanan','checkout'].includes(S.p))S.p='intro';
  if(S.u&&!P[S.p])S.p='dash';
  const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav','mporders','hpdet'].includes(S.p), role=ROLE();
@@ -1725,6 +1796,7 @@ function hpCartN(){return hpCartIds().length}
 
  window.openCart=()=>{if(!isBuyer()){toast('Masuk sebagai pembeli untuk memakai keranjang');return nav('login')}S.cf=false;S.cfErr=false;nav('keranjang')};
  window.cartAdd=id=>{
+  if(S.u&&!isBuyer()){toast('Akun '+(ROLE_LABEL[ROLE()]||ROLE())+' hanya dapat melihat produk. Pembelian memakai akun pembeli.');return}
   if(!isBuyer()){modal(`<h3>Masuk untuk memesan</h3><p style="margin:10px 0">Silakan masuk atau buat akun pembeli terlebih dahulu untuk memakai keranjang.</p><button class="btn g w" onclick="closeM();nav('login')">Masuk</button><button class="btn l w" onclick="closeM();nav('daftar')">Buat Akun</button><button class="btn l w" onclick="closeM()">Nanti</button>`);return}
   id=String(id);const a=CART();
   if(a.includes(id))return toast('HP ini sudah ada di keranjang');
@@ -2260,7 +2332,7 @@ const pdpMore=b=>{const d=b.previousElementSibling;const o=d.classList.toggle('c
 const pdpGal=ph=>{ph=[...new Set((ph||[]).filter(u=>/^https?:\/\//i.test(String(u||''))))];
  return `<div class="pdp-gal"><div class="pdp-sl" onscroll="pdpScroll(this)">${ph.length?ph.map(u=>`<div><img src="${esc(u)}" alt="" referrerpolicy="no-referrer" onclick="viewPhoto(this.src)" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph0'}))"></div>`).join(''):'<div><span class="ph0"></span></div>'}</div>${ph.length?`<span class="pdp-ct">1/${ph.length}</span>`:''}${ph.length>1?`<div class="pdp-th">${ph.map((u,i)=>`<button type="button" class="${i?'':'on'}" onclick="pdpGo(this,${i})" aria-label="Foto ${i+1}"><img src="${esc(u)}" alt="" referrerpolicy="no-referrer"></button>`).join('')}</div>`:''}</div>`};
 const pdpTop=()=>{const n=(typeof u3ck==='function')?u3ck():0;return `<div class="pdp-top"><div><button onclick="pdpBack()" aria-label="Kembali">${PDPI.back}</button><div class="r"><button onclick="nav('intro')" aria-label="Beranda">${ni('dash')}</button><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button></div></div></div><div class="pdp-dsk">${mpHead()}</div>`};
-const pdpBar=(o)=>{const nv=S.u&&ROLE()==='PEMBELI';return `<div class="pdp-bar${nv?' nv':''}">${o.wa?`<a class="c" target="_blank" rel="noopener" href="${esc(o.wa)}" aria-label="Chat penjual">${ni('chat')}</a>`:`<button class="c" onclick="toast('Nomor penjual belum tersedia')" aria-label="Chat penjual">${ni('chat')}</button>`}<button class="k" ${o.dis?'disabled':''} onclick="${o.add}" aria-label="Tambah ke keranjang">${ni('cart')}</button><button class="b" ${o.dis?'disabled':''} onclick="${o.buy}">${o.dis?'Stok habis':'Beli sekarang'}<small>${o.price}</small></button></div>`};
+const pdpBar=(o)=>{const nv=S.u&&ROLE()==='PEMBELI';if(S.u&&!nv)return `<div class="pdp-bar ro">${o.wa?`<a class="c" target="_blank" rel="noopener" href="${esc(o.wa)}" aria-label="Chat penjual">${ni('chat')}</a>`:''}<div class="b">${o.price}<small>Mode lihat saja · beli memakai akun pembeli</small></div></div>`;return `<div class="pdp-bar${nv?' nv':''}">${o.wa?`<a class="c" target="_blank" rel="noopener" href="${esc(o.wa)}" aria-label="Chat penjual">${ni('chat')}</a>`:`<button class="c" onclick="toast('Nomor penjual belum tersedia')" aria-label="Chat penjual">${ni('chat')}</button>`}<button class="k" ${o.dis?'disabled':''} onclick="${o.add}" aria-label="Tambah ke keranjang">${ni('cart')}</button><button class="b" ${o.dis?'disabled':''} onclick="${o.buy}">${o.dis?'Stok habis':'Beli sekarang'}<small>${o.price}</small></button></div>`};
 const pdpDesc=t=>{const x=String(t||'').trim();if(!x)return '<p class="mp-em">Penjual belum menulis deskripsi.</p>';const long=x.length>260||x.split('\n').length>6;return `<div class="pdp-dt${long?' cl':''}">${esc(x)}</div>${long?'<button type="button" class="pdp-more" onclick="pdpMore(this)">Lihat selengkapnya</button>':''}`};
 
 /* ---- produk toko mitra ---- */
