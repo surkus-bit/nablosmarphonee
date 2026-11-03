@@ -537,6 +537,77 @@ table{border-collapse:collapse}th,td{padding:8px 10px;text-align:left;border-bot
  .pf{margin-top:32px;padding:22px 8px 10px}
 }
 </style>
+<style id="nablo-mp2">
+/* Marketplace v2: sederhana, bersih */
+.mp{max-width:1100px;padding-left:18px;padding-right:18px}
+.mp-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);margin:0 -18px;padding:calc(10px + env(safe-area-inset-top,0px)) 18px 10px}
+.mp-lg{display:flex;cursor:pointer}.mp-lg img{border-radius:9px!important}
+.mp-sr{position:relative;display:block}
+.mp-sr input{width:100%;height:42px;min-height:42px;margin:0;border:1px solid var(--line);border-radius:999px;background:var(--bg);padding:0 16px 0 42px}
+.mp-sr input:focus{background:#fff}
+.mp-si{position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;color:var(--mut);pointer-events:none}
+.mp-si svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mp-ic{display:flex;gap:6px}.mp-ic button{position:relative;width:42px;height:42px;border:0;background:transparent;border-radius:50%;color:var(--navy);display:flex;align-items:center;justify-content:center;margin:0;cursor:pointer}
+.mp-ic button:hover{background:var(--bg)}
+.mp-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mp-ic i{position:absolute;top:2px;right:0;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--bad);color:#fff;font:700 11px/18px var(--font);text-align:center;font-style:normal}
+.mp-promo{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:14px 0 4px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--blue-l)}
+.mp-promo b{display:block;color:var(--navy);font-size:14px}.mp-promo small{color:var(--mut);font-size:12px}
+.mp-promo .btn{margin:0;flex:none;min-height:40px}
+.mp-chips,.mp-sort{display:flex;gap:8px;overflow-x:auto;padding:12px 0 4px;scrollbar-width:none}
+.mp-chips::-webkit-scrollbar,.mp-sort::-webkit-scrollbar{display:none}
+.mp-chips button,.mp-sort button,.mp-fb{flex:none;border:1px solid var(--line);background:#fff;color:var(--t);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;margin:0;white-space:nowrap}
+.mp-chips button.on,.mp-sort button.on,.mp-fb.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.mp-sort{padding-top:8px}
+.mp-bar2{display:flex;align-items:center;gap:8px}.mp-bar2 .mp-sort{flex:1;min-width:0}
+.mp-s{margin-top:16px}.mp-sh h2{font-size:16px}
+.mp-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:640px){.mp-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+@media(min-width:900px){.mp-g{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.mp-c{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;cursor:pointer;box-shadow:none;transition:border-color .15s}
+.mp-c:hover{transform:none;border-color:#CBD5E1;box-shadow:none}
+.mp-im{position:relative;aspect-ratio:1/1;background:#EEF2F6;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.mp-im img{width:100%;height:100%;object-fit:cover}
+.mp-im.big{border-radius:12px;max-height:460px}.mp-im.big img{object-fit:contain;background:#fff}
+.mp-bdg{position:absolute;left:8px;top:8px;font-style:normal;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--ok-l);color:var(--ok)}
+.mp-bdg.warn{background:var(--warn-l);color:var(--warn)}
+.mp-bd{padding:10px 12px 12px;gap:4px}.mp-nm{font-size:13px;line-height:1.35;color:var(--t);min-height:2.7em}
+.mp-bd b{font-size:15px;color:var(--navy)}.mp-bd small{font-size:11.5px;color:var(--mut)}
+.mp-sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.mp-st{border-radius:10px;padding:12px}
+.mp-em{color:var(--mut);font-size:13px}
+.mp-empty{text-align:center;padding:36px 16px;border:1px dashed #CBD5E1;border-radius:12px;background:#fff}.mp-empty p{color:var(--mut);margin:6px 0 14px;font-size:13px}
+.mp-back{border:0;background:none;color:var(--blue);font-weight:600;font-size:13px;padding:14px 0 4px;margin:0;cursor:pointer}
+.mp-dt{display:grid;grid-template-columns:1fr;gap:16px;margin-top:8px}
+@media(min-width:760px){.mp-dt{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}}
+.mp-info h1{font-size:18px;font-weight:600;line-height:1.35;margin:6px 0 4px;color:var(--t)}
+.mp-pr{font-size:26px;font-weight:700;color:var(--navy)}
+.mp-info>small{color:var(--mut)}
+.mp-var{margin:16px 0 4px}.mp-var small{display:block;color:var(--mut);margin-bottom:8px;font-weight:600}
+.mp-var div{display:flex;flex-wrap:wrap;gap:8px}
+.mp-var button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;color:var(--t);cursor:pointer;margin:0}
+.mp-var button.on{border-color:var(--navy);background:var(--blue-l);color:var(--navy)}
+.mp-var button:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.mp-store{display:flex;align-items:center;gap:12px;margin:18px 0 6px;padding:12px;border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.mp-store>div:nth-child(2){flex:1;min-width:0}.mp-store b{display:block;color:var(--navy);font-size:14px}.mp-store small{color:var(--mut);font-size:12px}
+.mp-store>span{color:var(--mut);font-size:22px}
+.mp-h3{font-size:14px;color:var(--navy);margin:18px 0 6px}
+.mp-bar{position:sticky;bottom:0;z-index:15;display:flex;gap:8px;align-items:center;background:#fff;border-top:1px solid var(--line);margin:20px -18px 0;padding:10px 18px calc(10px + env(safe-area-inset-bottom,0px))}
+.mp-bar .btn{margin:0;min-height:44px;padding:10px 12px;flex:0 0 auto;text-decoration:none}
+.mp-bar .btn.g{flex:1}
+.mp-lk{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px}.mp-lk .btn{margin:0}
+@media(max-width:600px){
+ .mp{padding-left:16px;padding-right:16px}
+ .mp-top{grid-template-columns:auto minmax(0,1fr) auto;gap:10px;margin:0 -16px;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px}
+ .mp-sr{grid-column:auto;order:0}
+ .mp-ic{gap:2px}.mp-ic button{width:40px;height:40px}
+ .mp-promo{padding:14px;margin-top:14px}
+ .mp-bd{padding:10px 10px 12px}
+ .mp-g{gap:10px}
+ .mp-bar{margin:20px -16px 0;padding-left:16px;padding-right:16px}
+ .mp-s{margin-top:14px}
+}
+</style>
 </head><body>
 <div id="bar"></div><div id="ld"><div class="sp"></div></div>
 <div id="app"></div><div id="drw"></div><div id="mod"></div><div id="toast"></div>
@@ -1748,7 +1819,7 @@ const u3photos=s=>{const L={photos:'Foto pelanggan',photo_before:'Sebelum',photo
 </script>
 <script id="mp">
 /* NABLO MARKETPLACE — beranda lintas toko, pencarian, detail, keranjang multi-toko, lacak pesanan, favorit (aditif) */
-const M={reg:{},cat:'',q:'',min:'',max:'',sort:'new',loc:'',fav:[],ord:[]};
+const M={vsel:{},reg:{},cat:'',q:'',min:'',max:'',sort:'new',loc:'',fav:[],ord:[]};
 try{M.fav=JSON.parse(localStorage.getItem('mp_fav')||'[]');M.ord=JSON.parse(localStorage.getItem('mp_ord')||'[]')}catch(e){}
 const mpSave=()=>{try{localStorage.setItem('mp_fav',JSON.stringify(M.fav.slice(0,60)));localStorage.setItem('mp_ord',JSON.stringify(M.ord.slice(0,30)))}catch(e){}};
 const mpLoad=(k,get)=>{if(M[k]||M['l'+k]||M['f'+k])return;M['l'+k]=1;get().then(r=>{M[k]=r}).catch(()=>{M['f'+k]=1}).finally(()=>{M['l'+k]=0;render()})};
@@ -1756,8 +1827,8 @@ const mpWait=(k,t)=>M['f'+k]?`<div class="card">Gagal memuat ${t}. <button class
 const mpGo=q=>{M.q=String(q||'').trim();M.cat='';nav('mpsearch')};
 const mpCatGo=c=>{M.q='';M.cat=c;nav('mpsearch')};
 const mpAcc=()=>{if(!S.u){S.nextP='intro';return nav('login')}const r=ROLE(),t=r==='MITRA'?'mitrabiz':r==='SUPERADMIN'?'u3admin':'akun';nav(P[t]?t:'intro')};
-const mpHead=()=>`<header class="mp-top"><div class="mp-lg" onclick="nav('intro')">${logo(34)}<b>${esc(shopName())}</b></div><div class="mp-sr"><input id="mp_q" type="search" value="${esc(M.q)}" placeholder="Cari produk atau toko" enterkeyhint="search" onkeydown="if(event.key==='Enter')mpGo(this.value)"><button onclick="mpGo(document.getElementById('mp_q').value)">Cari</button></div><div class="mp-ic"><button onclick="mpAcc()" aria-label="${S.u?'Akun saya':'Masuk'}">${ni('profil')}</button><button onclick="nav('mpfav')" aria-label="Favorit">${ni('heart')}</button><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${u3ck()?`<i>${u3ck()}</i>`:''}</button></div></header>`;
-const mpCard=p=>{M.reg[p.prod_id]=p;return `<div class="mp-c" onclick="mpOpen('${esc(p.prod_id)}')"><div class="mp-im">${p.photo_url?`<img loading="lazy" src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>HP</span>'}</div><div class="mp-bd"><div class="mp-nm">${esc(p.name)}</div><b>${u3rp(p.price)}</b><small>${esc(p.store_name)}${p.location?' · '+esc(p.location):''}</small></div></div>`};
+const mpHead=()=>{const n=u3ck();return `<header class="mp-top"><div class="mp-lg" onclick="nav('intro')" aria-label="Beranda">${logo(34)}</div><div class="mp-sr"><span class="mp-si">${ni('search')}</span><input id="mp_q" type="search" value="${esc(M.q)}" placeholder="Cari produk atau toko" enterkeyhint="search" onkeydown="if(event.key==='Enter')mpGo(this.value)"></div><div class="mp-ic"><button onclick="nav('keranjang')" aria-label="Keranjang">${ni('cart')}${n?`<i>${n}</i>`:''}</button><button onclick="mpAcc()" aria-label="${S.u?'Akun saya':'Masuk'}">${ni('profil')}</button></div></header>`};
+const mpCard=p=>{M.reg[p.prod_id]=p;return `<div class="mp-c" onclick="mpOpen('${esc(p.prod_id)}')"><div class="mp-im">${p.photo_url?`<img loading="lazy" src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>Foto</span>'}</div><div class="mp-bd"><div class="mp-nm">${esc(p.name)}</div><b>${u3rp(p.price)}</b><small>${esc(p.store_name)}${p.location?' · '+esc(p.location):''}</small></div></div>`};
 const mpStore=s=>`<div class="mp-st" onclick="u3open('${esc(s.slug)}')"><div class="mp-sl">${s.logo_url||s.photo_url?`<img src="${esc(s.logo_url||s.photo_url)}" alt="" referrerpolicy="no-referrer">`:'Toko'}</div><div><b>${esc(s.store_name)}</b><small>${esc(s.location||s.address||'')}</small></div></div>`;
 const mpSec=(t,more,body)=>`<section class="mp-s"><div class="mp-sh"><h2>${t}</h2>${more||''}</div>${body}</section>`;
 const mpGrid=L=>L.length?`<div class="mp-g">${L.map(mpCard).join('')}</div>`:'<p class="mp-em">Belum ada produk.</p>';
@@ -1784,14 +1855,16 @@ P.mpsearch=()=>{mpLoadRes();const r=M.res;
 const mpOpen=id=>{M.det=M.reg[id]||M.fav.find(x=>x.prod_id===id);if(M.det)nav('mpprod')};
 const mpIsFav=id=>M.fav.some(x=>x.prod_id===id);
 const mpFav=id=>{const p=M.reg[id]||M.fav.find(x=>x.prod_id===id);if(!p)return;M.fav=mpIsFav(id)?M.fav.filter(x=>x.prod_id!==id):[p].concat(M.fav);mpSave();render()};
-const mpAdd=(id,buy)=>{const p=M.reg[id]||M.fav.find(x=>x.prod_id===id);if(!p)return;const g=U3.cart[p.slug]||(U3.cart[p.slug]={name:p.store_name,pay:'',phone:p.phone,items:[]}),it=g.items.find(x=>x.id===p.prod_id);if(it){if(it.qty<p.stock)it.qty++}else g.items.push({id:p.prod_id,name:p.name,price:p.price,qty:1,max:p.stock});if(buy)nav('keranjang');else{toast('Masuk keranjang');render()}};
+const mpCurV=p=>{const vs=p.variants||[];if(!vs.length)return null;return vs.find(v=>v.variant_id===M.vsel[p.prod_id])||vs.find(v=>v.stock>0)||vs[0]};
+const mpVar=(pid,vid)=>{M.vsel[pid]=vid;render()};
+const mpAdd=(id,buy)=>{const p=M.reg[id]||M.fav.find(x=>x.prod_id===id);if(!p)return;const v=mpCurV(p);if(v&&!(v.stock>0))return toast('Stok variasi ini habis');const stock=v?v.stock:p.stock,price=v?v.price:p.price,vid=v?v.variant_id:'',nm=p.name+(v?' ('+v.option_value+')':'');const g=U3.cart[p.slug]||(U3.cart[p.slug]={name:p.store_name,pay:'',phone:p.phone,items:[]}),it=g.items.find(x=>x.id===p.prod_id&&(x.vid||'')===vid);if(it){if(it.qty<stock)it.qty++}else g.items.push({id:p.prod_id,vid:vid,name:nm,price:price,qty:1,max:stock});if(buy)nav('keranjang');else{toast('Masuk keranjang');render()}};
 P.mpprod=()=>{const p=M.det;if(!p)return `<div class="intro mp">${mpHead()}<div class="card">Produk tidak ditemukan.</div></div>`;M.reg[p.prod_id]=p;
  return `<div class="intro mp">${mpHead()}<div class="mp-dt"><div class="mp-im big">${p.photo_url?`<img src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>HP</span>'}</div><div class="mp-info"><h1>${esc(p.name)}</h1><div class="mp-pr">${u3rp(p.price)}</div><small>${esc(p.category)} · stok ${p.stock}</small><p style="white-space:pre-wrap">${esc(p.description||'Tidak ada deskripsi.')}</p><div class="card"><b>Dijual oleh ${esc(p.store_name)}</b><small style="display:block">${esc(p.location||'')}</small><button class="btn l" onclick="u3open('${esc(p.slug)}')">Lihat toko</button> <a class="btn l" style="display:inline-block;text-decoration:none" target="_blank" rel="noopener" href="${esc(u3wa(p.phone,'Halo '+p.store_name+', saya tertarik dengan '+p.name+' di NABLO.'))}">Chat penjual</a></div><div class="mp-act"><button class="btn l" onclick="mpFav('${esc(p.prod_id)}')">${mpIsFav(p.prod_id)?'Hapus dari Favorit':'Tambah ke Favorit'}</button><button class="btn l" onclick="mpAdd('${esc(p.prod_id)}')">+ Keranjang</button><button class="btn g" onclick="mpAdd('${esc(p.prod_id)}',1)">Beli sekarang</button></div></div></div>${pubFoot()}</div>`};
 P.mpfav=()=>`<div class="intro mp">${mpHead()}${mpSec('Favorit saya','',M.fav.length?mpGrid(M.fav):'<p class="mp-em">Belum ada favorit. Tekan tombol Tambah ke Favorit pada halaman produk. Favorit tersimpan di perangkat ini; harga dan stok dicek ulang saat checkout.</p>')}${pubFoot()}</div>`;
 /* Keranjang multi-toko: satu form, satu pesanan per toko */
 const mpq=(s,i,d)=>{u3draft();u3qty(s,i,d)};
 const mpCo=()=>{u3draft();const gs=Object.keys(U3.cart);if(!gs.length)return toast('Keranjang kosong');if(!S.u||ROLE()!=='PEMBELI'){S.nextP='keranjang';toast('Masuk atau buat akun pelanggan untuk checkout');return nav('login')}const ph=u3v('mp')||String(S.u.phone||'');
- u3run(async()=>{const r=await api('mpCheckout',S.t,{phone:ph,address:u3v('ma'),pay_method:u3v('mm')||'TRANSFER',note:u3v('mt'),groups:gs.map(s=>({slug:s,items:U3.cart[s].items.map(i=>({prod_id:i.id,qty:i.qty}))}))});
+ u3run(async()=>{const r=await api('mpCheckout',S.t,{phone:ph,address:u3v('ma'),pay_method:u3v('mm')||'TRANSFER',note:u3v('mt'),groups:gs.map(s=>({slug:s,items:U3.cart[s].items.map(i=>({prod_id:i.id,variant_id:i.vid||'',qty:i.qty}))}))});
   M.ores=r;r.forEach(x=>M.ord.unshift({id:x.order_id,phone:ph}));mpSave();U3.cart={};U3.dr=null;M.ordList=null;toast('Pesanan dibuat')})};
 P.keranjang=()=>{
   const gs=Object.keys(U3.cart),r=M.ores;let all=0;
@@ -1850,7 +1923,7 @@ function hpCartN(){return hpCartIds().length}
 function hpLoad(){if(Array.isArray(S.cat)||HPL.busy||HPL.fail)return;HPL.busy=1;api('getCatalog').then(x=>{S.cat=Array.isArray(x)?x:[]}).catch(()=>{HPL.fail=1}).finally(()=>{HPL.busy=0;render()})}
 function hpList(){const q=String(M.q||'').toLowerCase().trim(),c=String(M.cat||'');if(c&&!/^hp/i.test(c))return[];return(Array.isArray(S.cat)?S.cat:[]).filter(x=>!q||`${x.brand||''} ${x.model||''} ${x.color||''} ${x.ram||''} ${x.rom||''} nablo hp`.toLowerCase().includes(q))}
 function hpCard(x){const id=esc(String(x.id)),img=x.photo_url?`<img loading="lazy" src="${esc(x.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>HP</span>';
- return `<div class="mp-c"><div class="mp-im" onclick="katDetail('${id}')">${img}</div><div class="mp-bd" onclick="katDetail('${id}')"><div class="mp-nm">${esc(x.brand||'')} ${esc(x.model||'HP')}</div><b>${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</b><small>${esc(x.ram||'-')}/${esc(x.rom||'-')}${x.color?' · '+esc(x.color):''}</small><small>${esc(shopName())} · <span class="mp-tag">${x.reserved?'Dipesan':'Siap jual'}</span></small></div><div style="padding:0 10px 10px">${x.reserved?'<button class="btn l" style="width:100%;margin:0" disabled>Sedang dipesan</button>':`<button class="btn l" style="width:100%;margin:0" onclick="cartAdd('${id}')">+ Keranjang</button>`}</div></div>`}
+ return `<div class="mp-c" onclick="katDetail('${id}')"><div class="mp-im">${img}${x.reserved?'<em class="mp-bdg warn">Dipesan</em>':'<em class="mp-bdg">Siap jual</em>'}</div><div class="mp-bd"><div class="mp-nm">${esc(x.brand||'')} ${esc(x.model||'HP')}</div><b>${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</b><small>${esc(x.ram||'-')}/${esc(x.rom||'-')}${x.color?' · '+esc(x.color):''}</small><small>${esc(shopName())}</small></div></div>`}
 function hpInRange(x){const p=+x.price||0;if(M.min!==''&&p<+M.min)return false;if(M.max!==''&&p>+M.max)return false;if(M.loc&&!String(inf().store_address||'').toLowerCase().includes(String(M.loc).toLowerCase()))return false;return true}
 function hpAll(){const part=M.res&&M.res.items?M.res.items.slice():[],hp=hpList().filter(hpInRange);let out=[];
  if(M.sort==='price_asc'||M.sort==='price_desc'){out=part.map(p=>({h:mpCard(p),p:+p.price||0})).concat(hp.map(x=>({h:hpCard(x),p:+x.price||0})));out.sort((a,b)=>M.sort==='price_asc'?a.p-b.p:b.p-a.p);return out.map(o=>o.h)}
@@ -1870,4 +1943,41 @@ P.keranjang=()=>{hpLoad();const o=_mpKer(),ids=hpCartIds();if(!ids.length)return
 P.mporders=()=>{const o=_mpOrd();return o.replace('<div class="buyer-section">','<div class="card"><b>Pesanan HP unit</b><p>Pembelian HP dari '+esc(shopName())+' dilacak di halaman ini juga.</p><button class="btn l" onclick="nav(\'pesanan\')">Lihat pesanan HP unit</button></div><div class="buyer-section">')};
 </script>
 
+<script id="mp2">
+/* NABLO MARKETPLACE v2 — tampilan sederhana ala marketplace profesional */
+const mpCatSet=c=>{M.cat=c;M.q='';render();scrollTo(0,0)};
+const mpSortSet=v=>{M.sort=v;render()};
+const mpChips=(cats,onSel)=>`<div class="mp-chips"><button class="${!M.cat?'on':''}" onclick="${onSel}('')">Semua</button>${cats.map(c=>`<button class="${M.cat===c?'on':''}" onclick="${onSel}('${esc(c).replace(/'/g,'&#39;')}')">${esc(c)}</button>`).join('')}</div>`;
+const mpSortBar=()=>`<div class="mp-sort">${[['new','Terbaru'],['price_asc','Harga terendah'],['price_desc','Harga tertinggi']].map(x=>`<button class="${(M.sort||'new')===x[0]?'on':''}" onclick="mpSortSet('${x[0]}')">${x[1]}</button>`).join('')}</div>`;
+P.intro=()=>{
+ hpLoad();mpLoad('home',()=>api('mpHome'));mpLoadRes();
+ const h=M.home,r=M.res,cats=(h&&h.cats)||(r&&r.cats)||[],stores=(h&&h.stores)||[];
+ const seller=S.u&&ROLE()==='MITRA';
+ const promo=`<div class="mp-promo"><div><b>Belanja dari toko mitra</b><small>Harga dan stok diperiksa sistem saat checkout.</small></div><button class="btn l" onclick="${seller?"nav('mitrabiz')":"nav('mitrareg')"}">${seller?'Seller Centre':'Buka toko'}</button></div>`;
+ return `<div class="intro mp">${mpHead()}${promo}${cats.length?mpChips(cats,'mpCatSet'):''}${mpSortBar()}
+  <section class="mp-s">${hpGrid()}</section>
+  ${stores.length?mpSec('Toko mitra','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${stores.map(mpStore).join('')}</div>`):''}
+  ${h&&h.service&&h.service.length?mpSec('Servis HP','<a onclick="nav(\'tokos\')">Lihat semua</a>',`<div class="mp-sg">${h.service.map(mpStore).join('')}</div>`):''}
+  <div class="mp-lk"><button class="btn l" onclick="nav('mptrack')">Lacak pesanan</button><button class="btn l" onclick="nav('lacak')">Lacak servis</button><button class="btn l" onclick="nav('mpfav')">Favorit</button></div>${pubFoot()}</div>`};
+P.kat=()=>P.intro();
+P.mpsearch=()=>{
+ hpLoad();mpLoadRes();const r=M.res,cats=(r&&r.cats)||[];
+ const f=M.fo?`<div class="card mp-f"><input id="mpf_a" type="number" min="0" placeholder="Harga min" value="${esc(M.min)}"><input id="mpf_b" type="number" min="0" placeholder="Harga maks" value="${esc(M.max)}"><input id="mpf_l" placeholder="Lokasi" value="${esc(M.loc)}"><select id="mpf_c" hidden><option value="${esc(M.cat)}"></option></select><select id="mpf_s" hidden><option value="${esc(M.sort||'new')}"></option></select><button class="btn g" onclick="mpApply();M.fo=false;render()">Terapkan</button></div>`:'';
+ const n=((r&&r.total)||0)+hpList().filter(hpInRange).length;
+ return `<div class="intro mp">${mpHead()}${cats.length?mpChips(cats,'mpCatSet'):''}<div class="mp-bar2">${mpSortBar()}<button class="mp-fb ${M.min||M.max||M.loc?'on':''}" onclick="M.fo=!M.fo;render()">Filter</button></div>${f}
+ ${M.q?`<p class="mp-em" style="margin:10px 2px">Hasil untuk "${esc(M.q)}" · ${n} produk</p>`:`<p class="mp-em" style="margin:10px 2px">${n} produk</p>`}
+ ${r&&r.stores&&r.stores.length?mpSec('Toko','',`<div class="mp-sg">${r.stores.map(mpStore).join('')}</div>`):''}
+ <section class="mp-s" style="margin-top:12px">${hpGrid()}</section>${pubFoot()}</div>`};
+P.mpprod=()=>{
+ const p=M.det;if(!p)return `<div class="intro mp">${mpHead()}<div class="card">Produk tidak ditemukan.</div></div>`;M.reg[p.prod_id]=p;
+ const vs=p.variants||[],v=mpCurV(p),price=v?v.price:p.price,stock=v?v.stock:p.stock,fav=mpIsFav(p.prod_id),buyerNav=S.u&&ROLE()==='PEMBELI';
+ const vhtml=vs.length?`<div class="mp-var"><small>${esc(vs[0].option_name||'Variasi')}</small><div>${vs.map(x=>`<button class="${v&&v.variant_id===x.variant_id?'on':''}" ${x.stock>0?'':'disabled'} onclick="mpVar('${esc(p.prod_id)}','${esc(x.variant_id)}')">${esc(x.option_value)}</button>`).join('')}</div></div>`:'';
+ return `<div class="intro mp">${mpHead()}<button class="mp-back" onclick="history.length>1&&S.p!=='intro'?nav('mpsearch'):nav('intro')">← Kembali</button>
+ <div class="mp-dt"><div class="mp-im big">${p.photo_url?`<img src="${esc(p.photo_url)}" alt="" referrerpolicy="no-referrer">`:'<span>Foto</span>'}</div>
+ <div class="mp-info"><div class="mp-pr">${u3rp(price)}</div><h1>${esc(p.name)}</h1><small>${esc(p.category)} · Stok ${stock}</small>${vhtml}
+ <div class="mp-store" onclick="u3open('${esc(p.slug)}')"><div class="mp-sl">Toko</div><div><b>${esc(p.store_name)}</b><small>${esc(p.location||'Lihat profil toko')}</small></div><span>›</span></div>
+ <h3 class="mp-h3">Deskripsi</h3><p style="white-space:pre-wrap;color:var(--t)">${esc(p.description||'Tidak ada deskripsi.')}</p></div></div>
+ <div class="mp-bar" style="bottom:${buyerNav?'calc(64px + env(safe-area-inset-bottom,0px))':'0'}"><button class="btn l" onclick="mpFav('${esc(p.prod_id)}')" aria-label="Favorit">${fav?'Tersimpan':'Simpan'}</button><a class="btn l" target="_blank" rel="noopener" href="${esc(u3wa(p.phone,'Halo '+p.store_name+', saya tertarik dengan '+p.name+' di NABLO.'))}">Chat</a><button class="btn l" ${stock>0?'':'disabled'} onclick="mpAdd('${esc(p.prod_id)}')">+ Keranjang</button><button class="btn g" ${stock>0?'':'disabled'} onclick="mpAdd('${esc(p.prod_id)}',1)">Beli</button></div>${pubFoot()}</div>`};
+P.mpfav=()=>`<div class="intro mp">${mpHead()}${mpSec('Favorit saya','',M.fav.length?mpGrid(M.fav):'<div class="mp-empty"><b>Belum ada favorit</b><p>Tekan Simpan pada halaman produk. Favorit tersimpan di perangkat ini; harga dan stok dicek ulang saat checkout.</p><button class="btn g" onclick="nav(\'intro\')">Mulai belanja</button></div>')}${pubFoot()}</div>`;
+</script>
 </body></html>
