@@ -1545,7 +1545,7 @@ const katCards=()=>{
  else if(S.ksort==='nama')list.sort((a,b)=>`${a.brand||''} ${a.model||''}`.localeCompare(`${b.brand||''} ${b.model||''}`,'id'));
  return `<div class="buyer-grid">${list.map(x=>`<article class="card buyer-product"><div class="buyer-photo">${x.photo_url?photo(x):'HP'}${x.reserved?'<span class="ready-pill" style="background:#FEF3C7;color:#B45309">● DIPESAN</span>':'<span class="ready-pill">● SIAP JUAL</span>'}</div><div class="buyer-info"><div class="buyer-brand">${esc(x.brand||'Smartphone')}</div><h4>${esc(x.model||'Model HP')}</h4><div class="buyer-memory">${esc(x.ram||'-')} RAM · ${esc(x.rom||'-')} Memori${x.color?' · '+esc(x.color):''}</div><div class="buyer-price">${Number(x.price)>0?rp(x.price):'Hubungi penjual'}</div><div class="buyer-buttons"><button class="btn g" onclick="katDetail('${esc(x.id)}')">Lihat Detail</button>${x.reserved?'':`<button class="btn l" onclick="cartAdd('${esc(x.id)}')">Keranjang</button>`}${wa?`<a class="btn whatsapp" target="_blank" rel="noopener" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Halo, saya tertarik dengan '+x.brand+' '+x.model+' ('+x.ram+'/'+x.rom+'). Apakah unit ini masih tersedia?')}">WhatsApp ↗</a>`:''}</div></div></article>`).join('')||'<div class="buyer-empty"><b>HP belum ditemukan</b>Coba kata kunci lain atau pilih filter “Semua HP”.</div>'}</div>`;
 };
-const loadSold=()=>{if(S.soldLoading)return;S.soldLoading=true;api('getSoldCatalog',S.t).then(x=>{S.sold=Array.isArray(x)?x:[];S.soldLoading=false;if(S.p==='terjual')render()}).catch(e=>{S.sold=[];S.soldLoading=false;if(S.p==='terjual')render();toast('Riwayat terjual gagal dimuat: '+String(e&&e.message||e))})};
+const loadSold=()=>{if(S.soldLoading)return;S.soldLoading=true;api('getSoldCatalog',S.t||'').then(x=>{S.sold=Array.isArray(x)?x:[];S.soldLoading=false;if(S.p==='terjual')render()}).catch(e=>{S.sold=[];S.soldLoading=false;if(S.p==='terjual')render();toast('Riwayat terjual gagal dimuat: '+String(e&&e.message||e))})};
 const loadCat=()=>{S.cat=null;const e=$('#kl');if(e)e.innerHTML=katCards();api('getCatalog').then(x=>{S.cat=Array.isArray(x)?x:[];if(['kat','beranda','bandingkan'].includes(S.p))render();else{const target=$('#kl');if(target)target.innerHTML=katCards()}}).catch(e=>{S.cat=[];if(['kat','beranda','bandingkan'].includes(S.p))render();else{const target=$('#kl');if(target)target.innerHTML=katCards()}toast(String(e&&e.message||e))})};
 const doDaftar=()=>{
  const o={full_name:$('#rn').value,username:$('#ru').value,phone:$('#rh').value,email:$('#re').value.trim(),password:$('#rw').value};
@@ -1573,7 +1573,7 @@ const katDetail_lama=id=>{
  });
 };
 
-const addCompare=()=>{const el=$('#comparePick'),id=el&&el.value;if(!id)return toast('Pilih HP terlebih dahulu');if((S.compareIds||[]).length>=3)return toast('Maksimal 3 HP untuk dibandingkan');if((S.compareIds||[]).some(x=>String(x)===String(id)))return toast('HP sudah ada dalam perbandingan');run(async()=>{const detail=await api('getDetail',id,S.t);S.compareIds.push(id);S.compareDetails=S.compareDetails||{};S.compareDetails[String(id)]=detail;},()=>render())};
+const addCompare=()=>{const el=$('#comparePick'),id=el&&el.value;if(!id)return toast('Pilih HP terlebih dahulu');if((S.compareIds||[]).length>=3)return toast('Maksimal 3 HP untuk dibandingkan');if((S.compareIds||[]).some(x=>String(x)===String(id)))return toast('HP sudah ada dalam perbandingan');run(async()=>{const detail=await api('getDetail',id,S.t||'');S.compareIds.push(id);S.compareDetails=S.compareDetails||{};S.compareDetails[String(id)]=detail;},()=>render())};
 /* ---------- Render ---------- */
 /* ---------- v3: bukti pembayaran privat ---------- */
 const PROOF={},PX='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
@@ -1700,11 +1700,11 @@ async function sendNotifUI(){const title=($('#nt_title')||{}).value||'',message=
   toast(r.emailError?'Pengumuman tersimpan, tetapi '+r.emailError:r.emailSent?'Pengumuman disimpan dan email dikirim ke '+r.emailCount+' penerima'+(r.emailFailed?' ('+r.emailFailed+' gagal)':''):'Pengumuman berhasil disimpan')},
   ()=>{if($('#nt_title'))$('#nt_title').value='';if($('#nt_message'))$('#nt_message').value='';pollNotifs(true)})}
 function render(){
- if(!S.u&&!['intro','login','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','hpdet','mptrack','mpfav'].includes(S.p))S.p='intro';
- if(S.u&&ROLE()==='MITRA'&&!/^sc_/.test(S.p)&&!['mitra','mitrabiz','intro','kat','hpdet','profil','akun','mpsearch','mpprod','mpfav','tokos','tokod','lacak','mptrack','keranjang'].includes(S.p))S.p='mitrabiz';
+ if(!S.u&&!['intro','login','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','hpdet','mptrack','mpfav','bandingkan','terjual','checkout','mporders'].includes(S.p))S.p='intro';
+ if(S.u&&ROLE()==='MITRA'&&!/^sc_/.test(S.p)&&!['mitra','mitrabiz','intro','kat','hpdet','profil','akun','mpsearch','mpprod','mpfav','tokos','tokod','lacak','mptrack','keranjang','bandingkan','terjual','mporders','checkout'].includes(S.p))S.p='mitrabiz';
  if(S.u&&ROLE()==='PEMBELI'&&!['intro','mpsearch','mpprod','hpdet','mpfav','mporders','akun','profil','notifikasi','keranjang','mptrack','tokos','tokod','lacak','mitrareg','beranda','kat','terjual','bandingkan','pesanan','checkout'].includes(S.p))S.p='intro';
- if(S.u&&!P[S.p])S.p='dash';
- const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav','mporders','hpdet'].includes(S.p), role=ROLE();
+ if(!P[S.p])S.p=S.u?(ROLE()==='MITRA'?'mitrabiz':ROLE()==='PEMBELI'?'intro':'dash'):'intro';
+ const lg=S.p==='login', publicPage=['intro','kat','daftar','lupa','boot','tokos','tokod','lacak','mitrareg','keranjang','mpsearch','mpprod','mptrack','mpfav','mporders','hpdet','bandingkan','terjual'].includes(S.p), role=ROLE();
  if(S.u&&!['inv','intro','qris','form','beranda','kat','terjual','bandingkan','akun','profil'].includes(S.p)){
   if(role==='PEMBELI'&&['terjual','bandingkan','akun'].includes(S.p)){}else{const m=MENU.find(x=>x[0]===S.p);if(m&&!m[3].includes(role))S.p='dash'
   }
@@ -1712,7 +1712,7 @@ function render(){
  const prim=(lg||publicPage||role==='PEMBELI')?[]:(PRIMARY[role]||['dash']).map(k=>MENU.find(x=>x[0]===k)).filter(Boolean),
  inPrim=prim.some(x=>x[0]===(({form:'stok',inv:'jual',qris:'jual'})[S.p]||S.p)),
  n=role==='PEMBELI'&&S.u?`<nav class="buyer-nav"><button class="${S.p==='intro'?'on':''}" onclick="nav('intro')"><i>${ni('dash')}</i>Katalog</button><button class="${S.p==='keranjang'?'on':''}" onclick="nav('keranjang')"><i>${ni('cart')}</i>Keranjang</button><button class="${S.p==='mporders'?'on':''}" onclick="nav('mporders')"><i>${ni('jual')}</i>Pesanan</button><button class="${['tokos','tokod','lacak'].includes(S.p)?'on':''}" onclick="nav('tokos')"><i>${ni('servis')}</i>Servis</button><button class="${['akun','profil'].includes(S.p)?'on':''}" onclick="nav('akun')"><i>${ni('profil')}</i>Akun</button></nav>`:(lg||publicPage||!S.u)?'':`<nav>${prim.map(x=>`<button class="${(({form:'stok',inv:'jual',qris:'jual'})[S.p]||S.p)==x[0]?'on':''}" onclick="nav('${x[0]}')"><i>${x[1]}</i>${x[4]||x[2].split(' ')[0]}</button>`).join('')}<button class="${!inPrim?'on':''}" onclick="openMenu()"><i>${ni('menu')}</i>Menu</button></nav>`;
- $('#app').className=(lg||(S.p==='intro'&&!(role==='PEMBELI'&&S.u)))?'noav':'';$('#app').innerHTML=P[S.p]()+n;ntfSync();
+ $('#app').className=(lg||(S.p==='intro'&&!(role==='PEMBELI'&&S.u)))?'noav':'';try{$('#app').innerHTML=(typeof P[S.p]==='function'?P[S.p]:P.intro)()+n}catch(err){console.error(err);$('#app').innerHTML='<div class="pg"><div class="card"><b>Halaman gagal dimuat</b><p style="margin:8px 0">Silakan muat ulang atau kembali ke beranda.</p><button class="btn g" onclick="nav(\'intro\')">Beranda</button></div></div>'}ntfSync();
  if(role==='SUB_OWNER'&&S.p!=='profil'){
    // Mode pemeriksaan: tombol navigasi/lihat tetap aktif, seluruh tombol aksi perubahan dinonaktifkan.
    $('#app').querySelectorAll('button').forEach(b=>{const h=b.getAttribute('onclick')||'';if(!/nav\s*\(|openMenu\s*\(|doLogout\s*\(|viewPhoto\s*\(|toggleNotif\s*\(|ntf[A-Z]\w*\s*\(|pollNotifs\s*\(/.test(h)){b.disabled=true;b.title='SUB OWNER hanya dapat melihat data';b.style.opacity='.48';b.style.cursor='not-allowed';}});
@@ -1966,7 +1966,7 @@ function hpCartN(){return hpCartIds().length}
  const badgeCart=()=>{const n=CART().length;document.querySelectorAll('.cartbtn .cb').forEach(e=>{e.textContent=n?String(n):''})};
  const injectCartBtn=()=>{document.querySelectorAll('#app .hd').forEach(h=>{if(h.querySelector('.cartbtn'))return;const b=document.createElement('button');b.type='button';b.className='ic cartbtn';b.setAttribute('aria-label','Keranjang');b.title='Keranjang';b.onclick=()=>openCart();b.innerHTML=ni('cart')+'<em class="cb"></em>';h.appendChild(b)});badgeCart()};
 
- window.openCart=()=>{if(!isBuyer()){toast('Masuk sebagai pembeli untuk memakai keranjang');return nav('login')}S.cf=false;S.cfErr=false;nav('keranjang')};
+ window.openCart=()=>{S.cf=false;S.cfErr=false;nav('keranjang')};
  window.cartAdd=id=>{
   if(S.u&&!isBuyer()){toast('Akun '+(ROLE_LABEL[ROLE()]||ROLE())+' hanya dapat melihat produk. Pembelian memakai akun pembeli.');return}
   if(!isBuyer()){modal(`<h3>Masuk untuk memesan</h3><p style="margin:10px 0">Untuk memesan, silakan masuk atau buat akun pembeli terlebih dahulu.</p><button class="btn g w" onclick="closeM();nav('login')">Masuk</button><button class="btn l w" onclick="closeM();nav('daftar')">Buat Akun</button><button class="btn l w" onclick="closeM()">Nanti</button>`);return}
